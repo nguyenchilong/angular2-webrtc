@@ -16,12 +16,14 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('myVideo') myVideo;
     @ViewChild('mySnapshot') mySnapshot;
+    @ViewChild('myButton') myButton;
+
 
     constructor() { };
 
     snapshot(): void {
         this.mySnapshot.nativeElement.getContext('2d')
-        .drawImage(this.myVideo.nativeElement, 0, 0, 500, 375);
+            .drawImage(this.myVideo.nativeElement, 0, 0, 500, 375);
     }
 
     start(): void {
@@ -34,6 +36,11 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
             },
             (error) => { console.log('navigator.getUserMedia error: ', error); }
         );
+    }
+
+    download(): void {
+        this.myButton.nativeElement.href = this.mySnapshot.nativeElement.toDataURL();
+        this.myButton.nativeElement.download = 'canvas.png';
     }
 
     ngOnInit() {

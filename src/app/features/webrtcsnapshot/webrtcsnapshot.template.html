@@ -2,7 +2,10 @@
     <video #myVideo></video>
     <div class="bar">
         <button (click)="snapshot()">Snapshot</button>
+        <a (click)="download()" #myButton>Download</a>
     </div>
-    <canvas #mySnapshot width="500" height="375" >
-    </canvas>
+    <div class="picture">
+        <canvas #mySnapshot width="500" height="375">
+        </canvas>
+    </div>
 </div>
