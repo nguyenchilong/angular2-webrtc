@@ -6,7 +6,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None,
   styles: [`
   md-sidenav-layout {
-    width: 70% !important;
+    width: 100% !important;
   }
   `]
 })
