@@ -1,15 +1,16 @@
 import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 
 @Component({
-    selector: 'webrtcvideo-component',
-    styleUrls: ['./webrtcvideo.style.css'],
-    templateUrl: './webrtcvideo.template.html'
+    selector: 'webrtcrecord-component',
+    styleUrls: ['./webrtcrecord.style.css'],
+    templateUrl: './webrtcrecord.template.html'
 })
 
-export class WebrtcVideo implements OnInit, AfterViewInit, OnDestroy {
+export class WebrtcRecord implements OnInit, AfterViewInit, OnDestroy {
 
-    constraints = { video: true, audio: false };
-    stream: MediaStream;
+    constraints = { video: true, audio: true };
+    stream: MediaStream = new MediaStream();
+    recorder = new MediaStreamRecorder(this.stream);
     @ViewChild('myVideo') myVideo;
 
     constructor() { };
@@ -29,6 +30,17 @@ export class WebrtcVideo implements OnInit, AfterViewInit, OnDestroy {
             },
             (error) => { console.log('navigator.getUserMedia error: ', error); }
         );
+    }
+
+    startrecording(): void {
+        this.recorder = new MediaStreamRecorder(this.stream);
+        this.recorder.mimeType = 'video/webm';
+        this.recorder.start(9999);
+    }
+
+    stoprecording(): void {
+        // this.recorder.stop();
+        this.recorder.save();
     }
 
     ngOnInit() {

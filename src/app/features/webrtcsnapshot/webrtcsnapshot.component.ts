@@ -16,7 +16,7 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
 
     @ViewChild('myVideo') myVideo;
     @ViewChild('mySnapshot') mySnapshot;
-    @ViewChild('myButton') myButton;
+    @ViewChild('myLink') myLink;
 
 
     constructor() { };
@@ -39,8 +39,8 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
     }
 
     download(): void {
-        this.myButton.nativeElement.href = this.mySnapshot.nativeElement.toDataURL();
-        this.myButton.nativeElement.download = 'canvas.png';
+        this.myLink.nativeElement.href = this.mySnapshot.nativeElement.toDataURL();
+        this.myLink.nativeElement.download = 'canvas.png';
     }
 
     ngOnInit() {
@@ -52,7 +52,6 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         this.start();
-
     }
 
     ngOnDestroy() {
