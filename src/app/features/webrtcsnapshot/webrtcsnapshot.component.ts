@@ -26,6 +26,11 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
             .drawImage(this.myVideo.nativeElement, 0, 0, 500, 375);
     }
 
+    stop(): void {
+        this.myVideo.nativeElement.pause();
+        this.stream.getVideoTracks().forEach((track) => track.stop());
+    }
+
     start(): void {
         navigator.getUserMedia(
             this.constraints,
@@ -55,7 +60,7 @@ export class WebrtcSnapshot implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.stream.getVideoTracks().forEach((track) => track.stop());
+        this.stop();
 
     }
 

@@ -43,7 +43,7 @@ export class WebrtcVideo implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.stream.getVideoTracks().forEach((track) => track.stop());
+        this.stop();
 
     }
 
