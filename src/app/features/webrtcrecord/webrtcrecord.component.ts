@@ -35,12 +35,12 @@ export class WebrtcRecord implements OnInit, AfterViewInit, OnDestroy {
     startrecording(): void {
         this.recorder = new MediaStreamRecorder(this.stream);
         this.recorder.mimeType = 'video/webm';
-        this.recorder.start(9999);
+        this.recorder.start(1000);
     }
 
     stoprecording(): void {
-        // this.recorder.stop();
         this.recorder.save();
+        this.recorder.stop();
     }
 
     ngOnInit() {
@@ -55,7 +55,8 @@ export class WebrtcRecord implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.stream.getVideoTracks().forEach((track) => track.stop());
+        this.recorder.stop();
+        this.stop();
 
     }
 
