@@ -25,13 +25,12 @@ export class WebrtcCaller {
     call(): void {
         // add the stream to the rtcpeerconnection
         this.pc.addStream(this.stream);
-        this.pc.createOffer(function (offer: RTCSessionDescriptionInit) {
-            // Hier kommt der Fehler:
-            this.pc.setLocalDescription(new RTCSessionDescription(offer), function () {
-                console.log(offer);
-                // send the offer to a server to be forwarded to the friend you're calling.
+        this.pc.createOffer(
+            (offer: RTCSessionDescriptionInit) => {
+                this.pc.setLocalDescription(new RTCSessionDescription(offer), function () {
+                    // send the offer to a server to be forwarded to the friend you're calling.
+                }, this.closeconnection);
             }, this.closeconnection);
-        }, this.closeconnection);
     }
 
     closeconnection(err): void {
