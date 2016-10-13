@@ -8,7 +8,10 @@ import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular
 
 export class WebrtcVideo implements OnInit, AfterViewInit, OnDestroy {
 
-    constraints = { video: true, audio: false };
+    constraints = {
+        video: true,
+        audio: false
+    };
     stream: MediaStream;
     @ViewChild('myVideo') myVideo;
 
