@@ -10,5 +10,9 @@ export const views: Object[] = [
     {
     name: 'Record',
     link: ['record']
+  },
+    {
+    name: 'Rtcpeer',
+    link: ['rtcpeer']
   }
 ];
