@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
         selector: 'rtcpeer-component',
-        template: '<webrtccaller-component></webrtccaller-component>'
+        templateUrl: './rtcpeer.template.html',
+        styleUrls: ['./rtcpeer.style.css']
 })
 
 export class RtcpeerComponent {

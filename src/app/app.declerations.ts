@@ -4,6 +4,8 @@ import { WebrtcVideo } from './features/webrtcvideo';
 import { WebrtcSnapshot } from './features/webrtcsnapshot';
 import { WebrtcRecord } from './features/webrtcrecord';
 import { WebrtcCaller } from './features/webrtccaller';
+import { WebrtcReceiver } from './features/webrtcreceiver';
+
 
 import { VideoComponent } from './features/video/video.component';
 import { SnapshotComponent } from './features/snapshot/snapshot.component';
@@ -18,6 +20,7 @@ export const APP_DECLERATIONS = [
   WebrtcSnapshot,
   WebrtcRecord,
   WebrtcCaller,
+  WebrtcReceiver,
 
   // Components to display
   VideoComponent,
