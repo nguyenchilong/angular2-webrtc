@@ -14,5 +14,13 @@ export const views: Object[] = [
     {
     name: 'Rtcpeer',
     link: ['rtcpeer']
+  },
+    {
+    name: 'Caller',
+    link: ['caller']
+  },
+    {
+    name: 'Receiver',
+    link: ['receiver']
   }
 ];

@@ -10,7 +10,7 @@ export class WebrtcRecord implements OnInit, AfterViewInit, OnDestroy {
 
     constraints = { video: true, audio: true };
     stream: MediaStream = new MediaStream();
-    recorder = new MediaStreamRecorder(this.stream);
+    recorder; // = new MediaStreamRecorder(this.stream);
     @ViewChild('myVideo') myVideo;
 
     constructor() { };
@@ -33,7 +33,7 @@ export class WebrtcRecord implements OnInit, AfterViewInit, OnDestroy {
     }
 
     startrecording(): void {
-        this.recorder = new MediaStreamRecorder(this.stream);
+        // this.recorder = new MediaStreamRecorder(this.stream);
         this.recorder.mimeType = 'video/webm';
         this.recorder.start(1000);
     }
