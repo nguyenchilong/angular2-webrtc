@@ -1,5 +1,5 @@
 export const views: Object[] = [
-  {
+ /* {
     name: 'Basic Demo',
     link: ['']
   },
@@ -14,7 +14,7 @@ export const views: Object[] = [
     {
     name: 'Rtcpeer',
     link: ['rtcpeer']
-  },
+  }, */
     {
     name: 'Caller',
     link: ['caller']

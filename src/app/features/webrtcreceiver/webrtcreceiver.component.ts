@@ -10,7 +10,10 @@ import { SOCKET } from '../../services/constants';
 
 export class WebrtcReceiver implements OnInit {
 
-    constraints = { video: true, audio: false };
+    constraints = {
+        video: true,
+        audio: true
+    };
     stream: MediaStream = new MediaStream();
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
     pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
@@ -82,5 +85,5 @@ export class WebrtcReceiver implements OnInit {
         };
     }
 
-    constructor() {  }
+    constructor() { }
 }

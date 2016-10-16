@@ -10,7 +10,10 @@ import { SOCKET } from '../../services/constants';
 
 export class WebrtcCaller implements OnInit {
 
-    constraints = { video: true, audio: false };
+    constraints = {
+        audio: true,
+        video: true
+    };
     stream: MediaStream = new MediaStream();
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
     pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
