@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../services/constants';
 
@@ -8,13 +8,13 @@ import { SOCKET } from '../../services/constants';
     templateUrl: './webrtcreceiver.template.html'
 })
 
-export class WebrtcReceiver {
+export class WebrtcReceiver implements OnInit {
 
     constraints = { video: true, audio: false };
     stream: MediaStream = new MediaStream();
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
-    pc: RTCPeerConnection = new RTCPeerConnection(null);
-    socket: SocketIOClient.Socket;
+    pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
+    socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     offer: RTCSessionDescriptionInit;
     @ViewChild('myVideo') myVideo;
     @ViewChild('otherVideo') otherVideo;
@@ -55,17 +55,18 @@ export class WebrtcReceiver {
         console.log('closed connection');
     }
 
-    constructor() {
-        this.socket = io(SOCKET);
+    ngOnInit() {
+        this.startVideostream();
         this.socket.on('get1',
             (msg) => {
-                this.startVideostream();
                 this.offer = msg;
                 this.receive();
             }
         );
-        this.socket.on('candidate2',
+        this.socket.on('getice1',
             (msg) => {
+                console.log('receiver');
+                console.log(msg);
                 this.pc.addIceCandidate(msg);
             }
         );
@@ -73,5 +74,13 @@ export class WebrtcReceiver {
         this.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
+        // push ice candidates from config to server
+        this.pc.onicecandidate = (evt) => {
+            if (evt.candidate) {
+                this.socket.emit('pushice2', evt.candidate);
+            }
+        };
     }
+
+    constructor() {  }
 }

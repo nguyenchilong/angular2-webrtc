@@ -13,8 +13,8 @@ export class WebrtcCaller implements OnInit {
     constraints = { video: true, audio: false };
     stream: MediaStream = new MediaStream();
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
-    pc: RTCPeerConnection = new RTCPeerConnection(null);
-    socket: SocketIOClient.Socket;
+    pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
+    socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     @ViewChild('myVideo') myVideo;
     @ViewChild('otherVideo') otherVideo;
 
@@ -77,13 +77,24 @@ export class WebrtcCaller implements OnInit {
 
     ngOnInit() {
         this.startVideostream();
-    }
-
-    constructor() {
-        this.socket = io(SOCKET);
+        this.socket.on('getice2',
+            (msg) => {
+                console.log('caller');
+                console.log(msg);
+                this.pc.addIceCandidate(msg);
+            }
+        );
         // add remote stream to otherVideo
         this.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
+        this.pc.onicecandidate = (evt) => {
+            if (evt.candidate) {
+                this.socket.emit('pushice1', evt.candidate);
+            }
+        };
+    }
+
+    constructor() {
     }
 }
