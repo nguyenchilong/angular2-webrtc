@@ -13,6 +13,7 @@ import { RecorderComponent } from './features/recorder/recorder.component';
 import { RtcpeerComponent } from './features/rtcpeer/rtcpeer.component';
 import { CallerComponent } from './features/caller/caller.component';
 import { ReceiverComponent } from './features/receiver/receiver.component';
+import { PresenterComponent } from './features/presenter/presenter.component';
 
 export const APP_DECLERATIONS = [
   NotFound404Component,
@@ -23,6 +24,7 @@ export const APP_DECLERATIONS = [
   WebrtcRecord,
   WebrtcCaller,
   WebrtcReceiver,
+  PresenterComponent,
 
   // Components to display
   VideoComponent,
