@@ -29,7 +29,6 @@ export class WebrtcCaller implements OnInit {
             this.constraints,
             // success:
             (localMediaStream: MediaStream) => {
-                // make stream global in component
                 this.stream = localMediaStream;
                 this.myVideo.nativeElement.src = URL.createObjectURL(this.stream);
             },
@@ -38,19 +37,25 @@ export class WebrtcCaller implements OnInit {
         );
     }
 
-    // this method does add this.stream to this.pc and 
-    // emits an offer to the server and
-    // start waiting for an anwer from the server
     call(): void {
+        // add stream to pc
         this.pc.addStream(this.stream);
-        this.pc.createOffer((offer: RTCSessionDescriptionInit) => {
-            this.pc.setLocalDescription(
-                new RTCSessionDescription(offer),
-                () => {
-                    this.socket.emit('push1', offer);
-                }, this.closeconnection);
-            this.startlisteningforanswer();
-        }, this.closeconnection);
+        // create offer
+        this.pc.createOffer(
+            (offer: RTCSessionDescriptionInit) => {
+                this.pc.setLocalDescription(
+                    new RTCSessionDescription(offer),
+                    () => {
+                        // push offer to signalingchannel
+                        this.socket.emit('push1', offer);
+                        // start listening for an answer
+                        this.startlisteningforanswer();
+                    },
+                    // error:
+                    this.closeconnection);
+            },
+            // error:
+            this.closeconnection);
     }
 
     // helpfunction for closing the connection and
@@ -67,7 +72,6 @@ export class WebrtcCaller implements OnInit {
     // helpfunction: listen for an answer from the server and
     // add answer to this.pc
     startlisteningforanswer(): void {
-        console.log('listening for anwer');
         this.socket.on('get2', (msg) => {
             // adding the answer as remotedescription to this.pc
             this.pc.setRemoteDescription(
@@ -80,6 +84,7 @@ export class WebrtcCaller implements OnInit {
 
     ngOnInit() {
         this.startVideostream();
+        // start listening for icecandidates from signalingchannel
         this.socket.on('getice2',
             (msg) => {
                 console.log('caller');
@@ -87,7 +92,7 @@ export class WebrtcCaller implements OnInit {
                 this.pc.addIceCandidate(msg);
             }
         );
-        // add remote stream to otherVideo
+        // add remote stream to otherVideo after stream from other peer arrives
         this.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
@@ -98,6 +103,6 @@ export class WebrtcCaller implements OnInit {
         };
     }
 
-    constructor() {
-    }
+    constructor() {  }
+
 }

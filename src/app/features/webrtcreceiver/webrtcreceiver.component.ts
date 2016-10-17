@@ -18,18 +18,15 @@ export class WebrtcReceiver implements OnInit {
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
     pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
-    offer: RTCSessionDescriptionInit;
     @ViewChild('myVideo') myVideo;
     @ViewChild('otherVideo') otherVideo;
 
 
     startVideostream(): void {
         navigator.getUserMedia(
-            // constrains:
             this.constraints,
             // success:
             (localMediaStream: MediaStream) => {
-                // make stream global in component
                 this.stream = localMediaStream;
                 this.myVideo.nativeElement.src = URL.createObjectURL(this.stream);
             },
@@ -39,31 +36,51 @@ export class WebrtcReceiver implements OnInit {
     }
 
 
-    receive(): void {
+    onOffer(offer: RTCSessionDescriptionInit): void {
+        // add stream to pc
         this.pc.addStream(this.stream);
-        this.pc.setRemoteDescription(new RTCSessionDescription(this.offer), () => {
-            this.pc.createAnswer((answer: RTCSessionDescriptionInit) => {
-                this.pc.setLocalDescription(
-                    new RTCSessionDescription(answer),
-                    () => {
-                        this.socket.emit('push2', answer);
-                    }, this.closeconnection
-                );
-            }, this.closeconnection);
-        }, this.closeconnection);
+        // creating answer
+        this.pc.setRemoteDescription(
+            new RTCSessionDescription(offer),
+            // success:
+            () => {
+                this.pc.createAnswer(
+                    (answer: RTCSessionDescriptionInit) => {
+                        this.pc.setLocalDescription(
+                            new RTCSessionDescription(answer),
+                            // success:
+                            () => {
+                                // push answer to signalingchannel
+                                this.socket.emit('push2', answer);
+                            },
+                            // error:
+                            this.closeconnection
+                        );
+                    },
+                    // error:
+                    this.closeconnection);
+            },
+            // error:
+            this.closeconnection);
     }
 
+    // helpfunction for closing the connection and
+    // stoping the stream
     closeconnection(err): void {
-        this.pc.close();
-        console.log('closed connection');
+        if (this.pc.signalingState !== 'closed') {
+            this.pc.close();
+        }
+        if (this.stream.active) {
+            this.stream.stop();
+        }
     }
 
     ngOnInit() {
         this.startVideostream();
+        // listening for offer from signalingchannel
         this.socket.on('get1',
             (msg) => {
-                this.offer = msg;
-                this.receive();
+                this.onOffer(msg);
             }
         );
         this.socket.on('getice1',
