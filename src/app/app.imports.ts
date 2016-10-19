@@ -18,4 +18,3 @@ export const APP_IMPORTS = [
   StoreDevToolsModule,
   StoreModule.provideStore(rootReducer)
 ];
-
