@@ -10,7 +10,7 @@ import { CallerComponent } from './features/caller/caller.component';
 import { ReceiverComponent } from './features/receiver/receiver.component';
 
 export const routes: Routes = [
-  { path: '', component: VideoComponent, pathMatch: 'full' },
+  { path: '', component: ReceiverComponent, pathMatch: 'full' },
   { path: 'snapshot', component: SnapshotComponent },
   // { path: 'record', component: RecorderComponent },
   { path: 'rtcpeer', component: RtcpeerComponent },
