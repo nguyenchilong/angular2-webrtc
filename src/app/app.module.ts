@@ -19,7 +19,6 @@ import { APP_IMPORTS } from './app.imports';
 import { APP_PROVIDERS } from './app.providers';
 
 import { AppComponent } from './app.component';
-
 import { AppState } from './reducers';
 
 @NgModule({
