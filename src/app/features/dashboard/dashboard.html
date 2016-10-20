@@ -1,0 +1,25 @@
+<md-card>
+	<h1>Das ist die Startseite</h1>
+</md-card>
+<md-card>
+	<p>User Object:<br> Name: {{(user | async).name}}<br>Logged in?: {{(user | async).loggedin}}</p>
+	<md-card>
+		<div>
+            Change Users value: loggedin: boolean
+            <br>
+            <br>
+			<button md-raised-button color="primary" (click)="loginUser()">Login</button>
+			<button md-raised-button color="accent" (click)="logoutUser()">Logout</button>
+		</div>
+        <br>
+		<div>
+            Change Users value name: string:
+            <br>
+            <br>
+			<md-input #input placeholder="new Name for User"></md-input>
+            <br>
+            <br>
+			<button md-button md-raised-button (click)="setName()">Set as Name</button>
+		</div>
+	</md-card>
+</md-card>
