@@ -1,21 +1,32 @@
 <md-sidenav-layout fullscreen>
-  <md-sidenav #sidenav [mode]="sideNavMode">
-    <md-nav-list>
-      <template ngFor let-view [ngForOf]="views" let-even="even" let-odd="odd" let-rowIndex="index">
-        <a md-list-item [routerLink]="view.link" routerLinkActive="active-link" (click)="mobile ? sidenav.close() : {}">
-          <span md-line>{{view.name}}</span>
-          <span md-line class="secondary">{{view.description}}</span>
-        </a>
-      </template>
-    </md-nav-list>
-  </md-sidenav>
-  <md-toolbar color="primary">
-    <button md-icon-button (click)="sidenav.toggle()">
+	<md-sidenav #sidenav [mode]="sideNavMode">
+		<md-nav-list>
+			<template ngFor let-view [ngForOf]="views" let-even="even" let-odd="odd" let-rowIndex="index">
+				<a md-list-item [routerLink]="view.link" routerLinkActive="active-link" (click)="mobile ? sidenav.close() : {}">
+					<span md-line>{{view.name}}</span>
+					<span md-line class="secondary">{{view.description}}</span>
+				</a>
+			</template>
+		</md-nav-list>
+	</md-sidenav>
+	<!-- TOOLBAR -->
+	<md-toolbar color="primary">
+
+		<button md-icon-button (click)="sidenav.toggle()">
       <md-icon>menu</md-icon>
-    </button> Webrtc Demo
-  </md-toolbar>
-<md-card id="my-page-card">
-  <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
-</md-card>
+    </button>
+		<span>Webrtc Demo</span>
+		<button md-icon-button>
+      <md-icon>settings</md-icon>
+    </button>
+		<button md-icon-button>
+      <md-icon>power_settings_new</md-icon>
+    </button>
+
+	</md-toolbar>
+	<!-- END TOOLBAR -->
+	<md-card id="my-page-card">
+		<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+	</md-card>
 </md-sidenav-layout>
 <my-store-devtools *ngIf="showMonitor"></my-store-devtools>

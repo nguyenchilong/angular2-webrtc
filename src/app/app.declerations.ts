@@ -7,7 +7,7 @@ import { WebrtcCaller } from './features/webrtccaller';
 import { WebrtcReceiver } from './features/webrtcreceiver';
 
 
-import { VideoComponent } from './features/video/video.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { SnapshotComponent } from './features/snapshot/snapshot.component';
 // import { RecorderComponent } from './features/recorder/recorder.component';
 import { RtcpeerComponent } from './features/rtcpeer/rtcpeer.component';
@@ -27,7 +27,7 @@ export const APP_DECLERATIONS = [
   PresenterComponent,
 
   // Components to display
-  VideoComponent,
+  DashboardComponent,
   SnapshotComponent,
   // RecorderComponent,
   RtcpeerComponent,
