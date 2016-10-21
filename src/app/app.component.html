@@ -10,20 +10,7 @@
 		</md-nav-list>
 	</md-sidenav>
 	<!-- TOOLBAR -->
-	<md-toolbar color="primary">
-
-		<button md-icon-button (click)="sidenav.toggle()">
-      <md-icon>menu</md-icon>
-    </button>
-		<span>Webrtc Demo</span>
-		<button md-icon-button>
-      <md-icon>settings</md-icon>
-    </button>
-		<button md-icon-button>
-      <md-icon>power_settings_new</md-icon>
-    </button>
-
-	</md-toolbar>
+	<nav-component (toggleoutput)="sidenav.toggle()"></nav-component>
 	<!-- END TOOLBAR -->
 	<md-card id="my-page-card">
 		<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>

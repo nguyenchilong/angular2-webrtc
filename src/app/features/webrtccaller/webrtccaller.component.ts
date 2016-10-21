@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../services/constants';
 
@@ -8,7 +8,7 @@ import { SOCKET } from '../../services/constants';
     templateUrl: './webrtccaller.template.html'
 })
 
-export class WebrtcCaller implements OnInit {
+export class WebrtcCaller implements OnInit, OnDestroy {
 
     constraints = {
         audio: true,
@@ -101,6 +101,10 @@ export class WebrtcCaller implements OnInit {
                 this.socket.emit('pushice1', evt.candidate);
             }
         };
+    }
+
+    ngOnDestroy() {
+        this.closeconnection(null);
     }
 
     constructor() {  }

@@ -5,7 +5,7 @@ import { WebrtcSnapshot } from './features/webrtcsnapshot';
 // import { WebrtcRecord } from './features/webrtcrecord';
 import { WebrtcCaller } from './features/webrtccaller';
 import { WebrtcReceiver } from './features/webrtcreceiver';
-
+import { NavComponent } from './features/nav/nav.component';
 
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { SnapshotComponent } from './features/snapshot/snapshot.component';
@@ -29,6 +29,7 @@ export const APP_DECLERATIONS = [
   // Components to display
   DashboardComponent,
   SnapshotComponent,
+  NavComponent,
   // RecorderComponent,
   RtcpeerComponent,
   CallerComponent,
