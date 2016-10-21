@@ -71,7 +71,8 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
             this.pc.close();
         }
         if (this.stream.active) {
-            this.stream.stop();
+            this.stream.getAudioTracks().forEach((track) => track.stop());
+            this.stream.getVideoTracks().forEach((track) => track.stop());
         }
     }
 
