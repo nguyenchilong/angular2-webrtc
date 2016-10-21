@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
 
