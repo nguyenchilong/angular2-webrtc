@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../services/constants';
 
@@ -8,7 +8,7 @@ import { SOCKET } from '../../services/constants';
     templateUrl: './webrtcreceiver.template.html'
 })
 
-export class WebrtcReceiver implements OnInit {
+export class WebrtcReceiver implements OnInit, OnDestroy {
 
     constraints = {
         video: true,
@@ -100,6 +100,10 @@ export class WebrtcReceiver implements OnInit {
                 this.socket.emit('pushice2', evt.candidate);
             }
         };
+    }
+
+    ngOnDestroy() {
+        this.closeconnection(null);
     }
 
     constructor() { }
