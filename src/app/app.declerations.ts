@@ -14,6 +14,7 @@ import { RtcpeerComponent } from './features/rtcpeer/rtcpeer.component';
 import { CallerComponent } from './features/caller/caller.component';
 import { ReceiverComponent } from './features/receiver/receiver.component';
 import { PresenterComponent } from './features/presenter/presenter.component';
+import { VideoComponent } from './features/video/video.component';
 
 export const APP_DECLERATIONS = [
   NotFound404Component,
@@ -33,5 +34,6 @@ export const APP_DECLERATIONS = [
   // RecorderComponent,
   RtcpeerComponent,
   CallerComponent,
-  ReceiverComponent
+  ReceiverComponent,
+  VideoComponent
 ];

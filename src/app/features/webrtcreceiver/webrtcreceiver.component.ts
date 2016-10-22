@@ -18,8 +18,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
     pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
-    @ViewChild('myVideo') myVideo;
-    @ViewChild('otherVideo') otherVideo;
+    @ViewChild('Video') video;
 
 
     startVideostream(): void {
@@ -28,7 +27,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
             // success:
             (localMediaStream: MediaStream) => {
                 this.stream = localMediaStream;
-                this.myVideo.nativeElement.src = URL.createObjectURL(this.stream);
+                this.video.myVideo.nativeElement.src = URL.createObjectURL(this.stream);
             },
             // error:
             (error) => { console.log('navigator.getUserMedia error: ', error); }
@@ -93,7 +92,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         );
         // add remote stream to otherVideo
         this.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
-            this.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
+            this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
         // push ice candidates from config to server
         this.pc.onicecandidate = (evt) => {

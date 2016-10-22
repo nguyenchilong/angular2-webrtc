@@ -18,8 +18,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
     pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
-    @ViewChild('myVideo') myVideo;
-    @ViewChild('otherVideo') otherVideo;
+    @ViewChild('Video') video;
 
 
     // this method does start the stream of the camera and pushes it to this.stream
@@ -30,7 +29,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
             // success:
             (localMediaStream: MediaStream) => {
                 this.stream = localMediaStream;
-                this.myVideo.nativeElement.src = URL.createObjectURL(this.stream);
+                this.video.myVideo.nativeElement.src = URL.createObjectURL(this.stream);
             },
             // error:
             (error) => { console.log('navigator.getUserMedia error: ', error); }
@@ -95,7 +94,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         );
         // add remote stream to otherVideo after stream from other peer arrives
         this.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
-            this.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
+            this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
         this.pc.onicecandidate = (evt) => {
             if (evt.candidate) {

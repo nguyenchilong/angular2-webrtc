@@ -1,0 +1,14 @@
+.videoWraper {
+    height: 500px;
+    position: relative;
+}
+
+.myVideo {
+    height: 150px;
+    position: absolute;
+    bottom: 0;
+}
+
+.otherVideo {
+    height: 100%;
+}
