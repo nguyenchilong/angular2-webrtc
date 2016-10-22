@@ -1,4 +1,6 @@
 <md-sidenav-layout fullscreen>
+
+	<!-- SIDENAV -->
 	<md-sidenav #sidenav [mode]="sideNavMode">
 		<md-nav-list>
 			<template ngFor let-view [ngForOf]="views" let-even="even" let-odd="odd" let-rowIndex="index">
@@ -9,11 +11,18 @@
 			</template>
 		</md-nav-list>
 	</md-sidenav>
+	<!-- END OF SIDENAV -->
+
 	<!-- TOOLBAR -->
 	<nav-component (toggleoutput)="sidenav.toggle()"></nav-component>
-	<!-- END TOOLBAR -->
+	<!-- END OF TOOLBAR -->
+
+	<!-- OUTLET -->
 	<md-card id="my-page-card">
 		<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
 	</md-card>
+	<!-- END OF OUTLET -->
+
 </md-sidenav-layout>
+
 <my-store-devtools *ngIf="showMonitor"></my-store-devtools>

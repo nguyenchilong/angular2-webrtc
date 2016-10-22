@@ -24,7 +24,7 @@ export class NavComponent {
         this.store.dispatch({ type: 'LOGOUT_USER' });
     }
 
-    // Emits Output if nav should be toggled
+    // Emits Output if nav istoggled
     toggle(): void {
         this.toggleoutput.emit();
     }

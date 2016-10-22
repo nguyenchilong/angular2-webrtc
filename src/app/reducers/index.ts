@@ -5,7 +5,7 @@ import { storeLogger } from 'ngrx-store-logger';
 import { routerReducer, RouterState } from '@ngrx/router-store';
 
 // own reducers
-import { userrx } from './user';
+import { userrx } from './user.reducer';
 
 export interface AppState {
   router: RouterState;

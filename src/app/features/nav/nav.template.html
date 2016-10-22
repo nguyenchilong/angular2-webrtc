@@ -1,18 +1,22 @@
 <md-toolbar color="primary">
 
+<!-- LEFT -->
 	<button md-icon-button (click)="toggle()">
       <md-icon>menu</md-icon>
     </button>
 	<span>Webrtc Demo</span>
+<!-- END OF LEFT -->
+
 	<span style="flex: 1 1 auto;"></span>
 
-    <!-- show when user is logged out -->
-    <span *ngIf="!(user | async).loggedin">
+<!-- END RIGHT-->
+	<!-- show when user is logged out -->
+	<span *ngIf="!(user | async).loggedin">
         <button md-raised-button (click)="loginUser()" style="color: black;">Login</button>
     </span>
-    <!-- show when user is logged out -->
+	<!-- show when user is logged out -->
 
-    <!-- show when user is logged in -->
+	<!-- show when user is logged in -->
 	<span *ngIf="(user | async).loggedin">
 		<button md-icon-button>
 			<md-icon>settings</md-icon>
@@ -21,6 +25,7 @@
 			<md-icon>power_settings_new</md-icon>
 		</button>
 	</span>
-    <!-- show when user ist logged in -->
+	<!-- show when user ist logged in -->
+<!-- END OF RIGHT -->
 
 </md-toolbar>
