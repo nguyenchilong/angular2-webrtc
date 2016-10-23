@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
         selector: 'dashboard-component',
-        templateUrl: './dashboard.html'
+        templateUrl: './dashboard.html',
+        changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DashboardComponent {

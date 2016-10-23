@@ -1,11 +1,12 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../services/constants';
 
 @Component({
     selector: 'webrtccaller-component',
     styleUrls: ['./webrtccaller.style.css'],
-    templateUrl: './webrtccaller.template.html'
+    templateUrl: './webrtccaller.template.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class WebrtcCaller implements OnInit, OnDestroy {

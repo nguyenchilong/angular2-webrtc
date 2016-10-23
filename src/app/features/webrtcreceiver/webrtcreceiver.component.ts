@@ -1,11 +1,12 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../services/constants';
 
 @Component({
     selector: 'webrtcreceiver-component',
     styleUrls: ['./webrtcreceiver.style.css'],
-    templateUrl: './webrtcreceiver.template.html'
+    templateUrl: './webrtcreceiver.template.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class WebrtcReceiver implements OnInit, OnDestroy {

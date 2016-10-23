@@ -4,7 +4,7 @@
 	<button md-icon-button (click)="toggle()">
       <md-icon>menu</md-icon>
     </button>
-	<span>Webrtc Demo</span>
+	<span></span>
 <!-- END OF LEFT -->
 
 	<span style="flex: 1 1 auto;"></span>
@@ -12,6 +12,7 @@
 <!-- END RIGHT-->
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
+        <button md-raised-button style="color: black;">Create Account</button>
         <button md-raised-button (click)="loginUser()" style="color: black;">Login</button>
     </span>
 	<!-- show when user is logged out -->
