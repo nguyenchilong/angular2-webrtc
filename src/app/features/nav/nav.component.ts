@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
     selector: 'nav-component',
-    templateUrl: './nav.template.html'
+    templateUrl: './nav.template.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class NavComponent {
