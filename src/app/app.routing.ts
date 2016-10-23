@@ -11,9 +11,6 @@ import { ReceiverComponent } from './features/receiver/receiver.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, pathMatch: 'full' },
-  { path: 'snapshot', component: SnapshotComponent },
-  // { path: 'record', component: RecorderComponent },
-  { path: 'rtcpeer', component: RtcpeerComponent },
   { path: 'caller', component: CallerComponent },
   { path: 'receiver', component: ReceiverComponent },
   { path: '**', component: NotFound404Component }
