@@ -19,9 +19,6 @@ import { AppModule } from './app/app.module.universal.node';
 import { routes } from './server.routes';
 import { HOST, UNIVERSAL_PORT } from '../constants';
 
-import * as fs from 'fs';
-import * as https from 'https';
-
 // enable prod for faster renders
 enableProdMode();
 
@@ -72,6 +69,10 @@ let server = app.listen(process.env.PORT || UNIVERSAL_PORT, () => {
   console.log(`Listening on: http://${HOST}:${server.address().port}`);
 });
 */
+
+// own server implementation
+import * as fs from 'fs';
+import * as https from 'https';
 
 let server = https.createServer({
     key: fs.readFileSync(__dirname + '/server.key'),
