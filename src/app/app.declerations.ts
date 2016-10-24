@@ -1,5 +1,6 @@
 import { NotFound404Component } from './not-found404.component';
 
+import { VideoComponent } from './features/video/video.component';
 import { WebrtcCaller } from './features/webrtccaller';
 import { WebrtcReceiver } from './features/webrtcreceiver';
 
@@ -16,6 +17,7 @@ export const APP_DECLERATIONS = [
   NotFound404Component,
 
   // Components
+  VideoComponent,
   WebrtcCaller,
   WebrtcReceiver,
 
