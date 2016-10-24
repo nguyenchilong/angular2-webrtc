@@ -19,6 +19,9 @@ import { AppModule } from './app/app.module.universal.node';
 import { routes } from './server.routes';
 import { HOST, UNIVERSAL_PORT } from '../constants';
 
+import * as fs from 'fs';
+import * as https from 'https';
+
 // enable prod for faster renders
 enableProdMode();
 
@@ -35,8 +38,8 @@ app.use(bodyParser.json());
 
 // Serve static files
 
-app.use('/assets', express.static(path.join(__dirname, 'assets'), {maxAge: 30}));
-app.use(express.static(path.join(ROOT, 'dist/client'), {index: false}));
+app.use('/assets', express.static(path.join(__dirname, 'assets'), { maxAge: 30 }));
+app.use(express.static(path.join(ROOT, 'dist/client'), { index: false }));
 
 function ngApp(req, res) {
   res.render('index', {
@@ -56,7 +59,7 @@ routes.forEach(route => {
   app.get(`/${route}/*`, ngApp);
 });
 
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   const pojo = { status: 404, message: 'No Content' };
   const json = JSON.stringify(pojo, null, 2);
@@ -64,6 +67,17 @@ app.get('*', function(req, res) {
 });
 
 // Server
+/*
 let server = app.listen(process.env.PORT || UNIVERSAL_PORT, () => {
   console.log(`Listening on: http://${HOST}:${server.address().port}`);
+});
+*/
+
+let server = https.createServer({
+    key: fs.readFileSync(__dirname + '/server.key'),
+    cert: fs.readFileSync(__dirname + '/server.crt')
+}, app);
+
+server.listen(process.env.PORT || UNIVERSAL_PORT, () => {
+  console.log(`Listening on: https://${HOST}:${server.address().port}`);
 });
