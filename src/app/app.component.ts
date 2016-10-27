@@ -5,6 +5,8 @@ import { MdSidenav } from '@angular/material';
 import { views } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
+import { WampService } from './services/wamp.service';
+
 @Component({
   selector: 'my-app',
   styleUrls: ['./app.component.css'],
@@ -23,7 +25,8 @@ export class AppComponent {
 
   constructor(
     public route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private wamp: WampService
   ) { }
 
   activateEvent(event) {
