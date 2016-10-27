@@ -22,7 +22,7 @@ import * as _ from 'lodash'
  */
 
 //own typing for autobahn
-declare var autobahn: any;
+declare var ab: any;
 
 // Extra variables that live on Global that will be replaced by webpack DefinePlugin
 declare var AOT: boolean;
@@ -48,7 +48,7 @@ interface GlobalEnvironment {
   SystemJS: SystemJS;
   System: SystemJS;
   UNIVERSAL;
-  autobahn;
+  ab;
 }
 
 interface WebpackModule {
