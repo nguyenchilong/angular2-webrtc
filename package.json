@@ -14,6 +14,7 @@
     "webdev:hmr": "npm run webdev -- --inline --hot",
     "webpack": "webpack",
     "ngc": "./node_modules/.bin/ngc -p tsconfig.aot.json",
+    "ngc:universal": "./node_modules/.bin/ngc -p tsconfig.aot.universal.json",
     "webdriver-manager": "webdriver-manager",
     "webdriver:update": "npm run webdriver-manager update",
     "webdriver:start": "npm run webdriver-manager start",
@@ -69,6 +70,9 @@
     "build:dll": "npm run clean:dll && npm run sass && webpack",
     "build:prod": "npm run clean:dist && npm run sass && webpack",
     "build:universal": "npm run build:universal:prod",
+    "build:universal:aot": "npm run build:universal:aot:prod",
+    "build:universal:aot:dev": "npm run clean:dist && npm run sass && webpack",
+    "build:universal:aot:prod": "npm run clean:dist && npm run sass && webpack",
     "build:universal:dev": "npm run clean:dist && npm run sass && webpack",
     "build:universal:prod": "npm run clean:dist && npm run sass && webpack",
     "watch": "npm run watch:dev",
@@ -76,6 +80,7 @@
     "watch:prod": "npm-run-all -p -r \"build:prod -- --watch\" sass:watch",
     "watch:universal": "npm-run-all -p -r \"build:universal -- --watch\" sass:watch",
     "universal": "npm run build:universal && npm run server:universal",
+    "universal:aot": "npm run build:universal:aot && npm run server:universal",
     "universal:watch": "npm run build:universal && npm-run-all -p -r watch:universal server:universal"
   },
   "dependencies": {
