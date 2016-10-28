@@ -32,7 +32,7 @@ const webpackMerge = require('webpack-merge');
 
 const { hasProcessFlag, includeClientPackages, root, testDll } = require('./helpers.js');
 
-const EVENT = process.env.npm_lifecycle_event;
+const EVENT = process.env.npm_lifecycle_event || '';
 const AOT = EVENT.includes('aot');
 const DEV_SERVER = EVENT.includes('webdev');
 const DLL = EVENT.includes('dll');
@@ -240,9 +240,15 @@ const clientConfig = function webpackConfig(): WebpackConfig {
         };
       }
     } else {
-      config.entry = {
-        main: './src/main.browser.universal'
-      };
+      if (AOT) {
+        config.entry = {
+          main: './src/main.browser.universal.aot'
+        };
+      } else {
+        config.entry = {
+          main: './src/main.browser.universal'
+        };
+      }
     }
   }
 
