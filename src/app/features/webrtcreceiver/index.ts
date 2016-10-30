@@ -1,1 +1,0 @@
-export * from './webrtcreceiver.component';

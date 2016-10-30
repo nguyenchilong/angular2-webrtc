@@ -1,8 +1,8 @@
 import { NotFound404Component } from './not-found404.component';
 
 import { VideoComponent } from './features/video/video.component';
-import { WebrtcCaller } from './features/webrtccaller';
-import { WebrtcReceiver } from './features/webrtcreceiver';
+import { WebrtcCaller } from './features/webrtccaller/webrtccaller.component';
+import { WebrtcReceiver } from './features/webrtcreceiver/webrtcreceiver.component';
 import { LoginComponent } from './features/login/login.component';
 
 import { DashboardComponent } from './features/dashboard/dashboard.component';
