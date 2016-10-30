@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 
@@ -8,9 +9,12 @@ export class AuthService implements CanActivate {
 
     // JWT_KEY ist for getting the JWT from localStorage
     JWT_KEY: string = 'retain_token';
-    JWT: string = 'here_comes_the_jwt';
+    JWT: string = '';
 
-    constructor(private router: Router) {
+    constructor(
+        private router: Router,
+        private store: Store<any>
+    ) {
         const token = window.localStorage.getItem(this.JWT_KEY);
         // check if token already exists in localStorage
         // and execute setJWT
@@ -38,8 +42,11 @@ export class AuthService implements CanActivate {
     }
 
     setJWT(jwt: string): void {
-        window.localStorage.setItem(this.JWT_KEY, jwt);
-        // also set the jwt to the user object in store
+        if (!Boolean(window.localStorage.getItem(this.JWT_KEY))) {
+            window.localStorage.setItem(this.JWT_KEY, jwt);
+        }
+        this.JWT = jwt;
+        this.store.dispatch({ type: 'LOGIN_USER' });
     }
 
     // here we do a http post request for getting
@@ -54,6 +61,7 @@ export class AuthService implements CanActivate {
 
     signout(): void {
         window.localStorage.removeItem(this.JWT_KEY);
-        // also remove the jwt from user object in store
+        this.store.dispatch({ type: 'LOGOUT_USER' });
+        this.router.navigate(['auth']);
     }
 }

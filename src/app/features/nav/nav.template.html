@@ -13,7 +13,7 @@
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
         <button md-raised-button style="color: black;">Create Account</button>
-        <button md-raised-button (click)="loginUser()" style="color: black;">Login</button>
+        <a [routerLink]="'auth'" ><button md-raised-button style="color: black;">Login</button></a>
     </span>
 	<!-- show when user is logged out -->
 
