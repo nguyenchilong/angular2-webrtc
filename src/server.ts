@@ -64,22 +64,24 @@ app.get('*', function (req, res) {
 });
 
 // Server
-
+/*
 let server = app.listen(process.env.PORT || UNIVERSAL_PORT, () => {
   console.log(`Listening on: http://${HOST}:${server.address().port}`);
 });
-
+*/
 
 // own server implementation
 import * as fs from 'fs';
 import * as https from 'https';
-/*
+
 let server = https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/cert.pem'),
   ca: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/chain.pem')
 }, app);
-*/
+
+
 server.listen(process.env.PORT || UNIVERSAL_PORT, () => {
   console.log(`Listening on: https://${HOST}:${server.address().port}`);
 });
+
