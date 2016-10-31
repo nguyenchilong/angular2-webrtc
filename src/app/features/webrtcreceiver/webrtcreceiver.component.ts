@@ -66,7 +66,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     // helpfunction for closing the connection and
     // stoping the stream
-    closeconnection(err): void {
+    closeconnection(): void {
         if (this.pc.signalingState !== 'closed') {
             this.pc.close();
         }
@@ -104,7 +104,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.closeconnection(null);
+        this.closeconnection();
     }
 
     constructor() { }
