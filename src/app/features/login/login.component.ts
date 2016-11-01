@@ -11,11 +11,15 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
     @ViewChild('username') username;
-    @ViewChild('username') password;
+    @ViewChild('password') password;
 
     constructor(
         private authservice: AuthService,
-        private router: Router) {}
+        private router: Router) {
+        if (this.authservice.isAuthorized) {
+            this.router.navigate(['']);
+        }
+    }
 
     login(): void {
         this.authservice.setJWT(this.username._value);
