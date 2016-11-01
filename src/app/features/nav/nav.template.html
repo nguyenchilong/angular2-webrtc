@@ -20,6 +20,12 @@
 	<!-- show when user is logged in -->
 	<span *ngIf="(user | async).loggedin">
 		<button md-icon-button>
+			<md-icon>account_box</md-icon>
+		</button>
+		<b>
+			{{(user | async).name}}
+		</b>
+		<button md-icon-button>
 			<md-icon>settings</md-icon>
 		</button>			
         <button md-icon-button (click)="logoutUser()">
