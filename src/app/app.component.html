@@ -13,15 +13,17 @@
 	</md-sidenav>
 	<!-- END OF SIDENAV -->
 
-	<!-- TOOLBAR -->
-	<nav-component (toggleoutput)="sidenav.toggle()"></nav-component>
-	<!-- END OF TOOLBAR -->
+	<div (click)="clickinside()">
+		<!-- TOOLBAR -->
+		<nav-component (toggleoutput)="sidenav.toggle()"></nav-component>
+		<!-- END OF TOOLBAR -->
 
-	<!-- OUTLET -->
-	<md-card id="my-page-card">
-		<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
-	</md-card>
-	<!-- END OF OUTLET -->
+		<!-- OUTLET -->
+		<md-card id="my-page-card">
+			<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+		</md-card>
+		<!-- END OF OUTLET -->
+	</div>
 
 </md-sidenav-layout>
 
