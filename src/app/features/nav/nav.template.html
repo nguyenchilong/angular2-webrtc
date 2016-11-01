@@ -4,12 +4,12 @@
 	<button *ngIf="(user | async).loggedin" md-icon-button (click)="toggle()">
       <md-icon>menu</md-icon>
     </button>
-	<span>Menü</span>
+	<span *ngIf="(user | async).loggedin">Menü</span>
 	<!-- END OF LEFT -->
 
 	<span style="flex: 1 1 auto;"></span>
 
-	<!-- END RIGHT-->
+	<!-- RIGHT-->
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
         <button md-raised-button style="color: black;">Create Account</button>
@@ -34,7 +34,7 @@
 			<md-icon>power_settings_new</md-icon>
 		</button>
 	</span>
-	<!-- show when user ist logged in -->
+	<!-- show when user is logged in -->
 	<!-- END OF RIGHT -->
 
 </md-toolbar>
