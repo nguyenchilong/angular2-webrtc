@@ -1,15 +1,17 @@
 <md-toolbar color="primary">
 
-<!-- LEFT -->
+	<!-- LEFT -->
+	<span *ngIf="(user | async).loggedin">
 	<button md-icon-button (click)="toggle()">
       <md-icon>menu</md-icon>
     </button>
 	<span>Menü</span>
-<!-- END OF LEFT -->
+	</span>
+	<!-- END OF LEFT -->
 
 	<span style="flex: 1 1 auto;"></span>
 
-<!-- END RIGHT-->
+	<!-- END RIGHT-->
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
         <button md-raised-button style="color: black;">Create Account</button>
@@ -33,6 +35,6 @@
 		</button>
 	</span>
 	<!-- show when user ist logged in -->
-<!-- END OF RIGHT -->
+	<!-- END OF RIGHT -->
 
 </md-toolbar>

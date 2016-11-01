@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
     @ViewChild('username') username;
-    @ViewChild('password') password;
+    @ViewChild('username') password;
 
     constructor(
         private authservice: AuthService,
