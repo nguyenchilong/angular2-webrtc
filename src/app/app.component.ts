@@ -43,7 +43,7 @@ export class AppComponent {
 
   clickinside(): void {
     if (this.sidenav._isOpened) {
-      this.sidenav.close();
+      this.sidenav.toggle();
     }
   }
 }
