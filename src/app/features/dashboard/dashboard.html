@@ -1,17 +1,12 @@
+<h2>Dashboard</h2>
 <md-card>
-	<h1>Dashboard</h1>
-</md-card>
-<md-card>
-	<p>User Object:<br> Name: {{(user | async).name}}<br>Logged in?: {{(user | async).loggedin}}</p>
-	<md-card>
-		<div>
-            Change Users value name: string:
-            <br>
-            <br>
-			<md-input #input placeholder="new Name for User"></md-input>
-            <br>
-            <br>
-			<button md-raised-button (click)="setName()">Set as Name</button>
-		</div>
-	</md-card>
+	<div>
+		Change Users name:
+		<br>
+		<br>
+		<md-input #input placeholder="new Name for User"></md-input>
+		<br>
+		<br>
+		<button md-raised-button (click)="setName()">Set as Name</button>
+	</div>
 </md-card>

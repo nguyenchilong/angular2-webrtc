@@ -1,9 +1,12 @@
 <md-card class="login">
+	<div class="icon">
+		<md-icon>person_pin</md-icon>
+	</div>
 	<md-input #username placeholder="Username"></md-input>
 	<br>
 	<md-input #password placeholder="Password" type="password"></md-input>
 	<br>
-	<button md-raised-button (click)="login()">Login</button>
+	<button md-raised-button (click)="login()" class="login-button">Login</button>
     <br>
     <br>
     <button md-button>Forgot Password</button>

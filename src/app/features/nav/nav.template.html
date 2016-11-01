@@ -4,7 +4,7 @@
 	<button *ngIf="(user | async).loggedin" md-icon-button (click)="toggle()">
       <md-icon>menu</md-icon>
     </button>
-	<span *ngIf="(user | async).loggedin">Menü</span>
+	<span><b>EduTalk</b></span>
 	<!-- END OF LEFT -->
 
 	<span style="flex: 1 1 auto;"></span>
@@ -12,8 +12,9 @@
 	<!-- RIGHT-->
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
-        <button md-raised-button style="color: black;">Create Account</button>
-        <a [routerLink]="'auth'" ><button md-raised-button style="color: black;">Login</button></a>
+        <button md-icon-button>
+			<md-icon>help_outline</md-icon>
+		</button>
     </span>
 	<!-- show when user is logged out -->
 
