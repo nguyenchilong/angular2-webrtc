@@ -1,16 +1,16 @@
 import { NotFound404Component } from './not-found404.component';
 
-import { VideoComponent } from './features/video/video.component';
-import { WebrtcCaller } from './features/webrtccaller/webrtccaller.component';
-import { WebrtcReceiver } from './features/webrtcreceiver/webrtcreceiver.component';
-import { LoginComponent } from './features/login/login.component';
+import { VideoComponent } from './features/components/video/video.component';
+import { WebrtcCaller } from './features/components/webrtccaller/webrtccaller.component';
+import { WebrtcReceiver } from './features/components/webrtcreceiver/webrtcreceiver.component';
+import { LoginComponent } from './features/components/login/login.component';
 
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { CallerComponent } from './features/caller/caller.component';
-import { ReceiverComponent } from './features/receiver/receiver.component';
-import { LoginscreenComponent } from './features/loginscreen/loginscreen.component';
+import { DashboardViewComponent } from './features/views/dashboard-view/dashboard-view.component';
+import { CallerViewComponent } from './features/views/caller-view/caller-view.component';
+import { ReceiverViewComponent } from './features/views/receiver-view/receiver-view.component';
+import { LoginViewComponent } from './features/views/login-view/login-view.component';
 
-import { NavComponent } from './features/nav/nav.component';
+import { NavComponent } from './features/components/nav/nav.component';
 
 
 export const APP_DECLERATIONS = [
@@ -25,10 +25,10 @@ export const APP_DECLERATIONS = [
   LoginComponent,
 
   // Pages
-  DashboardComponent,
-  CallerComponent,
-  ReceiverComponent,
-  LoginscreenComponent,
+  DashboardViewComponent,
+  CallerViewComponent,
+  ReceiverViewComponent,
+  LoginViewComponent,
 
   // Structure
   NavComponent

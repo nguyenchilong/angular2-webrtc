@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import * as io from 'socket.io-client';
-import { SOCKET } from '../../services/constants';
+import { SOCKET } from '../../../services/constants';
 
 @Component({
     selector: 'webrtcreceiver-component',

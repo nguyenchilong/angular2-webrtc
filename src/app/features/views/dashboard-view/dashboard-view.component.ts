@@ -3,12 +3,12 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Component({
-        selector: 'dashboard-component',
-        templateUrl: './dashboard.html',
+        selector: 'dashboard-view-component',
+        templateUrl: './dashboard-view.html',
         changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DashboardComponent {
+export class DashboardViewComponent {
 
         user: Observable<any>;
         @ViewChild('input') input;
