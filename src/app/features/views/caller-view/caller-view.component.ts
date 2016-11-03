@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'caller-view-component',
-    template: '<webrtccaller-component></webrtccaller-component>',
-    styles: ['webrtccaller-component{margin-left:auto;margin-right:auto;}']
+    templateUrl: './caller-view.template.html',
+    styleUrls: ['./caller-view.style.css']
 })
 
 export class CallerViewComponent {
