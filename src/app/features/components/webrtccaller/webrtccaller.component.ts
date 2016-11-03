@@ -1,6 +1,8 @@
 import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import * as io from 'socket.io-client';
-import { SOCKET } from '../../services/constants';
+import { SOCKET } from '../../../services/constants';
+import { PeerconnectionService } from '../../../services/peerconnection.service';
+
 
 @Component({
     selector: 'webrtccaller-component',
@@ -15,14 +17,15 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         audio: true,
         video: true
     };
-    stream: MediaStream = new MediaStream();
-    cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
-    pc: RTCPeerConnection = new RTCPeerConnection(this.cfg);
+    stream: MediaStream;
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
+    status: boolean = false;
     @ViewChild('Video') video;
 
+    constructor(private peerconnectionservice: PeerconnectionService) {
+    }
 
-    // this method does start the stream of the camera and pushes it to this.stream
+    // this method starts the stream of the camera and pushes it to this.stream
     startVideostream(): void {
         navigator.getUserMedia(
             // constrains:
@@ -37,13 +40,37 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         );
     }
 
-    call(): void {
+    stopVideostream(): void {
+        if (this.stream.active) {
+            this.stream.getAudioTracks().forEach((track) => track.stop());
+            this.stream.getVideoTracks().forEach((track) => track.stop());
+        }
+    }
+
+    startCall(): void {
+        this.status = !this.status;
+        this.peerconnectionservice.createConnection();
+        this.peerconnectionservice.pc.onicecandidate = (evt) => {
+            if (evt.candidate) {
+                this.socket.emit('pushice1', evt.candidate);
+            }
+        };
+        // add remote stream to otherVideo after stream from other peer arrives
+        this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
+            this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
+        };
+        this.socket.on('getice2',
+            (msg) => {
+                console.log('new icecandidate');
+                this.peerconnectionservice.pc.addIceCandidate(msg);
+            }
+        );
         // add stream to pc
-        this.pc.addStream(this.stream);
+        this.peerconnectionservice.pc.addStream(this.stream);
         // create offer
-        this.pc.createOffer(
+        this.peerconnectionservice.pc.createOffer(
             (offer: RTCSessionDescriptionInit) => {
-                this.pc.setLocalDescription(
+                this.peerconnectionservice.pc.setLocalDescription(
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
@@ -51,31 +78,28 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                         // start listening for an answer
                         this.startlisteningforanswer();
                     },
-                    // error:
                     this.closeconnection);
             },
-            // error:
             this.closeconnection);
     }
 
-    // helpfunction for closing the connection and
-    // stoping the stream
-    closeconnection(err): void {
-        if (this.pc.signalingState !== 'closed') {
-            this.pc.close();
-        }
-        if (this.stream.active) {
-            this.stream.getAudioTracks().forEach((track) => track.stop());
-            this.stream.getVideoTracks().forEach((track) => track.stop());
-        }
+    stopCall(): void {
+        this.status = !this.status;
+        this.closeconnection();
+        this.socket.removeAllListeners();
+    }
+
+    closeconnection(): void {
+        this.peerconnectionservice.closeConnection();
     }
 
     // helpfunction: listen for an answer from the server and
     // add answer to this.pc
     startlisteningforanswer(): void {
         this.socket.on('get2', (msg) => {
+            console.log('new answer');
             // adding the answer as remotedescription to this.pc
-            this.pc.setRemoteDescription(
+            this.peerconnectionservice.pc.setRemoteDescription(
                 new RTCSessionDescription(msg),
                 () => { },
                 () => { }
@@ -85,29 +109,11 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.startVideostream();
-        // start listening for icecandidates from signalingchannel
-        this.socket.on('getice2',
-            (msg) => {
-                console.log('caller');
-                console.log(msg);
-                this.pc.addIceCandidate(msg);
-            }
-        );
-        // add remote stream to otherVideo after stream from other peer arrives
-        this.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
-            this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
-        };
-        this.pc.onicecandidate = (evt) => {
-            if (evt.candidate) {
-                this.socket.emit('pushice1', evt.candidate);
-            }
-        };
     }
 
     ngOnDestroy() {
-        this.closeconnection(null);
+        this.closeconnection();
+        this.stopVideostream();
     }
-
-    constructor() {  }
 
 }

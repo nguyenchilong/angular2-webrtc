@@ -1,0 +1,41 @@
+<md-toolbar color="warn">
+
+	<!-- LEFT -->
+	<button *ngIf="(user | async).loggedin" md-icon-button (click)="toggle()">
+      <md-icon>menu</md-icon>
+    </button>
+	<span><b>EduTalk</b></span>
+	<!-- END OF LEFT -->
+
+	<span style="flex: 1 1 auto;"></span>
+
+	<!-- RIGHT-->
+	<!-- show when user is logged out -->
+	<span *ngIf="!(user | async).loggedin">
+        <button md-icon-button>
+			<md-icon>help_outline</md-icon>
+		</button>
+    </span>
+	<!-- show when user is logged out -->
+
+	<!-- show when user is logged in -->
+	<span *ngIf="(user | async).loggedin">
+		<button md-icon-button md-tooltip="account" tooltip-position="below">
+			<md-icon>account_box</md-icon>
+		</button>
+	</span>
+	<span *ngIf="(user | async).loggedin">
+		{{(user | async).name}}
+	</span>
+	<span *ngIf="(user | async).loggedin">
+		<button md-icon-button md-tooltip="settings" tooltip-position="below">
+			<md-icon>settings</md-icon>
+		</button>			
+        <button md-icon-button (click)="logoutUser()">
+			<md-icon>power_settings_new</md-icon>
+		</button>
+	</span>
+	<!-- show when user is logged in -->
+	<!-- END OF RIGHT -->
+
+</md-toolbar>

@@ -3,25 +3,27 @@
 	<!-- SIDENAV -->
 	<md-sidenav #sidenav [mode]="sideNavMode">
 		<md-nav-list>
-			<template ngFor let-view [ngForOf]="views" let-even="even" let-odd="odd" let-rowIndex="index">
+			<div *ngFor="let view of views">
 				<a md-list-item [routerLink]="view.link" routerLinkActive="active-link" (click)="mobile ? sidenav.close() : {}">
 					<span md-line>{{view.name}}</span>
 					<span md-line class="secondary">{{view.description}}</span>
 				</a>
-			</template>
+			</div>
 		</md-nav-list>
 	</md-sidenav>
 	<!-- END OF SIDENAV -->
 
-	<!-- TOOLBAR -->
-	<nav-component (toggleoutput)="sidenav.toggle()"></nav-component>
-	<!-- END OF TOOLBAR -->
+	<div (click)="clickinside()">
+		<!-- TOOLBAR -->
+		<nav-component (toggleoutput)="sidenav.toggle()"></nav-component>
+		<!-- END OF TOOLBAR -->
 
-	<!-- OUTLET -->
-	<md-card id="my-page-card">
-		<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
-	</md-card>
-	<!-- END OF OUTLET -->
+		<!-- OUTLET -->
+		<md-card id="my-page-card">
+			<router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+		</md-card>
+		<!-- END OF OUTLET -->
+	</div>
 
 </md-sidenav-layout>
 

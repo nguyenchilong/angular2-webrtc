@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'receiver-component',
+    selector: 'receiver-view-component',
     template: '<webrtcreceiver-component></webrtcreceiver-component>'
 })
 
-export class ReceiverComponent {
+export class ReceiverViewComponent {
 
 }

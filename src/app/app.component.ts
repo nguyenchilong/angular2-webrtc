@@ -40,4 +40,10 @@ export class AppComponent {
       console.log('Deactivate Event', event);
     }
   }
+
+  clickinside(): void {
+    if (this.sidenav._isOpened) {
+      this.sidenav.toggle();
+    }
+  }
 }
