@@ -20,7 +20,7 @@
 
 	<!-- show when user is logged in -->
 	<span *ngIf="(user | async).loggedin">
-		<button md-icon-button>
+		<button md-icon-button md-tooltip="account" tooltip-position="below">
 			<md-icon>account_box</md-icon>
 		</button>
 	</span>
@@ -28,7 +28,7 @@
 		{{(user | async).name}}
 	</span>
 	<span *ngIf="(user | async).loggedin">
-		<button md-icon-button>
+		<button md-icon-button md-tooltip="settings" tooltip-position="below">
 			<md-icon>settings</md-icon>
 		</button>			
         <button md-icon-button (click)="logoutUser()">
