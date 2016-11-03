@@ -9,6 +9,7 @@ import { DashboardViewComponent } from './features/views/dashboard-view/dashboar
 import { CallerViewComponent } from './features/views/caller-view/caller-view.component';
 import { ReceiverViewComponent } from './features/views/receiver-view/receiver-view.component';
 import { LoginViewComponent } from './features/views/login-view/login-view.component';
+import { CalendarViewComponent } from './features/views/calendar-view/calendar-view.component';
 
 import { NavComponent } from './features/components/nav/nav.component';
 
@@ -24,12 +25,13 @@ export const APP_DECLERATIONS = [
   WebrtcReceiver,
   LoginComponent,
 
-  // Pages
+  // Views
   DashboardViewComponent,
   CallerViewComponent,
   ReceiverViewComponent,
   LoginViewComponent,
-
+  CalendarViewComponent,
+  
   // Structure
   NavComponent
 ];

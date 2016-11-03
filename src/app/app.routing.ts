@@ -6,6 +6,7 @@ import { DashboardViewComponent } from './features/views/dashboard-view/dashboar
 import { CallerViewComponent } from './features/views/caller-view/caller-view.component';
 import { ReceiverViewComponent } from './features/views/receiver-view/receiver-view.component';
 import { LoginViewComponent } from './features/views/login-view/login-view.component';
+import { CalendarViewComponent } from './features/views/calendar-view/calendar-view.component';
 
 import { AuthService } from './services/auth.service';
 
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'caller', component: CallerViewComponent, canActivate: [AuthService] },
   { path: 'receiver', component: ReceiverViewComponent, canActivate: [AuthService] },
   { path: 'auth', component: LoginViewComponent },
+  { path: 'calendar', component: CalendarViewComponent },
   { path: '**', component: NotFound404Component }
 ];
