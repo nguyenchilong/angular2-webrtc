@@ -8,5 +8,8 @@ import { Component } from '@angular/core';
 
 export class CalendarViewComponent {
 
+        viewDate: Date = new Date();
+        events = [];
+        x = this.viewDate.getMonth();
 
 }
