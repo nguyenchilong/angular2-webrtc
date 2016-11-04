@@ -2,7 +2,8 @@ import { ActionReducer, Action } from '@ngrx/store';
 
 let init: any = {
     loggedin: false,
-    name: 'Max Mustermann'
+    name: 'Max Mustermann',
+    role: 'stud'
 };
 
 export const userrx: ActionReducer<any> = (state: any = init, action: Action) => {

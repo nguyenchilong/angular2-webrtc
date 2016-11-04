@@ -2,10 +2,13 @@ import { Component, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
 
-import { views } from './app-nav-views';
+import { STUDVIEWS, PROFVIEWS } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
 import { WampService } from './services/wamp.service';
+
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'my-app',
@@ -20,14 +23,27 @@ export class AppComponent {
   );
   mobile = MOBILE;
   sideNavMode = MOBILE ? 'over' : 'side';
-  views = views;
+  views;
   @ViewChild(MdSidenav) sidenav: MdSidenav;
+
+  user: Observable<any>;
 
   constructor(
     public route: ActivatedRoute,
     public router: Router,
-    private wamp: WampService
-  ) { }
+    private wamp: WampService,
+    private store: Store<any>
+  ) {
+    this.user = this.store.select(store => store.user);
+    this.user.subscribe((user) => {
+      console.log(user);
+      if (user.role === 'stud') {
+        this.views = STUDVIEWS;
+      } else if (user.role === 'prof') {
+        this.views = PROFVIEWS;
+      }
+     });
+  }
 
   activateEvent(event) {
     if (ENV === 'development') {

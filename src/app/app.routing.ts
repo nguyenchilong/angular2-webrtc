@@ -9,11 +9,13 @@ import { LoginViewComponent } from './features/views/login-view/login-view.compo
 import { CalendarViewComponent } from './features/views/calendar-view/calendar-view.component';
 
 import { AuthService } from './services/auth.service';
+import { StudguardService } from './services/studguard.service';
+import { ProfguardService } from './services/profguard.service';
 
 export const routes: Routes = [
   { path: '', component: DashboardViewComponent, canActivate: [AuthService], pathMatch: 'full' },
-  { path: 'caller', component: CallerViewComponent, canActivate: [AuthService] },
-  { path: 'receiver', component: ReceiverViewComponent, canActivate: [AuthService] },
+  { path: 'caller', component: CallerViewComponent, canActivate: [AuthService, StudguardService] },
+  { path: 'receiver', component: ReceiverViewComponent, canActivate: [AuthService, ProfguardService] },
   { path: 'auth', component: LoginViewComponent },
   { path: 'calendar', component: CalendarViewComponent },
   { path: '**', component: NotFound404Component }
