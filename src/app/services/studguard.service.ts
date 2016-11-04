@@ -11,14 +11,12 @@ export class StudguardService implements CanActivate {
     user: Observable<any>;
     constructor(
         private store: Store<any>,
-        private router: Router,)
-        {
+        private router: Router) {
         this.user =  this.store.select(store => store.user);
         this.user.subscribe((user) => {
             this.role = user.role;
         });
     }
-
 
     canActivate() {
         if (this.role === 'stud') {

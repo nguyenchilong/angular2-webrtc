@@ -27,6 +27,12 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
                 state,
                 { name: action.payload}
             );
+        case 'SET_ROLE':
+            return Object.assign(
+                {},
+                state,
+                { role: action.payload}
+            );
         default:
             return state;
     }

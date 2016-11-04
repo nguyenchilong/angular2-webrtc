@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class DashboardViewComponent {
 
         user: Observable<any>;
+        switch: boolean = true;
         @ViewChild('input') input;
 
         constructor(private store: Store<any>) {
@@ -19,5 +20,16 @@ export class DashboardViewComponent {
 
         setName(): void {
                 this.store.dispatch({ type: 'SET_NAME', payload: this.input._value });
+        }
+
+        toProf(): void {
+                this.store.dispatch({type: 'SET_ROLE', payload: 'prof'});
+                this.switch = !this.switch;
+        }
+
+        toStud(): void {
+                this.store.dispatch({type: 'SET_ROLE', payload: 'stud'});
+                this.switch = !this.switch;
+
         }
 }

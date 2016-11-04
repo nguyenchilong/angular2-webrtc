@@ -18,7 +18,6 @@ export class ProfguardService implements CanActivate {
         });
     }
 
-
     canActivate() {
         if (this.role === 'prof') {
             return true;

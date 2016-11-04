@@ -1,12 +1,10 @@
 <h2>Dashboard</h2>
 <md-card>
 	<div>
-		Change Users name:
+		Change Role:
 		<br>
 		<br>
-		<md-input #input placeholder="new Name for User"></md-input>
-		<br>
-		<br>
-		<button md-raised-button (click)="setName()">Set as Name</button>
+		<button md-raised-button [disabled]="switch" (click)="toStud()">Stud</button>
+		<button md-raised-button [disabled]="!switch" (click)="toProf()">Prof</button>
 	</div>
 </md-card>
