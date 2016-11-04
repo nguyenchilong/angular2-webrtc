@@ -10,5 +10,9 @@ export const views: Object[] = [
   {
     name: 'Receiver',
     link: ['receiver']
+  },
+  {
+    name: 'Calendar',
+    link: ['calendar']
   }
 ];
