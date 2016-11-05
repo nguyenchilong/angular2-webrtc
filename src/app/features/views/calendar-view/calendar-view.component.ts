@@ -8,8 +8,20 @@ import { Component } from '@angular/core';
 
 export class CalendarViewComponent {
 
-        viewDate: Date = new Date();
-        events = [];
-        x = this.viewDate.getMonth();
+    viewDate: Date = new Date();
+    month: any = this.viewDate.getMonth();
+    day: any = this.viewDate.getDay();
+
+    events = [
+        {
+            title: 'Besprechung',
+            start: new Date(),
+            end: new Date(),
+            color: {
+                primary: '#ad2121',
+                secondary: '#FAE3E3'
+            },
+        }
+    ];
 
 }
