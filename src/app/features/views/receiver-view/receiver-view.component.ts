@@ -6,7 +6,7 @@ import { ChatComponent } from '../../components/chat/chat.component';
 
 @Component({
     selector: 'receiver-view-component',
-    template: '<webrtcreceiver-component #Receiver (closeConnection)="closeConnection"></webrtcreceiver-component><chat-component #Chat></chat-component>'
+    templateUrl: './receiver.template.html'
 })
 
 export class ReceiverViewComponent implements OnDestroy, OnInit {
