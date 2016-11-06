@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { CalendarComponent } from '../../components/calendar/calendar.component';
 
 @Component({
     selector: 'calendar-view-component',
@@ -6,11 +7,9 @@ import { Component } from '@angular/core';
     styleUrls: ['./calendar-view.style.css']
 })
 
-export class CalendarViewComponent {
+export class CalendarViewComponent implements OnInit {
 
-    viewDate: Date = new Date();
-    month: any = this.viewDate.getMonth();
-    day: any = this.viewDate.getDay();
+    @ViewChild('Calendar') calendar: CalendarComponent;
 
     events = [
         {
@@ -23,5 +22,10 @@ export class CalendarViewComponent {
             },
         }
     ];
+
+    ngOnInit() {
+        this.calendar.events = this.events;
+    }
+
 
 }
