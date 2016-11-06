@@ -4,6 +4,7 @@ import { VideoComponent } from './features/components/video/video.component';
 import { WebrtcCaller } from './features/components/webrtccaller/webrtccaller.component';
 import { WebrtcReceiver } from './features/components/webrtcreceiver/webrtcreceiver.component';
 import { LoginComponent } from './features/components/login/login.component';
+import { ChatComponent } from './features/components/chat/chat.component';
 
 import { DashboardViewComponent } from './features/views/dashboard-view/dashboard-view.component';
 import { CallerViewComponent } from './features/views/caller-view/caller-view.component';
@@ -24,6 +25,7 @@ export const APP_DECLERATIONS = [
   WebrtcCaller,
   WebrtcReceiver,
   LoginComponent,
+  ChatComponent,
 
   // Views
   DashboardViewComponent,
@@ -31,7 +33,7 @@ export const APP_DECLERATIONS = [
   ReceiverViewComponent,
   LoginViewComponent,
   CalendarViewComponent,
-  
+
   // Structure
   NavComponent
 ];

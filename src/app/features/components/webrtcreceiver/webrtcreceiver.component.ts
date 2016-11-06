@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
@@ -19,6 +19,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     stream: MediaStream;
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     @ViewChild('Video') video;
+    @Output() closeConnection = new EventEmitter();
 
     constructor(private peerconnectionservice: PeerconnectionService) { }
 
@@ -75,11 +76,16 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     }
 
     closeconnection(): void {
-        this.peerconnectionservice.closeConnection();
+        this.closeConnection.emit();
     }
 
-    newconnection(): void {
-        this.peerconnectionservice.createConnection();
+    configurateRTCPeerConnection(): void {
+        this.socket.on('get1',
+            (msg) => {
+                console.log('new offer');
+                this.onOffer(msg);
+            }
+        );
         this.socket.on('getice1',
             (msg) => {
                 console.log('new icecandidate');
@@ -101,19 +107,9 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.startVideostream();
-        this.newconnection();
-        // listening for offer from signalingchannel
-        this.socket.on('get1',
-            (msg) => {
-                console.log('new offer');
-                this.onOffer(msg);
-            }
-        );
-
     }
 
     ngOnDestroy() {
-        this.closeconnection();
         this.stopVideostream();
     }
 

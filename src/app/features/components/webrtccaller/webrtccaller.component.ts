@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
@@ -21,6 +21,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     status: boolean = false;
     @ViewChild('Video') video;
+    @Output() closeConnection = new EventEmitter();
 
     constructor(private peerconnectionservice: PeerconnectionService) {
     }
@@ -49,7 +50,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     startCall(): void {
         this.status = !this.status;
-        this.peerconnectionservice.createConnection();
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 this.socket.emit('pushice1', evt.candidate);
@@ -76,7 +76,15 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                         // push offer to signalingchannel
                         this.socket.emit('push1', offer);
                         // start listening for an answer
-                        this.startlisteningforanswer();
+                        this.socket.on('get2', (msg) => {
+                            console.log('new answer');
+                            // adding the answer as remotedescription to this.pc
+                            this.peerconnectionservice.pc.setRemoteDescription(
+                                new RTCSessionDescription(msg),
+                                () => { },
+                                () => { }
+                            );
+                        });
                     },
                     this.closeconnection);
             },
@@ -90,30 +98,14 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     closeconnection(): void {
-        this.peerconnectionservice.closeConnection();
-    }
-
-    // helpfunction: listen for an answer from the server and
-    // add answer to this.pc
-    startlisteningforanswer(): void {
-        this.socket.on('get2', (msg) => {
-            console.log('new answer');
-            // adding the answer as remotedescription to this.pc
-            this.peerconnectionservice.pc.setRemoteDescription(
-                new RTCSessionDescription(msg),
-                () => { },
-                () => { }
-            );
-        });
+        this.closeConnection.emit();
     }
 
     ngOnInit() {
-        this.peerconnectionservice.createConnection();
         this.startVideostream();
     }
 
     ngOnDestroy() {
-        this.closeconnection();
         this.stopVideostream();
     }
 
