@@ -15,7 +15,7 @@ export class ChatComponent {
     }
 
     send(): void {
-
+        this.peerconnectionservice.dc.send('Hello!');
     }
 
     configureDataChannel(): void {

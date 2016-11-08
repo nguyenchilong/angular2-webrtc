@@ -4,16 +4,23 @@ import { Injectable } from '@angular/core';
 
 export class PeerconnectionService {
 
-    cfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
+    pccfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };
     pc: RTCPeerConnection;
-    // dc: RTCDataChannel;
+    dc: RTCDataChannel;
 
     constructor() { };
 
     createConnection(): void {
         if (!this.pc || this.pc.signalingState === 'closed') {
-            this.pc = new RTCPeerConnection(this.cfg);
+            this.pc = new RTCPeerConnection(this.pccfg);
             console.log('created new PeerConnection');
+            this.pc.ondatachannel = (e) => {
+                let peerchannel = e.channel;
+                peerchannel.onmessage = (msg) => {
+                    console.log(msg.data);
+                };
+            };
+            this.dc = this.pc.createDataChannel('DataChannel');
         };
     }
 
@@ -22,14 +29,6 @@ export class PeerconnectionService {
             this.pc.close();
             console.log('closed PeerConnection');
         }
-    }
-
-    createDataChannel(): void {
-        // this.dc = this.pc.createDataChannel('namedChannel', null);
-    }
-
-    closeDataChannel(): void {
-        // this.dc.close();
     }
 
 }
