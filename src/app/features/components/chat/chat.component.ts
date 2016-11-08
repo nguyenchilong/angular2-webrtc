@@ -11,10 +11,14 @@ import { PeerconnectionService } from '../../../services/peerconnection.service'
 export class ChatComponent {
 
     constructor(private peerconnectionservice: PeerconnectionService) {
-        // this.peerconnectionservice.createDataChannel();
+
     }
 
     send(): void {
+
+    }
+
+    configureDataChannel(): void {
 
     }
 }

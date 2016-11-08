@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'calendar-component',
@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
 
 export class CalendarComponent {
 
+    @Input() events;
     viewDate: Date = new Date();
     month: any = this.viewDate.getMonth();
     day: any = this.viewDate.getDay();
-    events = [];
 
 }

@@ -24,7 +24,6 @@ export class CalendarViewComponent implements OnInit {
     ];
 
     ngOnInit() {
-        this.calendar.events = this.events;
     }
 
 
