@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'login-view-component',
@@ -7,7 +7,8 @@ import { Component } from '@angular/core';
         <login-component></login-component>
     </div>
     `,
-    styleUrls: ['./login-view.style.css']
+    styleUrls: ['./login-view.style.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LoginViewComponent {

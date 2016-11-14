@@ -3,6 +3,7 @@ import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'webrtccaller-component',
@@ -19,12 +20,21 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     };
     stream: MediaStream;
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
+    storecon: Observable<any>;
     status: boolean = false;
     @ViewChild('Video') video;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>) {
+        this.storecon = this.store.select(store => store.peerconn);
+        this.storecon.subscribe((con) => {
+            if (con.connectionexists === true && con.callactive === true) {
+                this.status = true;
+            } else if (this.status === true) {
+                this.status = false;
+            }
+        });
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
@@ -50,7 +60,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     startCall(): void {
-        this.status = !this.status;
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 this.socket.emit('pushice1', evt.candidate);
@@ -103,7 +112,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     stopCall(): void {
-        this.status = !this.status;
         this.peerconnectionservice.recreateConnection();
         this.socket.removeAllListeners();
     }

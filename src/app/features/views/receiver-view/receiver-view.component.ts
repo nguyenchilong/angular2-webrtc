@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 
 import { WebrtcReceiver } from '../../components/webrtcreceiver/webrtcreceiver.component';
@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'receiver-view-component',
-    templateUrl: './receiver.template.html'
+    templateUrl: './receiver.template.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ReceiverViewComponent {

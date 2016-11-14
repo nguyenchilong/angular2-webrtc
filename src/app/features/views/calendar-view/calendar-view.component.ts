@@ -1,10 +1,11 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CalendarComponent } from '../../components/calendar/calendar.component';
 
 @Component({
     selector: 'calendar-view-component',
     templateUrl: './calendar-view.template.html',
-    styleUrls: ['./calendar-view.style.css']
+    styleUrls: ['./calendar-view.style.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CalendarViewComponent implements OnInit {

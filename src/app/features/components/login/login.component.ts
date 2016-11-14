@@ -1,11 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'login-component',
     templateUrl: './login.template.html',
-    styleUrls: ['./login.style.css']
+    styleUrls: ['./login.style.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LoginComponent {

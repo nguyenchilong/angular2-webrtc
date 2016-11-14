@@ -4,5 +4,5 @@
 </md-card>
 <md-card>
 	<md-input #Input placeholder="Nachricht..."></md-input>
-	<button md-raised-button (click)="send()">Send Hello</button>
+	<button md-raised-button (click)="send()" [disabled]="!showbutton">Send Hello</button>
 </md-card>
