@@ -21,20 +21,12 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     stream: MediaStream;
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     storecon: Observable<any>;
-    status: boolean = false;
     @ViewChild('Video') video;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>) {
         this.storecon = this.store.select(store => store.peerconn);
-        this.storecon.subscribe((con) => {
-            if (con.connectionexists === true && con.callactive === true) {
-                this.status = true;
-            } else if (this.status === true) {
-                this.status = false;
-            }
-        });
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
