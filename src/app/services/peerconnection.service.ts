@@ -51,9 +51,7 @@ export class PeerconnectionService {
     }
 
     recreateConnection(): void {
-        this.pc.close();
-        this.store.dispatch({ type: 'CONNECTION_CLOSED' });
-        this.store.dispatch({ type: 'CALL_ENDED' });
+        this.closeConnection();
         this.createConnection();
     }
 
