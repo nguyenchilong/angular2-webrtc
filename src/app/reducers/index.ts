@@ -6,14 +6,18 @@ import { routerReducer, RouterState } from '@ngrx/router-store';
 
 // own reducers
 import { userrx } from './user.reducer';
+import { peerconnrx } from './peerconn.reducer';
+import { chatrx } from './chat.reducer';
 
 export interface AppState {
   router: RouterState;
 }
 
 export const reducers = {
-  router: routerReducer,
-  user: userrx
+  // router: routerReducer,
+  user: userrx,
+  peerconn: peerconnrx,
+  chat: chatrx
 };
 
 // Generate a reducer to set the root state in dev mode for HMR

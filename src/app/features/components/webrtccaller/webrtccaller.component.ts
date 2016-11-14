@@ -1,8 +1,8 @@
-import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
-
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'webrtccaller-component',
@@ -21,9 +21,10 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     status: boolean = false;
     @ViewChild('Video') video;
-    @Output() closeConnection = new EventEmitter();
 
-    constructor(private peerconnectionservice: PeerconnectionService) {
+    constructor(
+        private peerconnectionservice: PeerconnectionService,
+        private store: Store<any>) {
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
@@ -81,32 +82,40 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                             // adding the answer as remotedescription to this.pc
                             this.peerconnectionservice.pc.setRemoteDescription(
                                 new RTCSessionDescription(msg),
-                                () => { },
-                                () => { }
+                                () => {
+                                    this.store.dispatch({ type: 'CALL_STARTED' });
+                                },
+                                () => {
+                                    this.peerconnectionservice.recreateConnection();
+                                }
                             );
                         });
                     },
-                    this.closeconnection);
+                    () => {
+                        this.peerconnectionservice.recreateConnection();
+                    }
+                );
             },
-            this.closeconnection);
+            () => {
+                this.peerconnectionservice.recreateConnection();
+            }
+        );
     }
 
     stopCall(): void {
         this.status = !this.status;
-        this.closeconnection();
+        this.peerconnectionservice.recreateConnection();
         this.socket.removeAllListeners();
-    }
-
-    closeconnection(): void {
-        this.closeConnection.emit();
     }
 
     ngOnInit() {
         this.startVideostream();
+        this.peerconnectionservice.createConnection();
     }
 
     ngOnDestroy() {
         this.stopVideostream();
+        this.peerconnectionservice.closeConnection();
     }
 
 }

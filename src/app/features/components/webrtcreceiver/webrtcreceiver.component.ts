@@ -3,6 +3,9 @@ import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 @Component({
     selector: 'webrtcreceiver-component',
     styleUrls: ['./webrtcreceiver.style.css'],
@@ -19,9 +22,14 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     stream: MediaStream;
     socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     @ViewChild('Video') video;
-    @Output() closeConnection = new EventEmitter();
+    storecon: Observable<any>;
 
-    constructor(private peerconnectionservice: PeerconnectionService) { }
+    constructor(
+        private peerconnectionservice: PeerconnectionService,
+        private store: Store<any>,
+    ) {
+        this.storecon = this.store.select(store => store.peerconn);
+    }
 
     startVideostream(): void {
         navigator.getUserMedia(
@@ -43,7 +51,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         }
     }
 
-    onOffer(offer: RTCSessionDescriptionInit): void {
+    handleOffer(offer: RTCSessionDescriptionInit): void {
         // add stream to pc
         this.peerconnectionservice.pc.addStream(this.stream);
         // creating answer
@@ -58,32 +66,29 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                             () => {
                                 // push answer to signalingchannel
                                 this.socket.emit('push2', answer);
+                                this.store.dispatch({ type: 'CALL_STARTED' });
                             },
                             () => {
-                                this.closeconnection();
+                                this.peerconnectionservice.recreateConnection();
                             }
                         );
                     },
                     () => {
-                        this.closeconnection();
+                        this.peerconnectionservice.recreateConnection();
                     }
                 );
             },
             () => {
-                this.closeconnection();
+                this.peerconnectionservice.recreateConnection();
             }
         );
-    }
-
-    closeconnection(): void {
-        this.closeConnection.emit();
     }
 
     configurateRTCPeerConnection(): void {
         this.socket.on('get1',
             (msg) => {
                 console.log('new offer');
-                this.onOffer(msg);
+                this.handleOffer(msg);
             }
         );
         this.socket.on('getice1',
@@ -107,10 +112,20 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.startVideostream();
+        this.storecon.subscribe( (con) => {
+            if (con.connectionexists === true && con.callactive === false) {
+                this.socket.removeAllListeners();
+                this.configurateRTCPeerConnection();
+                console.log('config receiver');
+            }
+        });
+        this.peerconnectionservice.createConnection();
     }
 
     ngOnDestroy() {
         this.stopVideostream();
+        this.socket.removeAllListeners();
+        this.peerconnectionservice.closeConnection();
     }
 
 }

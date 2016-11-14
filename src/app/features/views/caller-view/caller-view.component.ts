@@ -11,31 +11,11 @@ import { ChatComponent } from '../../components/chat/chat.component';
     styleUrls: ['./caller-view.style.css']
 })
 
-export class CallerViewComponent implements OnDestroy {
+export class CallerViewComponent {
 
     @ViewChild('Caller') caller: WebrtcCaller;
     @ViewChild('Chat') chat: ChatComponent;
 
     constructor(private peerconnectionservice: PeerconnectionService) {
-        this.createConnection();
-    }
-
-    createConnection(): void {
-        this.peerconnectionservice.createConnection();
-        this.peerconnectionservice.pc.oniceconnectionstatechange = () => {
-            if (this.peerconnectionservice.pc.iceConnectionState === 'disconnected' ||
-            this.peerconnectionservice.pc.iceConnectionState === 'closed') {
-                this.closeConnection();
-            }
-        };
-    }
-
-    closeConnection(): void {
-        this.peerconnectionservice.closeConnection();
-        this.createConnection();
-    }
-
-    ngOnDestroy() {
-        this.peerconnectionservice.closeConnection();
     }
 }

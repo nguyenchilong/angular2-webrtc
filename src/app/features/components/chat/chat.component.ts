@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { MdInput } from '@angular/material'
 
 @Component({
     selector: 'chat-component',
@@ -10,15 +13,17 @@ import { PeerconnectionService } from '../../../services/peerconnection.service'
 
 export class ChatComponent {
 
-    constructor(private peerconnectionservice: PeerconnectionService) {
+    @ViewChild('Input') input: MdInput;
+    chat: Observable<any>;
 
+    constructor(
+        private peerconnectionservice: PeerconnectionService,
+        private store: Store<any>) {
+            this.chat = this.store.select(store => store.chat);
     }
 
     send(): void {
-        this.peerconnectionservice.dc.send('Hello!');
-    }
-
-    configureDataChannel(): void {
-
+        this.store.dispatch({type: 'ADD_OWN_MESSAGE', payload: this.input.value});
+        this.peerconnectionservice.dc.send(this.input.value);
     }
 }
