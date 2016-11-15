@@ -1,0 +1,6 @@
+.calendar {
+  width: 600px;
+  height: 300px; }
+
+mwl-calendar-month-view {
+  height: 300px !important; }

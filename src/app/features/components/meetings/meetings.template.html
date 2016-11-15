@@ -1,11 +1,14 @@
-<md-card class="meetings">
-    <h4>My Meetings</h4>
-    <button md-icon-button>
-        <md-icon>help_outline</md-icon>
-    </button>
-    <md-card *ngFor="let meeting of meetings" class="meeting">
-        <h5>{{meeting.prof}}</h5>
-        <p>{{meeting.vorlesung}}</p>
-        <p>{{meeting.time}}</p>
+<div class="meetings">
+    <!--
+    <md-card>
+        <md-card-title>My Meetings <md-icon>help_outline</md-icon></md-card-title>
     </md-card>
-</md-card>
+    -->
+    <md-card *ngFor="let meeting of meetings" class="meeting">
+        <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
+        <md-card-title>{{meeting.prof}}</md-card-title>
+        <md-card-content>
+            <p>{{meeting.time}}</p>
+        </md-card-content>
+    </md-card>
+</div>

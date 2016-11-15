@@ -14,6 +14,7 @@ export class MeetingsCompontent {
 
     constructor(private restservice: RestService) {
         this.meetings = this.restservice.getMeetings();
+        this.restservice.callApi().subscribe(msg => console.log(JSON.parse(msg._body)));
       };
 
 }

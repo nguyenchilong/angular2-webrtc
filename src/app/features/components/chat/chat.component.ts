@@ -22,9 +22,9 @@ export class ChatComponent {
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>) {
-            this.chat = this.store.select(store => store.chat);
-            this.storecon = this.store.select(store => store.peerconn);
-            this.storecon.subscribe( (con) => {
+        this.chat = this.store.select(store => store.chat);
+        this.storecon = this.store.select(store => store.peerconn);
+        this.storecon.subscribe((con) => {
             if (con.connectionexists === true && con.callactive === true) {
                 this.showbutton = true;
             } else if (this.showbutton === true) {
@@ -34,7 +34,11 @@ export class ChatComponent {
     }
 
     send(): void {
-        this.store.dispatch({type: 'ADD_OWN_MESSAGE', payload: this.input.value});
-        this.peerconnectionservice.dc.send(this.input.value);
+        if (this.input.value !== '') {
+            this.store.dispatch({ type: 'ADD_OWN_MESSAGE', payload: this.input.value });
+            this.peerconnectionservice.dc.send(this.input.value);
+            this.input.value = '';
+        }
+        this.input.focus();
     }
 }

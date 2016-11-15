@@ -3,6 +3,6 @@
 	<p *ngFor="let message of (chat | async).messages">{{message}}</p>
 </md-card>
 <md-card>
-	<md-input #Input placeholder="Nachricht..."></md-input>
-	<button md-raised-button (click)="send()" [disabled]="!(storecon |async).callactive">Send Hello</button>
+	<md-input #Input placeholder="Message..."></md-input>
+	<button md-raised-button (click)="send()" [disabled]="!(storecon |async).callactive">Send</button>
 </md-card>

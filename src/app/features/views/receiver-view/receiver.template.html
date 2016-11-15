@@ -1,2 +1,8 @@
-<webrtcreceiver-component #Receiver></webrtcreceiver-component>
-<chat-component #Chat></chat-component>
+<md-grid-list cols="4" rowHeight="400px">
+  <md-grid-tile [colspan]="2" [rowspan]="1">
+      <webrtcreceiver-component #Receiver></webrtcreceiver-component>
+  </md-grid-tile>
+  <md-grid-tile [colspan]="2" [rowspan]="1">
+      <chat-component></chat-component>
+  </md-grid-tile>
+</md-grid-list>

@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'calendar-component',
     templateUrl: './calendar.template.html',
-    styleUrls: ['./calendar.style.css']
+    styleUrls: ['./calendar.style.css'],
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class CalendarComponent {

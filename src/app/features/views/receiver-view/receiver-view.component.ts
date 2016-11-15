@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 export class ReceiverViewComponent {
 
     @ViewChild('Receiver') receiver: WebrtcReceiver;
-    @ViewChild('Chat') chat: ChatComponent;
     storecon: Observable<any>;
 
     constructor(
