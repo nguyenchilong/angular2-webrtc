@@ -2,7 +2,7 @@ import { WampService } from './services/wamp.service';
 import { AuthService } from './services/auth.service';
 import { StudguardService } from './services/studguard.service';
 import { ProfguardService } from './services/profguard.service';
-
+import { RestService } from './services/rest.service';
 import { PeerconnectionService } from './services/peerconnection.service';
 
 export const APP_PROVIDERS = [
@@ -10,5 +10,6 @@ export const APP_PROVIDERS = [
     AuthService,
     StudguardService,
     ProfguardService,
-    PeerconnectionService
+    PeerconnectionService,
+    RestService
 ];

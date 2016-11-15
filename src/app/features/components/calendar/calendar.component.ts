@@ -28,6 +28,7 @@ export class CalendarComponent {
 
     dayClicked(e): void {
         alert(e.date);
+        console.log(e);
     }
 
 }
