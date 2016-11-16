@@ -2,13 +2,13 @@
 	<div class="icon">
 		<md-icon>person_pin</md-icon>
 	</div>
-	<md-input #username placeholder="Username"></md-input>
-	<br>
-	<md-input #password placeholder="Password" type="password"></md-input>
-	<br>
-	<button md-raised-button color="warn" (click)="login()" class="login-button">Login</button>
-    <br>
-    <br>
-    <button md-button>Forgot Password</button>
-    <button md-button class="registerbutton">Register</button>
+	<form [formGroup]="loginform" (ngSubmit)="login()">
+		<md-input type="email" formControlName="email" placeholder="Email" required autofocus></md-input>
+		<md-input type="password" formControlName="password" placeholder="Password"></md-input>
+		<button md-raised-button color="warn" (click)="login()" class="login-button">Login</button>
+		<br>
+		<br>
+		<button md-button>Forgot Password</button>
+		<button md-button class="registerbutton" type="submit">Register</button>
+	</form>
 </md-card>
