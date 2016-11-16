@@ -17,8 +17,4 @@ export class MeetingsCompontent {
         this.restservice.callApi().subscribe(msg => console.log(JSON.parse(msg._body)));
       };
 
-      mouseEnter() {
-          console.log('mouseEnter');
-      }
-
 }
