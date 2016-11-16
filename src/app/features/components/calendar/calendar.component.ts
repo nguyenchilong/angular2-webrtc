@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MdDialogRef, MdDialog } from '@angular/material/dialog';
+import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 
 @Component({
     selector: 'calendar-component',
@@ -37,9 +37,8 @@ export class CalendarComponent {
     }
 
     openDialog(e) {
-        this.dialogRef = this.dialog.open(CalendarDialog, {
-            disableClose: false
-        });
+        let config: MdDialogConfig = {disableClose: false};
+        this.dialogRef = this.dialog.open(CalendarDialog, config);
 
         this.dialogRef.componentInstance.events = e.events;
 
