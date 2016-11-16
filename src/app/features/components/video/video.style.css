@@ -1,6 +1,6 @@
 .videoWraper {
-  height: 300px;
-  width: 400px;
+  height: 333px;
+  width: 444px;
   position: relative;
   padding: 1px 1px 1px 1px; }
 
@@ -10,5 +10,5 @@
   bottom: 1px; }
 
 .otherVideo {
-  height: 300px;
-  width: 400px; }
+  height: 333px;
+  width: 444px; }

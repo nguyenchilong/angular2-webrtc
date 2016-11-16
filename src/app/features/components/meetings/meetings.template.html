@@ -1,10 +1,5 @@
 <div class="meetings">
-    <!--
-    <md-card>
-        <md-card-title>My Meetings <md-icon>help_outline</md-icon></md-card-title>
-    </md-card>
-    -->
-    <md-card *ngFor="let meeting of meetings" class="meeting" (mouseenter) ="mouseEnter()">
+    <md-card *ngFor="let meeting of meetings" class="meeting">
         <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
         <md-card-title>{{meeting.prof}}</md-card-title>
         <md-card-content>
