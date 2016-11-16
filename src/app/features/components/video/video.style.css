@@ -1,1 +1,14 @@
-.videoWraper{height:300px;width:400px;position:relative;padding:1px 1px 1px 1px}.myVideo{height:120px;position:absolute;bottom:1px}.otherVideo{height:300px;width:400px}
+.videoWraper {
+  height: 300px;
+  width: 400px;
+  position: relative;
+  padding: 1px 1px 1px 1px; }
+
+.myVideo {
+  height: 90px;
+  position: absolute;
+  bottom: 1px; }
+
+.otherVideo {
+  height: 300px;
+  width: 400px; }

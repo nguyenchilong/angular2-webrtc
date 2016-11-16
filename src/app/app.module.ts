@@ -21,6 +21,8 @@ import { APP_PROVIDERS } from './app.providers';
 import { AppComponent } from './app.component';
 import { AppState } from './reducers';
 
+import { CalendarDialog } from './features/components/calendar/calendar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,9 @@ import { AppState } from './reducers';
     APP_IMPORTS,
     BrowserModule,
     HttpModule,
+  ],
+  entryComponents: [
+    CalendarDialog
   ],
   bootstrap: [AppComponent],
   providers: [APP_PROVIDERS]

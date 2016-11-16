@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 
 import { WebrtcReceiver } from '../../components/webrtcreceiver/webrtcreceiver.component';
@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'receiver-view-component',
     templateUrl: './receiver.template.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./receiver.style.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class ReceiverViewComponent {

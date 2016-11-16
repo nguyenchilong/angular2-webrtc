@@ -22,7 +22,7 @@ export const views: Object[] = [
 export const STUDVIEWS: Object[] = [
   {
     name: 'Dashboard',
-    link: ['/']
+    link: ['dashboard']
   },
   {
     name: 'Caller',
@@ -30,14 +30,14 @@ export const STUDVIEWS: Object[] = [
   },
   {
     name: 'Calendar',
-    link: ['calendar']
+    link: ['/']
   }
 ];
 
 export const PROFVIEWS: Object[] = [
   {
     name: 'Dashboard',
-    link: ['/']
+    link: ['dashboard']
   },
   {
     name: 'Receiver',
@@ -45,6 +45,6 @@ export const PROFVIEWS: Object[] = [
   },
   {
     name: 'Calendar',
-    link: ['calendar']
+    link: ['/']
   }
 ];

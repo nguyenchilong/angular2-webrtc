@@ -1,3 +1,6 @@
 .meetings {
   width: 300px;
   padding: 7px 7px 7px 7px; }
+
+md-card:hover {
+  background: #e6e5e5; }

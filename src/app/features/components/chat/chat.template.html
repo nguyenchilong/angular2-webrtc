@@ -1,8 +1,9 @@
-<md-card class="messages">
-    <h4>Chat</h4>
-	<p *ngFor="let message of (chat | async).messages">{{message}}</p>
-</md-card>
 <md-card>
+	<h4>Chat</h4>
+	<div class="messages">
+		<p *ngFor="let message of (chat | async).messages">{{message}}</p>
+	</div>
+
 	<md-input #Input placeholder="Message..."></md-input>
 	<button md-raised-button (click)="send()" [disabled]="!(storecon |async).callactive">Send</button>
 </md-card>

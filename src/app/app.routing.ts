@@ -13,10 +13,11 @@ import { StudguardService } from './services/studguard.service';
 import { ProfguardService } from './services/profguard.service';
 
 export const routes: Routes = [
-  { path: '', component: DashboardViewComponent, canActivate: [AuthService], pathMatch: 'full' },
+  { path: '', component: CalendarViewComponent, canActivate: [AuthService], pathMatch: 'full' },
   { path: 'caller', component: CallerViewComponent, canActivate: [AuthService, StudguardService] },
   { path: 'receiver', component: ReceiverViewComponent, canActivate: [AuthService, ProfguardService] },
   { path: 'auth', component: LoginViewComponent },
   { path: 'calendar', component: CalendarViewComponent },
+  { path: 'dashboard', component: DashboardViewComponent},
   { path: '**', component: NotFound404Component }
 ];

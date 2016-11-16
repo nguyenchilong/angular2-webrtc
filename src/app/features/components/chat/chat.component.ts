@@ -1,15 +1,16 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { MdInput } from '@angular/material'
+import { MdInput } from '@angular/material';
 
 @Component({
     selector: 'chat-component',
     templateUrl: './chat.template.html',
     styleUrls: ['./chat.style.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class ChatComponent {

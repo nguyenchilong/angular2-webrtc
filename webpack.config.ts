@@ -315,6 +315,7 @@ const serverConfig: WebpackConfig = {
     '@angular2-material/card',
     '@angular2-material/checkbox',
     '@angular2-material/core',
+    '@angular2-material/dialog',
     '@angular2-material/grid',
     '@angular2-material/icon',
     '@angular2-material/input',

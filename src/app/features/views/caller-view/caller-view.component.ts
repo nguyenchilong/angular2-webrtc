@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { WebrtcCaller } from '../../components/webrtccaller/webrtccaller.component';
@@ -9,7 +9,9 @@ import { ChatComponent } from '../../components/chat/chat.component';
     selector: 'caller-view-component',
     templateUrl: './caller-view.template.html',
     styleUrls: ['./caller-view.style.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class CallerViewComponent {
