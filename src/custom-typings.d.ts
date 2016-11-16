@@ -48,7 +48,6 @@ interface GlobalEnvironment {
   SystemJS: SystemJS;
   System: SystemJS;
   UNIVERSAL;
-  ab;
 }
 
 interface WebpackModule {
