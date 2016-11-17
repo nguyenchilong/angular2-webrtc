@@ -40,7 +40,7 @@ export class RestService {
                 time: 'Mo 15:30 13.12.16'
             },
             {
-                title: 'Besprechung',
+                title: 'Bachelorarbeit',
                 start: this.d2,
                 end: this.d2,
                 color: {
@@ -52,7 +52,7 @@ export class RestService {
                 time: 'Do 12:30 20.12.16'
             },
             {
-                title: 'Besprechung',
+                title: 'Frage zur Übung 05',
                 start: this.d3,
                 end: this.d3,
                 color: {
