@@ -1,8 +1,9 @@
 import { ActionReducer, Action } from '@ngrx/store';
+import { meeting } from '../app.interfaces';
 
 let init: meeting[] = [];
 
-export const meetingsrx: ActionReducer<any> = (state: any = init, action: Action) => {
+export const meetingsrx: ActionReducer<meeting[]> = (state: meeting[] = init, action: Action) => {
     switch (action.type) {
 
         case 'ADD_MEETINGS':

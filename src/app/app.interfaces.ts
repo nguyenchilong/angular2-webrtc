@@ -1,4 +1,4 @@
-interface meeting {
+export interface meeting {
     id: number;
     title: string;
     start: Date;
