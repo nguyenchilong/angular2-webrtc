@@ -1,5 +1,7 @@
-<div *ngFor="let event of events">
-    <h4>{{event.title}}</h4>
-    <p>{{event.prof}}</p>
+<div *ngIf="!none">
+    <div *ngFor="let event of events">
+        <h4>{{event.title}}</h4>
+        <p>{{event.prof}}</p>
+    </div>
 </div>
-<h4 *ngIf="!events">No Meetings</h4>
+<h4 *ngIf="none">No Meetings</h4>

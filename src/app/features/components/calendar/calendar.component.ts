@@ -45,7 +45,6 @@ export class CalendarComponent implements OnInit {
     }
 
     dayClicked(e): void {
-        console.log(e.events);
         this.openDialog(e);
     }
 
@@ -54,10 +53,12 @@ export class CalendarComponent implements OnInit {
         this.dialogRef = this.dialog.open(CalendarDialog, config);
 
         this.dialogRef.componentInstance.events = e.events;
-
+        if (e.events.length !== 0) {
+            this.dialogRef.componentInstance.none = false;
+        }
+        console.log(this.dialogRef.componentInstance.events.length);
         this.dialogRef.afterClosed().subscribe(result => {
-            console.log('result: ' + result);
-            this.dialogRef.componentInstance.events = true;
+            this.dialogRef.componentInstance.none = true;
         });
     }
 
@@ -69,6 +70,7 @@ export class CalendarComponent implements OnInit {
     templateUrl: './calendar.dialog.html'
 })
 export class CalendarDialog {
-    events: any;
+    events: any[];
+    none: boolean = true;
     constructor(public dialogRef: MdDialogRef<CalendarDialog>) { }
 }
