@@ -24,6 +24,22 @@ const ENV = process.env.npm_lifecycle_event;
 if (ENV === 'e2e:server') { e2e = E2E_PORT };
 const PORT = e2e || PROD_PORT;
 
+/*
 app.listen(PORT, () => {
+  console.log(`Listening on: http://${HOST}:${PORT}`);
+});
+*/
+
+// own server implementation
+import * as fs from 'fs';
+import * as https from 'https';
+
+let server = https.createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/cert.pem'),
+  ca: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/chain.pem')
+}, app);
+
+server.listen(PORT, () => {
   console.log(`Listening on: http://${HOST}:${PORT}`);
 });
