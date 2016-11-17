@@ -31,8 +31,8 @@ app.listen(PORT, () => {
 */
 
 // own server implementation
-import * as fs from 'fs';
-import * as https from 'https';
+var fs = require('fs');
+var https = require('https');
 
 let server = https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/live/chor-am-killesberg.de/privkey.pem'),
