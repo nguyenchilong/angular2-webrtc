@@ -1,2 +1,5 @@
-<h4 *ngFor="let event of events">{{event.title}}</h4>
+<div *ngFor="let event of events">
+    <h4>{{event.title}}</h4>
+    <p>{{event.prof}}</p>
+</div>
 <h4 *ngIf="!events">No Meetings</h4>

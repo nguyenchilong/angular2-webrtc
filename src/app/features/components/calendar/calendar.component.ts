@@ -1,5 +1,8 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { RestService } from '../../../services/rest.service';
 
 @Component({
     selector: 'calendar-component',
@@ -8,16 +11,26 @@ import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog'
     encapsulation: ViewEncapsulation.None,
 })
 
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
 
-    @Input() events;
+    events: any = [];
+    meetings: Observable<any>;
     dialogRef: MdDialogRef<CalendarDialog>;
     viewDate: Date = new Date();
-    month: any = this.viewDate.getMonth();
-    day: any = this.viewDate.getDay();
     view: string = 'month';
 
-    constructor(public dialog: MdDialog) { }
+    constructor(
+        public dialog: MdDialog,
+        public store: Store<any>,
+        public restservice: RestService) {
+            this.meetings = this.store.select(store => store.meetings);
+            this.meetings.subscribe(meetings => this.events = meetings);
+         }
+
+    ngOnInit() {
+        let data = this.restservice.getMeetings();
+        this.store.dispatch({type: 'ADD_MEETINGS', payload: data});
+    }
 
     switchToMonth(): void {
         this.view = 'month';

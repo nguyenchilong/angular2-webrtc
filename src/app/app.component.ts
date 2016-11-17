@@ -6,6 +6,7 @@ import { STUDVIEWS, PROFVIEWS } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
 import { WampService } from './services/wamp.service';
+import { RestService } from './services/rest.service';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -32,6 +33,7 @@ export class AppComponent {
     public route: ActivatedRoute,
     public router: Router,
     private wamp: WampService,
+    private restservcice: RestService,
     private store: Store<any>
   ) {
     this.user = this.store.select(store => store.user);

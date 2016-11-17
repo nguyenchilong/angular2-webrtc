@@ -22,6 +22,8 @@ export class CalendarViewComponent implements OnInit {
                 primary: '#ad2121',
                 secondary: '#FAE3E3'
             },
+            prof: 'Prof. Dr. Otto Offline',
+            vorlesung: 'Mathe 1/2',
         }
     ];
 

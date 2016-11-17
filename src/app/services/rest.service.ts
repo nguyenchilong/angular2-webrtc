@@ -6,8 +6,14 @@ import { Observable } from 'rxjs';
 
 export class RestService {
 
-    constructor(private http: Http) {
+    d1 = new Date();
+    d2 = new Date();
+    d3 = new Date();
 
+    constructor(private http: Http) {
+        this.d1.setDate(new Date().getDate() + 1);
+        this.d2.setDate(new Date().getDate() + 3);
+        this.d3.setDate(new Date().getDate() + 7);
     }
 
     callApi(): Observable<any> {
@@ -22,22 +28,44 @@ export class RestService {
     getMeetings(): any {
         return [
             {
+                title: 'Besprechung',
+                start: this.d1,
+                end: this.d1,
+                color: {
+                    primary: '#ad2121',
+                    secondary: '#FAE3E3'
+                },
                 prof: 'Prof. Dr. Otto Offline',
                 vorlesung: 'Mathe 1/2',
                 time: 'Mo 15:30 13.12.16'
             },
             {
+                title: 'Besprechung',
+                start: this.d2,
+                end: this.d2,
+                color: {
+                    primary: '#ad2121',
+                    secondary: '#FAE3E3'
+                },
                 prof: 'Prof. Dr. Ralf Kramer',
                 vorlesung: 'Datenbanksysteme',
                 time: 'Do 12:30 20.12.16'
             },
             {
+                title: 'Besprechung',
+                start: this.d3,
+                end: this.d3,
+                color: {
+                    primary: '#ad2121',
+                    secondary: '#FAE3E3'
+                },
                 prof: 'Prof. Dr. Oliver Höß',
                 vorlesung: 'Softwaremodellierung',
                 time: 'Fr 13:30 01.12.16'
             }
         ];
     }
+
 /*
     callApi(): Observable<any> {
         var obj = { UserName: 'test', Password: 'Test1234' };

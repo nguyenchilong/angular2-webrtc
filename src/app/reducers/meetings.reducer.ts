@@ -1,19 +1,13 @@
 import { ActionReducer, Action } from '@ngrx/store';
 
-let init: any = {
-    connectionexists: false,
-    callactive: false
-};
+let init: meeting[] = [];
 
-export const peerconnrx: ActionReducer<any> = (state: any = init, action: Action) => {
+export const meetingsrx: ActionReducer<any> = (state: any = init, action: Action) => {
     switch (action.type) {
 
-        case 'CONNECTION_CREATED':
-            return Object.assign(
-                {},
-                state,
-                { connectionexists: true }
-            );
+        case 'ADD_MEETINGS':
+            return action.payload;
+            /*
         case 'CONNECTION_CLOSED':
             return Object.assign(
                 {},
@@ -32,6 +26,7 @@ export const peerconnrx: ActionReducer<any> = (state: any = init, action: Action
                 state,
                 { callactive: false }
             );
+            */
         default:
             return state;
     }

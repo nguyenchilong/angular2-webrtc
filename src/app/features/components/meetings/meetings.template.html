@@ -1,5 +1,5 @@
 <div class="meetings">
-    <md-card *ngFor="let meeting of meetings" class="meeting">
+    <md-card *ngFor="let meeting of (meetings | async)" class="meeting">
         <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
         <md-card-title>{{meeting.prof}}</md-card-title>
         <md-card-content>
