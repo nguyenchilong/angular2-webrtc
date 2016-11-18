@@ -4,7 +4,7 @@
 		<p *ngFor="let message of (chat | async).messages">{{message}}</p>
 	</div>
 	<form [formGroup]="chatform" (ngSubmit)="send()">
-	<md-input #Input formControlName="message" placeholder="Message..."></md-input>
-	<button md-raised-button [disabled]="!(storecon |async).callactive" type="submit">Send</button>
+		<md-input #Input formControlName="message" placeholder="Message..." autocomplete="off"></md-input>
+		<button md-raised-button [disabled]="!(storecon |async).callactive" type="submit">Send</button>
 	</form>
 </md-card>

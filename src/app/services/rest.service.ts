@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -16,14 +16,14 @@ export class RestService {
         this.d3.setDate(new Date().getDate() + 7);
     }
 
-    callApi(): Observable<any> {
-        let values: string = 'Basic ' + btoa('test:Test1234');
+    authorizeUser(user: string, password: string): Observable<any> {
+        let values: string = 'Basic ' + btoa(user + ':' + password);
         let headers = new Headers();
-        // vll hinzufügen vll nicht: headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'text/plain');
         headers.append('Authorization', values);
-        let options = new RequestOptions({ method: RequestMethod.Post, headers: headers });
-        return this.http.post('https://httpbin.org/post', null, options);
+        return this.http.post('http://10.90.38.128:8080/webrtc/web/app_test.php/tokens', {}, { headers: headers });
     }
+
 
     getMeetings(): any {
         return [
@@ -87,3 +87,4 @@ export class RestService {
     }
     */
 }
+
