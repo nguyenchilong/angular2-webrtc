@@ -1,5 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation }
-from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { CalendarComponent } from '../../components/calendar/calendar.component';
 
 @Component({
@@ -10,7 +9,7 @@ import { CalendarComponent } from '../../components/calendar/calendar.component'
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class CalendarViewComponent {
+export class CalendarViewComponent implements OnInit {
 
     @ViewChild('Calendar') calendar: CalendarComponent;
 
@@ -27,5 +26,9 @@ export class CalendarViewComponent {
             vorlesung: 'Mathe 1/2',
         }
     ];
-    
+
+    ngOnInit() {
+    }
+
+
 }

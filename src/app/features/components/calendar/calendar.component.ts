@@ -69,12 +69,11 @@ export class CalendarComponent implements OnInit {
 
 }
 
-// Dialog Component
+
 @Component({
     selector: 'calendar-dialog',
     templateUrl: './calendar.dialog.html'
 })
-
 export class CalendarDialog {
     events: any[];
     none: boolean = true;

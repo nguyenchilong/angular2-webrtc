@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-
+import { SOCKET } from './constants';
 @Injectable()
 
 export class PeerconnectionService {

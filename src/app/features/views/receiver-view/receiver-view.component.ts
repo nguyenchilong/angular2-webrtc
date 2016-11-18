@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { PeerconnectionService } from '../../../services/peerconnection.service';
+
+import { WebrtcReceiver } from '../../components/webrtcreceiver/webrtcreceiver.component';
+import { ChatComponent } from '../../components/chat/chat.component';
+
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'receiver-view-component',
@@ -10,5 +17,12 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
 
 export class ReceiverViewComponent {
 
-    constructor() {  };
+    @ViewChild('Receiver') receiver: WebrtcReceiver;
+    storecon: Observable<any>;
+
+    constructor(
+        private store: Store<any>,
+        private peerconnectionservice: PeerconnectionService
+    ) {
+    };
 }
