@@ -4,3 +4,6 @@
 
 md-card:hover {
   background: #e6e5e5; }
+
+md-card-subtitle {
+  margin-bottom: 10px; }
