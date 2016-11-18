@@ -13,7 +13,6 @@ import { RestService } from '../../../services/rest.service';
 
 export class CalendarComponent implements OnInit {
 
-    events: any = [];
     meetings: Observable<any>;
     dialogRef: MdDialogRef<CalendarDialog>;
     viewDate: Date = new Date();
@@ -23,13 +22,12 @@ export class CalendarComponent implements OnInit {
         public dialog: MdDialog,
         public store: Store<any>,
         public restservice: RestService) {
-            this.meetings = this.store.select(store => store.meetings);
-            this.meetings.subscribe(meetings => this.events = meetings);
-         }
+        this.meetings = this.store.select(store => store.meetings);
+    }
 
     ngOnInit() {
         let data = this.restservice.getMeetings();
-        this.store.dispatch({type: 'ADD_MEETINGS', payload: data});
+        this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
     }
 
     switchToMonth(): void {
@@ -49,14 +47,21 @@ export class CalendarComponent implements OnInit {
     }
 
     openDialog(e) {
-        let config: MdDialogConfig = {disableClose: false};
+        let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(CalendarDialog, config);
 
-        this.dialogRef.componentInstance.events = e.events;
-        if (e.events.length !== 0) {
+        // if single event from weekview
+        if (e.event) {
+            this.dialogRef.componentInstance.events = [e.event];
             this.dialogRef.componentInstance.none = false;
+        } else {
+            // if events is empty
+            this.dialogRef.componentInstance.events = e.events;
+            if (e.events.length !== 0) {
+                this.dialogRef.componentInstance.none = false;
+            }
         }
-        console.log(this.dialogRef.componentInstance.events.length);
+        // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {
             this.dialogRef.componentInstance.none = true;
         });
