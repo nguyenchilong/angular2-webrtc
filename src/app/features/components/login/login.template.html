@@ -5,10 +5,10 @@
 	<form [formGroup]="loginform" (ngSubmit)="login()">
 		<md-input type="email" formControlName="email" placeholder="Email" required autofocus></md-input>
 		<md-input type="password" formControlName="password" placeholder="Password"></md-input>
-		<button md-raised-button color="warn" (click)="login()" class="login-button">Login</button>
+		<button md-raised-button color="warn" type="submit"class="login-button">Login</button>
 		<br>
 		<br>
 	</form>
 	<button md-button>Forgot Password</button>
-	<button md-button class="registerbutton" type="submit">Register</button>
+	<button md-button class="registerbutton" >Register</button>
 </md-card>

@@ -5,6 +5,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MdInput } from '@angular/material';
 
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
 @Component({
     selector: 'chat-component',
     templateUrl: './chat.template.html',
@@ -19,10 +21,12 @@ export class ChatComponent {
     chat: Observable<any>;
     storecon: Observable<any>;
     showbutton: boolean = false;
+    chatform: FormGroup;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
-        private store: Store<any>) {
+        private store: Store<any>,
+        private formBuilder: FormBuilder) {
         this.chat = this.store.select(store => store.chat);
         this.storecon = this.store.select(store => store.peerconn);
         this.storecon.subscribe((con) => {
@@ -30,7 +34,10 @@ export class ChatComponent {
                 this.showbutton = true;
             } else if (this.showbutton === true) {
                 this.showbutton = false;
-            }
+            };
+            this.chatform = this.formBuilder.group({
+                message: ''
+            });
         });
     }
 

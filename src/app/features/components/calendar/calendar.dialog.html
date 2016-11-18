@@ -1,7 +1,10 @@
 <div *ngIf="!none">
-    <div *ngFor="let event of events">
+    <md-card *ngFor="let event of events">
         <h4>{{event.title}}</h4>
         <p>{{event.prof}}</p>
-    </div>
+        <p>{{event.time}}</p>
+    </md-card>
 </div>
-<h4 *ngIf="none">No Meetings</h4>
+<md-card>
+    <h4 *ngIf="none">No Meetings</h4>
+</md-card>

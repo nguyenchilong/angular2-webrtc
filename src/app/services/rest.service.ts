@@ -11,7 +11,7 @@ export class RestService {
     d3 = new Date();
 
     constructor(private http: Http) {
-        this.d1.setDate(new Date().getDate() + 1);
+        this.d1.setDate(new Date().getDate());
         this.d2.setDate(new Date().getDate() + 3);
         this.d3.setDate(new Date().getDate() + 7);
     }
