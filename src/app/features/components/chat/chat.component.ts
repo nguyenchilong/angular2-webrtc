@@ -1,11 +1,11 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, OnInit }
+    from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MdInput } from '@angular/material';
-
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'chat-component',
@@ -27,7 +27,8 @@ export class ChatComponent implements OnInit {
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder
+    ) {
         this.chat = this.store.select(store => store.chat);
         this.storecon = this.store.select(store => store.peerconn);
         this.storecon.subscribe((con) => {
