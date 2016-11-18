@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { Store } from '@ngrx/store';
@@ -15,9 +15,10 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
     encapsulation: ViewEncapsulation.None,
 })
 
-export class ChatComponent {
+export class ChatComponent implements OnInit {
 
     @ViewChild('Input') input: MdInput;
+    @ViewChild('Messages') messages;
     chat: Observable<any>;
     storecon: Observable<any>;
     showbutton: boolean = false;
@@ -38,6 +39,13 @@ export class ChatComponent {
             this.chatform = this.formBuilder.group({
                 message: ''
             });
+        });
+    }
+
+    ngOnInit() {
+        // scroll down when message is added
+        this.chat.subscribe(chat => {
+            this.messages.nativeElement.scrollTop = this.messages.nativeElement.scrollHeight;
         });
     }
 

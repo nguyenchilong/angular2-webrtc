@@ -1,9 +1,10 @@
 <md-card>
 	<h4>Chat</h4>
-	<div class="messages">
+	<div class="messages" #Messages>
 		<p *ngFor="let message of (chat | async).messages">{{message}}</p>
 	</div>
-	<form [formGroup]="chatform" (ngSubmit)="send()">
+	<md-divider></md-divider>
+	<form class="inputform" [formGroup]="chatform" (ngSubmit)="send()">
 		<md-input #Input formControlName="message" placeholder="Message..." autocomplete="off"></md-input>
 		<button md-raised-button [disabled]="!(storecon |async).callactive" type="submit">Send</button>
 	</form>
