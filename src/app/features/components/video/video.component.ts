@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'video-component',
@@ -7,7 +7,4 @@ import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class VideoComponent {
-    @ViewChild('myVideo') myVideo;
-    @ViewChild('otherVideo') otherVideo;
-}
+export class VideoComponent { }

@@ -2,13 +2,46 @@
 	<div class="icon">
 		<md-icon>person_pin</md-icon>
 	</div>
-	<form [formGroup]="loginform" (ngSubmit)="login()">
-		<md-input type="text" formControlName="email" placeholder="Email" required autofocus></md-input>
-		<md-input type="password" formControlName="password" placeholder="Password"></md-input>
-		<button md-raised-button color="warn" type="submit"class="login-button">Login</button>
+	<form
+		[formGroup]="loginform"
+		(ngSubmit)="login()">
+
+		<md-input
+			type="text"
+			formControlName="email"
+			placeholder="Email"
+			required
+			autofocus>
+		</md-input>
+
+		<md-input
+			type="password"
+			formControlName="password"
+			placeholder="Password">
+		</md-input>
+
+		<button
+			md-raised-button
+			color="warn"
+			type="submit"
+			class="login-button">
+			Login
+		</button>
+
 		<br>
 		<br>
+
 	</form>
-	<button md-button>Forgot Password</button>
-	<button md-button class="registerbutton" >Register</button>
+
+	<button
+		md-button>
+		Forgot Password
+	</button>
+
+	<button
+		md-button
+		class="registerbutton">
+		Register
+	</button>
+
 </md-card>

@@ -2,7 +2,21 @@
 	<video-component #Video></video-component>
 	<br>
 	<div>
-		<button md-raised-button [disabled]="(storecon |async).callactive" (click)="startCall()">Call</button>
-		<button md-raised-button [disabled]="!(storecon |async).callactive" (click)="stopCall()">Stop</button>
+
+		<button
+			md-raised-button
+			[disabled]="(storecon |async).callactive"
+			(click)="startCall()">
+			Call
+		</button>
+
+		<button
+			md-raised-button
+			[disabled]="!(storecon |async).callactive"
+			(click)="stopCall()">
+			Stop
+		</button>
+
 	</div>
+	
 </div>

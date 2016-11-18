@@ -1,10 +1,15 @@
 <div *ngIf="!none">
+
     <md-card *ngFor="let event of events">
         <h4>{{event.title}}</h4>
         <p>{{event.prof}}</p>
         <p>{{event.time}}</p>
     </md-card>
+
 </div>
+
 <md-card *ngIf="none">
+
     <h4>No Meetings</h4>
+    
 </md-card>

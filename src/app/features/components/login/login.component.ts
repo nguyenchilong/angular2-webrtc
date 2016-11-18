@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { RestService } from '../../../services/rest.service';
 
 @Component({
@@ -21,7 +21,8 @@ export class LoginComponent {
         private authservice: AuthService,
         private router: Router,
         private formBuilder: FormBuilder,
-        private restservice: RestService) {
+        private restservice: RestService
+    ) {
         if (this.authservice.isAuthorized) {
             this.router.navigate(['']);
         }
@@ -33,7 +34,7 @@ export class LoginComponent {
 
     login(): void {
         this.restservice.authorizeUser(this.loginform.value.email, this.loginform.value.password)
-        .subscribe(data => console.log(data._body.token));
+            .subscribe(data => console.log(data._body.token));
         this.authservice.setJWT(this.loginform.value.email);
         this.router.navigate(['']);
     }

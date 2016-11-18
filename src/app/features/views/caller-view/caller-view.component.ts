@@ -1,9 +1,5 @@
-import { Component, OnDestroy, ViewChild, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
-
-import { PeerconnectionService } from '../../../services/peerconnection.service';
-import { WebrtcCaller } from '../../components/webrtccaller/webrtccaller.component';
-import { ChatComponent } from '../../components/chat/chat.component';
-
+import { Component, ChangeDetectionStrategy, ViewEncapsulation }
+from '@angular/core';
 
 @Component({
     selector: 'caller-view-component',
@@ -16,9 +12,5 @@ import { ChatComponent } from '../../components/chat/chat.component';
 
 export class CallerViewComponent {
 
-    @ViewChild('Caller') caller: WebrtcCaller;
-    @ViewChild('Chat') chat: ChatComponent;
-
-    constructor(private peerconnectionservice: PeerconnectionService) {
-    }
+    constructor() {  }
 }
