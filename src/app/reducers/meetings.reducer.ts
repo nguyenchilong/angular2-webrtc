@@ -1,5 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { meeting } from '../app.interfaces';
+import * as _ from 'lodash';
 
 let init: meeting[] = [];
 
@@ -7,27 +8,24 @@ export const meetingsrx: ActionReducer<meeting[]> = (state: meeting[] = init, ac
     switch (action.type) {
 
         case 'ADD_MEETINGS':
-            return action.payload;
-            /*
-        case 'CONNECTION_CLOSED':
-            return Object.assign(
-                {},
-                state,
-                { connectionexists: false }
-            );
-        case 'CALL_STARTED':
-            return Object.assign(
-                {},
-                state,
-                { callactive: true }
-            );
-        case 'CALL_ENDED':
-            return Object.assign(
-                {},
-                state,
-                { callactive: false }
-            );
-            */
+            return [
+                ...state,
+                ...action.payload
+            ];
+        case 'ADD_MEETING':
+            return [
+                ...state,
+                action.payload
+            ];
+        case 'REMOVE_MEETING':
+            return [
+                ..._.reject(state, { 'id': action.payload.id })
+            ];
+        case 'REPLACE_MEETING':
+            return [
+                ..._.reject(state, { 'id': action.payload.id }),
+                action.payload
+            ];
         default:
             return state;
     }

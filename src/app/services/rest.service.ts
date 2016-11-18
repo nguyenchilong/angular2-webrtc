@@ -28,6 +28,7 @@ export class RestService {
     getMeetings(): any {
         return [
             {
+                id: 1,
                 title: 'Besprechung',
                 start: this.d1,
                 end: this.d1,
@@ -40,6 +41,7 @@ export class RestService {
                 time: 'Mo 15:30 13.12.16'
             },
             {
+                id: 2,
                 title: 'Bachelorarbeit',
                 start: this.d2,
                 end: this.d2,
@@ -52,6 +54,7 @@ export class RestService {
                 time: 'Do 12:30 20.12.16'
             },
             {
+                id: 3,
                 title: 'Frage zur Übung 05',
                 start: this.d3,
                 end: this.d3,

@@ -1,3 +1,6 @@
+<button (click)="click()">add</button>
+<button (click)="remove()">remove</button>
+<button (click)="replace()">replace</button>
 <div class="meetings">
     <md-card *ngFor="let meeting of (meetings | async)" class="meeting">
         <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
