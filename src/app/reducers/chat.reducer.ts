@@ -7,7 +7,7 @@ let init: any = {
 export const chatrx: ActionReducer<any> = (state: any = init, action: Action) => {
     switch (action.type) {
 
-        case 'ADD_REMOTE_MESSAGE':
+        case 'ADD_PEER_MESSAGE':
             return Object.assign(
                 {},
                 state,

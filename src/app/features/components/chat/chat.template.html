@@ -1,7 +1,11 @@
 <md-card>
 	<h4>Chat</h4>
 	<div class="messages" #Messages>
-		<p *ngFor="let message of (chat | async).messages">{{message}}</p>
+		<md-list dense>
+			<md-list-item *ngFor="let message of (chat | async).messages" [ngClass]="message.source === 'own' ? 'own' : 'peer'" >
+				<p class="text">{{message.text}}</p>
+			</md-list-item>
+		</md-list>
 	</div>
 	<md-divider></md-divider>
 	<form class="inputform" [formGroup]="chatform" (ngSubmit)="send()">

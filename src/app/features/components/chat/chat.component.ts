@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, AfterViewChecked } from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
     encapsulation: ViewEncapsulation.None,
 })
 
-export class ChatComponent implements OnInit {
+export class ChatComponent implements AfterViewChecked {
 
     @ViewChild('Input') input: MdInput;
     @ViewChild('Messages') messages;
@@ -42,19 +42,20 @@ export class ChatComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
-        // scroll down when message is added
-        this.chat.subscribe(chat => {
-            this.messages.nativeElement.scrollTop = this.messages.nativeElement.scrollHeight;
-        });
-    }
-
     send(): void {
         if (this.input.value !== '') {
-            this.store.dispatch({ type: 'ADD_OWN_MESSAGE', payload: this.input.value });
+            this.store.dispatch({ type: 'ADD_OWN_MESSAGE', payload: { text: this.input.value, source: 'own' } });
             this.peerconnectionservice.dc.send(this.input.value);
             this.input.value = '';
         }
         this.input.focus();
+    }
+
+    ngAfterViewChecked() {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom(): void {
+        this.messages.nativeElement.scrollTop = this.messages.nativeElement.scrollHeight;
     }
 }

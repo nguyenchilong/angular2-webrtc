@@ -1,1 +1,12 @@
-.messages{height:200px;overflow-y:scroll}.inputform{margin-top:10px}
+.messages {
+  height: 200px;
+  overflow-y: scroll; }
+
+.inputform {
+  margin-top: 10px; }
+
+.own .md-list-item {
+  justify-content: flex-end !important; }
+
+.text {
+  margin-bottom: 0; }

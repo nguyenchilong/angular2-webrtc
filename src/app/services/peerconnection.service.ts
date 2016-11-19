@@ -25,7 +25,7 @@ export class PeerconnectionService {
             // set peerchannel
             this.peerchannel = e.channel;
             this.peerchannel.onmessage = (msg) => {
-                this.store.dispatch({type: 'ADD_REMOTE_MESSAGE', payload: msg.data});
+                this.store.dispatch({type: 'ADD_PEER_MESSAGE', payload: { text: msg.data, source: 'peer' }});
             };
         };
         // listener for closed connection by peer
