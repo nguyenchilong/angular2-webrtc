@@ -7,6 +7,8 @@ import { CallerViewComponent } from './features/views/caller-view/caller-view.co
 import { ReceiverViewComponent } from './features/views/receiver-view/receiver-view.component';
 import { LoginViewComponent } from './features/views/login-view/login-view.component';
 import { CalendarViewComponent } from './features/views/calendar-view/calendar-view.component';
+import { ProfprofilViewComponent } from './features/views/profprofil-view/profprofil-view.component';
+import { StudprofilViewComponent } from './features/views/studprofil-view/studprofil-view.component';
 
 import { AuthService } from './services/auth.service';
 import { StudguardService } from './services/studguard.service';
@@ -19,5 +21,7 @@ export const routes: Routes = [
   { path: 'auth', component: LoginViewComponent },
   { path: 'calendar', component: CalendarViewComponent },
   { path: 'dashboard', component: DashboardViewComponent},
+  { path: 'profprofil', component: ProfprofilViewComponent, canActivate: [AuthService, ProfguardService] },
+  { path: 'studprofil', component: StudprofilViewComponent, canActivate: [AuthService, StudguardService] },
   { path: '**', component: NotFound404Component }
 ];

@@ -13,6 +13,8 @@ import { CallerViewComponent } from './features/views/caller-view/caller-view.co
 import { ReceiverViewComponent } from './features/views/receiver-view/receiver-view.component';
 import { LoginViewComponent } from './features/views/login-view/login-view.component';
 import { CalendarViewComponent } from './features/views/calendar-view/calendar-view.component';
+import { ProfprofilViewComponent } from './features/views/profprofil-view/profprofil-view.component';
+import { StudprofilViewComponent } from './features/views/studprofil-view/studprofil-view.component';
 
 import { NavComponent } from './features/components/nav/nav.component';
 
@@ -38,6 +40,8 @@ export const APP_DECLERATIONS = [
   ReceiverViewComponent,
   LoginViewComponent,
   CalendarViewComponent,
+  ProfprofilViewComponent,
+  StudprofilViewComponent,
 
   // Structure
   NavComponent

@@ -20,7 +20,10 @@
 
 	<!-- show when user is logged in -->
 	<span *ngIf="(user | async).loggedin">
-		<button md-icon-button md-tooltip="account" tooltip-position="below">
+		<button *ngIf="(user | async).role === 'stud'" [routerLink]="'studprofil'" md-icon-button md-tooltip="account" tooltip-position="below">
+			<md-icon>account_box</md-icon>
+		</button>
+		<button *ngIf="(user | async).role === 'prof'" [routerLink]="'profprofil'" md-icon-button md-tooltip="account" tooltip-position="below">
 			<md-icon>account_box</md-icon>
 		</button>
 	</span>
