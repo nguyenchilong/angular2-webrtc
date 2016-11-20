@@ -5,7 +5,7 @@ import { WebrtcCaller } from './features/components/webrtccaller/webrtccaller.co
 import { WebrtcReceiver } from './features/components/webrtcreceiver/webrtcreceiver.component';
 import { LoginComponent } from './features/components/login/login.component';
 import { ChatComponent } from './features/components/chat/chat.component';
-import { CalendarComponent, CalendarDialog } from './features/components/calendar/calendar.component';
+import { CalendarComponent } from './features/components/calendar/calendar.component';
 import { MeetingsCompontent } from './features/components/meetings/meetings.component';
 
 import { DashboardViewComponent } from './features/views/dashboard-view/dashboard-view.component';
@@ -17,6 +17,7 @@ import { ProfprofilViewComponent } from './features/views/profprofil-view/profpr
 import { StudprofilViewComponent } from './features/views/studprofil-view/studprofil-view.component';
 
 import { InfoDialog } from './features/dialogs/info-dialog/info-dialog.component';
+import { MeetingsDialog } from './features/dialogs/meetings-dialog/meetings-dialog.component';
 
 import { NavComponent } from './features/components/nav/nav.component';
 
@@ -33,7 +34,6 @@ export const APP_DECLERATIONS = [
   LoginComponent,
   ChatComponent,
   CalendarComponent,
-  CalendarDialog,
   MeetingsCompontent,
 
   // Views
@@ -47,6 +47,7 @@ export const APP_DECLERATIONS = [
 
   // dialogs
   InfoDialog,
+  MeetingsDialog,
 
   // Structure
   NavComponent

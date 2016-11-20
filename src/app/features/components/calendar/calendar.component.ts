@@ -3,6 +3,7 @@ import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog'
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
+import { MeetingsDialog } from '../../dialogs/meetings-dialog/meetings-dialog.component';
 
 @Component({
     selector: 'calendar-component',
@@ -14,7 +15,7 @@ import { RestService } from '../../../services/rest.service';
 export class CalendarComponent implements OnInit {
 
     meetings: Observable<any>;
-    dialogRef: MdDialogRef<CalendarDialog>;
+    dialogRef: MdDialogRef<MeetingsDialog>;
     viewDate: Date = new Date();
     view: string = 'month';
 
@@ -48,7 +49,7 @@ export class CalendarComponent implements OnInit {
 
     openDialog(e) {
         let config: MdDialogConfig = { disableClose: false };
-        this.dialogRef = this.dialog.open(CalendarDialog, config);
+        this.dialogRef = this.dialog.open(MeetingsDialog, config);
 
         // if single event from weekview
         if (e.event) {
@@ -67,15 +68,4 @@ export class CalendarComponent implements OnInit {
         });
     }
 
-}
-
-
-@Component({
-    selector: 'calendar-dialog',
-    templateUrl: './calendar.dialog.html'
-})
-export class CalendarDialog {
-    events: any[];
-    none: boolean = true;
-    constructor(public dialogRef: MdDialogRef<CalendarDialog>) { }
 }
