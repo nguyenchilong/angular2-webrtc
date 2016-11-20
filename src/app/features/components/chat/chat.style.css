@@ -10,3 +10,11 @@
 
 .text {
   margin-bottom: 0; }
+
+.chat {
+  height: 333px;
+  max-width: 444px; }
+
+.messageinput {
+  width: 295px;
+  margin-right: 7px; }
