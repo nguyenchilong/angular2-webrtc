@@ -12,6 +12,7 @@ import { UniversalModule } from 'angular2-universal';
 import { APP_DECLERATIONS } from './app.declerations';
 import { APP_IMPORTS } from './app.imports';
 import { APP_PROVIDERS } from './app.providers';
+import { APP_ENTRY } from './app.entrycomponents';
 
 import { AppComponent } from './app.component';
 
@@ -23,6 +24,9 @@ import { AppComponent } from './app.component';
   imports: [
     APP_IMPORTS,
     UniversalModule // NodeModule, NodeHttpModule, and NodeJsonpModule are included
+  ],
+  entryComponents: [
+    APP_ENTRY
   ],
   bootstrap: [AppComponent],
   providers: [APP_PROVIDERS]

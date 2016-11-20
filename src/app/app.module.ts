@@ -17,12 +17,10 @@ import { Store } from '@ngrx/store';
 import { APP_DECLERATIONS } from './app.declerations';
 import { APP_IMPORTS } from './app.imports';
 import { APP_PROVIDERS } from './app.providers';
+import { APP_ENTRY } from './app.entrycomponents';
 
 import { AppComponent } from './app.component';
 import { AppState } from './reducers';
-
-import { MeetingsDialog } from './features/dialogs/meetings-dialog/meetings-dialog.component';
-import { InfoDialog } from './features/dialogs/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +33,7 @@ import { InfoDialog } from './features/dialogs/info-dialog/info-dialog.component
     HttpModule,
   ],
   entryComponents: [
-    InfoDialog,
-    MeetingsDialog
+    APP_ENTRY
   ],
   bootstrap: [AppComponent],
   providers: [APP_PROVIDERS]
