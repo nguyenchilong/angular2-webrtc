@@ -1,14 +1,21 @@
 <md-card class="login">
-	<div class="icon">
-		<md-icon>person_pin</md-icon>
+	<div *ngIf="!isloading">
+		<div class="icon">
+			<md-icon>person_pin</md-icon>
+		</div>
+		<form [formGroup]="loginform" (ngSubmit)="login()">
+			<md-input type="text" [formControl]="loginform.controls['username']" placeholder="Username" required autofocus></md-input>
+			<md-input type="password" [formControl]="loginform.controls['password'] "placeholder="Password"></md-input>
+			<button md-raised-button color="warn" type="submit" class="login-button">Login</button>
+			<br>
+			<br>
+		</form>
+		<button md-button>Forgot Password</button>
+		<button md-button class="registerbutton">Register</button>
 	</div>
-	<form [formGroup]="loginform" (ngSubmit)="login()">
-		<md-input type="text" formControlName="email" placeholder="Email" required autofocus></md-input>
-		<md-input type="password" formControlName="password" placeholder="Password"></md-input>
-		<button md-raised-button color="warn" type="submit"class="login-button">Login</button>
-		<br>
-		<br>
-	</form>
-	<button md-button>Forgot Password</button>
-	<button md-button class="registerbutton" >Register</button>
+	<div *ngIf="isloading" class="spinnerwrapper">
+		<div class="spinner">
+			<md-progress-circle mode="indeterminate" color="warn"></md-progress-circle>
+		</div>
+	</div>
 </md-card>
