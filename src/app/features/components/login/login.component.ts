@@ -33,7 +33,7 @@ export class LoginComponent {
 
     login(): void {
         this.isloading = true;
-        this.restservice.authorizeUser(this.loginform.controls['username'].value, this.loginform.controls['password'].value)
+        this.restservice.authorizeUser(this.loginform.get('username').value, this.loginform.get('password').value)
             .subscribe(
             (data) => {
                 this.isloading = false;
@@ -44,8 +44,8 @@ export class LoginComponent {
                 this.changeDetectionRef.markForCheck();
             }
             );
-        this.authservice.setJWT(this.loginform.controls['username'].value);
-        this.loginform.controls['password'].setValue('');
+        this.authservice.setJWT(this.loginform.get('username').value);
+        this.loginform.get('password').setValue('');
         this.router.navigate(['']);
     }
 }
