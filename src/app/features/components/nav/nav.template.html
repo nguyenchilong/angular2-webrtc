@@ -12,7 +12,7 @@
 	<!-- RIGHT-->
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
-        <button md-icon-button>
+        <button md-icon-button (click)="openDialog()">
 			<md-icon>help_outline</md-icon>
 		</button>
     </span>

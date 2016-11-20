@@ -16,6 +16,8 @@ import { CalendarViewComponent } from './features/views/calendar-view/calendar-v
 import { ProfprofilViewComponent } from './features/views/profprofil-view/profprofil-view.component';
 import { StudprofilViewComponent } from './features/views/studprofil-view/studprofil-view.component';
 
+import { InfoDialog } from './features/dialogs/info-dialog/info-dialog.component';
+
 import { NavComponent } from './features/components/nav/nav.component';
 
 
@@ -42,6 +44,9 @@ export const APP_DECLERATIONS = [
   CalendarViewComponent,
   ProfprofilViewComponent,
   StudprofilViewComponent,
+
+  // dialogs
+  InfoDialog,
 
   // Structure
   NavComponent
