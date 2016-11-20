@@ -4,7 +4,7 @@
 	<button *ngIf="(user | async).loggedin" md-icon-button (click)="toggle()">
       <md-icon>menu</md-icon>
     </button>
-	<span><b>EduTalk</b></span>
+	<span><a style="color:white;text-decoration: none;"[routerLink]="'/'"><b>EduTalk</b></a></span>
 	<!-- END OF LEFT -->
 
 	<span style="flex: 1 1 auto;"></span>
