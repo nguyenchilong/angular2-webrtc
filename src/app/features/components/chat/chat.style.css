@@ -6,7 +6,13 @@
   margin-top: 10px; }
 
 .own .md-list-item {
-  justify-content: flex-end !important; }
+  justify-content: flex-end !important;
+  background-color: #ade0ad;
+  height: 22px !important; }
+
+.peer .md-list-item {
+  background-color: #e1e1e1;
+  height: 22px !important; }
 
 .text {
   margin-bottom: 0; }
