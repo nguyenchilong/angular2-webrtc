@@ -51,6 +51,20 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         }
     }
 
+    toggleAudio(): void {
+        let audioTracks = this.stream.getAudioTracks();
+        for (let i = 0, l = audioTracks.length; i < l; i++) {
+            audioTracks[i].enabled = !audioTracks[i].enabled;
+        }
+    }
+
+    toggleVideo(): void {
+        let videoTracks = this.stream.getVideoTracks();
+        for (let i = 0, l = videoTracks.length; i < l; i++) {
+            videoTracks[i].enabled = !videoTracks[i].enabled;
+        }
+    }
+
     handleOffer(offer: RTCSessionDescriptionInit): void {
         // add stream to pc
         this.peerconnectionservice.pc.addStream(this.stream);
@@ -112,7 +126,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.startVideostream();
-        this.storecon.subscribe( (con) => {
+        this.storecon.subscribe((con) => {
             if (con.connectionexists === true && con.callactive === false) {
                 this.socket.removeAllListeners();
                 this.configurateRTCPeerConnection();

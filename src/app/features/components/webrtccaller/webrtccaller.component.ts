@@ -51,6 +51,20 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         }
     }
 
+    toggleAudio(): void {
+        let audioTracks = this.stream.getAudioTracks();
+        for (let i = 0, l = audioTracks.length; i < l; i++) {
+            audioTracks[i].enabled = !audioTracks[i].enabled;
+        }
+    }
+
+    toggleVideo(): void {
+        let videoTracks = this.stream.getVideoTracks();
+        for (let i = 0, l = videoTracks.length; i < l; i++) {
+            videoTracks[i].enabled = !videoTracks[i].enabled;
+        }
+    }
+
     startCall(): void {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
