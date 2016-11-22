@@ -1,7 +1,9 @@
-<button (click)="click()">add</button>
-<button (click)="remove()">remove</button>
-<button (click)="replace()">replace</button>
 <div class="meetings">
+    <button md-raised-button (click)="click()">add</button>
+    <button md-raised-button (click)="replace()">replace</button>
+    <button md-raised-button (click)="remove()">remove</button>
+    <br>
+    <br>
     <md-card *ngFor="let meeting of (meetings | async)" class="meeting">
         <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
         <md-card-title>{{meeting.prof}}</md-card-title>

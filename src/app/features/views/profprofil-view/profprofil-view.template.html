@@ -1,21 +1,28 @@
-<md-card>
-    <md-card-title>Your profil</md-card-title>
-    <md-card-content>
-        <p><b>Name:</b> Prof. Dr. Otto Offline</p>
-        <p><b>Studiengang:</b> Wirtschaftsinformatik</p>
-        <p><b>Fakultät:</b> C</p>
-    </md-card-content>
-    <md-divider></md-divider>
-    <br>
-    <md-card-title>Change password</md-card-title>
-    <md-card-content>
-        <md-input placeholder="Old password" type="password"></md-input>
-        <br>
-        <md-input placeholder="New password" type="password"></md-input>
-        <br>
-        <md-input placeholder="Confirm new password" type="password"></md-input>
+<div class="profprofil">
+    <md-card>
+        <button [routerLink]="'/'" md-icon-button>
+		<md-icon>arrow_back</md-icon>
+	</button>
         <br>
         <br>
-        <button md-raised-button>Update password</button>
-    </md-card-content>
-</md-card>
+        <md-card-title>Your profil</md-card-title>
+        <md-card-content>
+            <p><b>Name:</b> Prof. Dr. Otto Offline</p>
+            <p><b>Studiengang:</b> Wirtschaftsinformatik</p>
+            <p><b>Fakultät:</b> C</p>
+        </md-card-content>
+        <md-divider></md-divider>
+        <br>
+        <md-card-title>Change password</md-card-title>
+        <md-card-content>
+            <md-input placeholder="Old password" type="password"></md-input>
+            <br>
+            <md-input placeholder="New password" type="password"></md-input>
+            <br>
+            <md-input placeholder="Confirm new password" type="password"></md-input>
+            <br>
+            <br>
+            <button md-raised-button>Update password</button>
+        </md-card-content>
+    </md-card>
+</div>
