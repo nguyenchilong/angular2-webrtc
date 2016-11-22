@@ -31,9 +31,6 @@
 		{{(user | async).name}}
 	</span>
 	<span *ngIf="(user | async).loggedin">
-		<button md-icon-button md-tooltip="settings" tooltip-position="below">
-			<md-icon>settings</md-icon>
-		</button>			
         <button md-icon-button (click)="logoutUser()">
 			<md-icon>power_settings_new</md-icon>
 		</button>
