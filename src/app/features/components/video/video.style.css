@@ -12,3 +12,13 @@
 .otherVideo {
   height: 333px;
   width: 444px; }
+
+.videomenu {
+  position: absolute;
+  left: 173px;
+  bottom: 35px;
+  border: 2px solid #a1a1a1;
+  padding: 5px 5px;
+  background: #dddddd;
+  border-radius: 25px;
+  opacity: 0.5; }

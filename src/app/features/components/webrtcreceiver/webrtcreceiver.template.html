@@ -1,5 +1,3 @@
 <div>
-	<video-component #Video></video-component>
-	<button md-raised-button [disabled]="!(storecon |async).callactive" (click)="toggleAudio()">Stop Audio</button>
-	<button md-raised-button [disabled]="!(storecon |async).callactive" (click)="toggleVideo()">Stop Video</button>
+	<video-component #Video (toggleAudio)="toggleAudio()" (toggleVideo)="toggleVideo()"></video-component>
 </div>
