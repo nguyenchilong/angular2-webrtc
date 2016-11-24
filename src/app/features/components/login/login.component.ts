@@ -36,14 +36,12 @@ export class LoginComponent {
         this.restservice.authorizeUser(
             this.loginform.get('username').value,
             this.loginform.get('password').value)
+            .map((res) => res.json())
             .subscribe(
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                console.log(data);
-                // this.authservice.setJWT(data.token);
-                this.authservice.setJWT('token');
-                console.log(data);
+                this.authservice.setJWT(data.token);
                 this.router.navigate(['']);
             },
             (err) => {
