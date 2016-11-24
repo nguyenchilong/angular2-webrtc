@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
+import { REST } from './constants';
 
 @Injectable()
 
@@ -21,7 +22,7 @@ export class RestService {
         let headers = new Headers();
         headers.append('Content-Type', 'text/plain');
         headers.append('Authorization', values);
-        return this.http.post('http://10.90.38.128:8080/webrtc/web/app_test.php/tokens', {}, { headers: headers });
+        return this.http.post('http://chor-am-killesberg.de:8001/web/app_test.php/tokens', {}, { headers: headers });
     }
 
 
