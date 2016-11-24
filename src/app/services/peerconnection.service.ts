@@ -42,6 +42,7 @@ export class PeerconnectionService {
     }
 
     closeConnection(): void {
+        this.pc.oniceconnectionstatechange = () => {};
         // close dc if it is not already closed
         if (this.pc && (this.pc.signalingState !== 'closed')) {
             this.pc.close();
