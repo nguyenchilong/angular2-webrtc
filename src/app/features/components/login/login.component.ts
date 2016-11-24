@@ -40,14 +40,18 @@ export class LoginComponent {
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
+                console.log(data);
+                // this.authservice.setJWT(data.token);
+                this.authservice.setJWT('token');
+                console.log(data);
+                this.router.navigate(['']);
             },
             (err) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
+                console.log(err);
             }
             );
-        this.authservice.setJWT(this.loginform.get('username').value);
         this.loginform.get('password').setValue('');
-        this.router.navigate(['']);
     }
 }

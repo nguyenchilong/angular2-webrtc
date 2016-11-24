@@ -3,7 +3,8 @@ import { MdDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'meetings-dialog',
-    templateUrl: './meetings-dialog.template.html'
+    templateUrl: './meetings-dialog.template.html',
+    styleUrls: ['./meetings-dialog.style.css']
 })
 
 export class MeetingsDialog {

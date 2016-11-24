@@ -5,7 +5,7 @@
 		</div>
 		<form [formGroup]="loginform" (ngSubmit)="login()">
 			<md-input type="text" [formControl]="loginform.controls['username']" placeholder="Username" required autofocus></md-input>
-			<md-input type="password" [formControl]="loginform.controls['password'] "placeholder="Password"></md-input>
+			<md-input type="password" [formControl]="loginform.controls['password'] "placeholder="Password" required #Password></md-input>
 			<button md-raised-button color="warn" type="submit" class="login-button">Login</button>
 			<br>
 			<br>
