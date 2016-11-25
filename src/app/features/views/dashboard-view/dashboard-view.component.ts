@@ -1,5 +1,6 @@
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { RestService } from '../../../services/rest.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,7 +15,10 @@ export class DashboardViewComponent {
         switch: boolean = true;
         @ViewChild('input') input;
 
-        constructor(private store: Store<any>) {
+        constructor(
+                private store: Store<any>,
+                private restservice: RestService
+        ) {
                 this.user = this.store.select(store => store.user);
         }
 
@@ -23,13 +27,17 @@ export class DashboardViewComponent {
         }
 
         toProf(): void {
-                this.store.dispatch({type: 'SET_ROLE', payload: 'prof'});
+                this.store.dispatch({ type: 'SET_ROLE', payload: 'prof' });
                 this.switch = !this.switch;
         }
 
         toStud(): void {
-                this.store.dispatch({type: 'SET_ROLE', payload: 'stud'});
+                this.store.dispatch({ type: 'SET_ROLE', payload: 'stud' });
                 this.switch = !this.switch;
-
+        }
+        test(): void {
+                this.restservice.test().subscribe( (res) => {
+                        console.log(res.json());
+                });
         }
 }
