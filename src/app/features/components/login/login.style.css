@@ -19,10 +19,6 @@ md-icon {
 .login-button {
   width: 300px; }
 
-.registerbutton {
-  position: absolute;
-  right: 24px; }
-
 .spinner {
   display: table-cell;
   vertical-align: middle;

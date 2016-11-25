@@ -18,6 +18,8 @@ import { StudprofilViewComponent } from './features/views/studprofil-view/studpr
 
 import { InfoDialog } from './features/dialogs/info-dialog/info-dialog.component';
 import { MeetingsDialog } from './features/dialogs/meetings-dialog/meetings-dialog.component';
+import { ForgotDialog } from './features/dialogs/forgot-dialog/forgot-dialog.component';
+
 
 import { NavComponent } from './features/components/nav/nav.component';
 
@@ -48,6 +50,7 @@ export const APP_DECLERATIONS = [
   // dialogs
   InfoDialog,
   MeetingsDialog,
+  ForgotDialog,
 
   // Structure
   NavComponent

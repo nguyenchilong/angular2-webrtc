@@ -10,8 +10,7 @@
 			<br>
 			<br>
 		</form>
-		<button md-button>Forgot Password</button>
-		<button md-button class="registerbutton">Register</button>
+		<button md-button (click)="openDialog()">Forgot Password</button>
 	</div>
 	<div *ngIf="isloading" class="spinnerwrapper">
 		<div class="spinner">
