@@ -36,9 +36,9 @@ export class ChatComponent implements AfterViewChecked {
             } else if (this.showbutton === true) {
                 this.showbutton = false;
             };
-            this.chatform = this.formBuilder.group({
-                message: ''
-            });
+        });
+        this.chatform = this.formBuilder.group({
+            message: ''
         });
     }
 
