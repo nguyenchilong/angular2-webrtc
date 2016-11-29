@@ -5,7 +5,7 @@ import { WAMP } from './constants';
 
 export class WampService {
     constructor() {
-/*
+
         let conn = new ab.Session(
         // URL of socket
         WAMP,
@@ -21,6 +21,5 @@ export class WampService {
         {'skipSubprotocolCheck': true}
 
     );
-*/
     }
 }
