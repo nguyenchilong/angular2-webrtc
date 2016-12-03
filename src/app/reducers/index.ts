@@ -9,6 +9,7 @@ import { userrx } from './user.reducer';
 import { peerconnrx } from './peerconn.reducer';
 import { chatrx } from './chat.reducer';
 import { meetingsrx } from './meetings.reducer';
+import { personsrx } from './persons.reducer';
 
 export interface AppState {
   router: RouterState;
@@ -19,7 +20,8 @@ export const reducers = {
   user: userrx,
   peerconn: peerconnrx,
   chat: chatrx,
-  meetings: meetingsrx
+  meetings: meetingsrx,
+  persons: personsrx
 };
 
 // Generate a reducer to set the root state in dev mode for HMR

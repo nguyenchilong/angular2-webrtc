@@ -2,6 +2,9 @@
 </h1>
 <div>
     <md-input placeholder="Title" value="1600 Amphitheatre Pkway"></md-input>
+    <select>
+        <option *ngFor="let person of (persons | async)">{{person.name}}</option>
+    </select>
     <md-input placeholder="Vorlesung"></md-input>
     <md-input placeholder="Start"></md-input>
     <md-input placeholder="Duration"></md-input>

@@ -4,7 +4,7 @@
     <button md-raised-button (click)="remove()">remove</button>
     <br>
     <br>
-    <md-card *ngFor="let meeting of (meetings | async)" class="meeting">
+    <md-card *ngFor="let meeting of (meetings | async)" class="meeting" (click)="openDialog(meeting)">
         <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
         <md-card-title>{{meeting.prof}}</md-card-title>
         <md-card-content>

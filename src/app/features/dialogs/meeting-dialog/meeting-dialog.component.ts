@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'meeting-dialog',
@@ -10,17 +12,14 @@ import { MdDialogRef } from '@angular/material/dialog';
 export class MeetingDialog {
 
     meeting: any;
-    persons: Object = [
-            {
-                name: 'Prof. Dr. Ralf Kramer'
-            },
-            {
-                name: 'Prof. Dr. Oliver Höß'
-            },
-        ]
+    persons: Observable<any>;
     none: boolean = true;
 
-    constructor(public dialogRef: MdDialogRef<MeetingDialog>) {
-
+    constructor(
+        public dialogRef: MdDialogRef<MeetingDialog>,
+        public store: Store<any>
+    ) {
+        this.persons = this.store.select(store => store.persons);
+    }
 }
 

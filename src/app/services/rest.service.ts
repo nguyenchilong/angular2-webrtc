@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import { REST } from './constants';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 
@@ -11,7 +12,10 @@ export class RestService {
     d2 = new Date();
     d3 = new Date();
 
-    constructor(private http: Http) {
+    constructor(
+        private http: Http,
+        private store: Store<any>
+    ) {
         this.d1.setDate(new Date().getDate());
         this.d2.setDate(new Date().getDate() + 3);
         this.d3.setDate(new Date().getDate() + 7);
@@ -87,6 +91,19 @@ export class RestService {
 
     getSlots(): Observable<any> {
         return this.http.post('url', {}, this.AuthHeaders);
+    }
+
+    getPersons(): void {
+        // dummipersons
+        let persons: Object = [
+            {
+                name: 'Prof. Dr. Ralf Kramer'
+            },
+            {
+                name: 'Prof. Dr. Oliver Höß'
+            },
+        ];
+        this.store.dispatch({ type: 'ADD_PERSONS', payload: persons });
     }
 }
 

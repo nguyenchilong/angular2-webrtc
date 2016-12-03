@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MdSidenav } from '@angular/material';
 
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
   );
@@ -37,6 +37,7 @@ export class AppComponent {
     private store: Store<any>
   ) {
     this.user = this.store.select(store => store.user);
+    // change website to view of profile
     this.user.subscribe((user) => {
       console.log(user);
       if (user.role === 'stud') {
@@ -63,5 +64,9 @@ export class AppComponent {
     if (this.sidenav._isOpened) {
       this.sidenav.toggle();
     }
+  }
+
+  ngOnInit(): void {
+    this.restservcice.getPersons();
   }
 }
