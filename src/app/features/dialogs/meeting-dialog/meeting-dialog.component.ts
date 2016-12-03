@@ -33,14 +33,22 @@ export class MeetingDialog {
         });
     }
 
-    setSelectedPerson(e): void {
-        // e is the id of the persons
-        // todo: push to store and to restservice
-        console.log(e);
-    }
-
     save(): void {
-        // 
+        //
+        let init: any = {
+            title: this.createform.get('title').value,
+            color: {
+                primary: '#ad2121',
+                secondary: '#FAE3E3'
+            },
+            prof: 'Prof. Dr. Oliver Höß',
+            vorlesung: 'Softwaremodellierung',
+            info: this.createform.get('info').value,
+            duration: 25,
+            time: 'Fr 13:30 01.12.16',
+            status: 'created'
+        };
+        this.store.dispatch({ type: 'ADD_MEETING', payload: init });
     }
 }
 
