@@ -27,8 +27,6 @@ export class CalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        let data = this.restservice.getMeetings();
-        this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
     }
 
     switchToMonth(): void {

@@ -30,8 +30,8 @@ export class RestService {
     }
 
 
-    getMeetings(): any {
-        return [
+    getMeetings(): void {
+        let data = [
             {
                 id: 1,
                 title: 'Besprechung',
@@ -72,6 +72,7 @@ export class RestService {
                 time: 'Fr 13:30 01.12.16'
             }
         ];
+        this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
     }
 
     test(): Observable<any> {

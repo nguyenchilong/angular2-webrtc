@@ -7,6 +7,8 @@ import { MOBILE } from './services/constants';
 
 import { WampService } from './services/wamp.service';
 import { RestService } from './services/rest.service';
+import { AuthService } from './services/auth.service';
+
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -18,7 +20,7 @@ import { Observable } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
   );
@@ -33,8 +35,9 @@ export class AppComponent implements OnInit{
     public route: ActivatedRoute,
     public router: Router,
     private wamp: WampService,
-    private restservcice: RestService,
-    private store: Store<any>
+    private restservice: RestService,
+    private store: Store<any>,
+    private authservice: AuthService
   ) {
     this.user = this.store.select(store => store.user);
     // change website to view of profile
@@ -45,7 +48,7 @@ export class AppComponent implements OnInit{
       } else if (user.role === 'prof') {
         this.views = PROFVIEWS;
       }
-     });
+    });
   }
 
   activateEvent(event) {
@@ -67,6 +70,9 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.restservcice.getPersons();
+    if (this.authservice.isAuthorized) {
+      this.restservice.getPersons();
+      this.restservice.getMeetings();
+    }
   }
 }
