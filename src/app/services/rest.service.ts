@@ -80,5 +80,13 @@ export class RestService {
         headers.append('Authorization', `Bearer ${authToken}`);
         return { headers: headers };
     }
+
+    getUser(): Observable<any> {
+        return this.http.post('url', {}, this.AuthHeaders);
+    }
+
+    getSlots(): Observable<any> {
+        return this.http.post('url', {}, this.AuthHeaders);
+    }
 }
 
