@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
+import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
+
+
 
 @Component({
     selector: 'meetings-component',
@@ -40,8 +44,11 @@ export class MeetingsCompontent {
         time: '123123'
     };
 
+    dialogRef: MdDialogRef<MeetingDialog>;
+
     constructor(
-        private store: Store<any>
+        private store: Store<any>,
+        public dialog: MdDialog
     ) {
         this.meetings = this.store.select(store => store.meetings);
     };
@@ -54,7 +61,17 @@ export class MeetingsCompontent {
     }
     replace(): void {
         this.store.dispatch({ type: 'REPLACE_MEETING', payload: this.meeting2 });
-
     }
 
+    openDialog(meeting) {
+        let config: MdDialogConfig = { disableClose: false };
+        this.dialogRef = this.dialog.open(MeetingDialog, config);
+
+        this.dialogRef.componentInstance.meeting = meeting;
+
+        // when closing dialog
+        this.dialogRef.afterClosed().subscribe(result => {
+            this.dialogRef.componentInstance.none = true;
+        });
+    }
 }
