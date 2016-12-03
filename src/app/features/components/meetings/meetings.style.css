@@ -14,3 +14,8 @@ md-card-title {
 md-card {
   padding-top: 15px;
   padding-bottom: 15px; }
+
+.createbutton {
+  right: 0px !important;
+  margin-bottom: 5px;
+  text-align: right; }

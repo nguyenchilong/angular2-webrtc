@@ -1,12 +1,53 @@
-<h1>Edit this meeting
-</h1>
-<div>
-    <md-input placeholder="Title" value="1600 Amphitheatre Pkway"></md-input>
-    <select>
-        <option *ngFor="let person of (persons | async)">{{person.name}}</option>
-    </select>
-    <md-input placeholder="Vorlesung"></md-input>
-    <md-input placeholder="Start"></md-input>
-    <md-input placeholder="Duration"></md-input>
-    <md-input placeholder="Info"></md-input>
+<div *ngIf="meeting">
+    <md-input placeholder="Title" value="{{meeting.title}}" class="meetinginput" disabled></md-input>
+    <br>
+    <br>
+    <select (change)="setSelectedPerson($event.target.value)" disabled>
+            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.name}}</option>
+        </select>
+    <br>
+    <br>
+    <md-input placeholder="Vorlesung" value="{{meeting.vorlesung}}" class="meetinginput" disabled></md-input>
+    <br>
+    <br>
+    <md-input placeholder="Start" value="{{meeting.start}}" class="meetinginput" disabled></md-input>
+    <br>
+    <br>
+    <select (change)="setSelectedPerson($event.target.value)" disabled>
+            <option *ngFor="let duration of durationoptions" [value]="duration">{{duration}}</option>
+        </select>
+    <br>
+    <br>
+    <md-input placeholder="Info" value="{{meeting.info}}" class="meetinginput" disabled></md-input>
+</div>
+
+<div *ngIf="!meeting">
+    <h4>Create new requeset</h4>
+    <br>
+    <form [formGroup]="createform" (ngSubmit)="save()">
+        <md-input placeholder="Title" class="meetinginput" [formControl]="createform.controls['title']"></md-input>
+        <br>
+        <br>
+        <select (change)="setSelectedPerson($event.target.value)">
+            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.name}}</option>
+        </select>
+        <br>
+        <br>
+        <md-input placeholder="Vorlesung" class="meetinginput"></md-input>
+        <br>
+        <br>
+        <md-input placeholder="Start" class="meetinginput"></md-input>
+        <br>
+        <br>
+        <select (change)="setSelectedPerson($event.target.value)">
+            <option *ngFor="let duration of durationoptions" [value]="duration">{{duration}}</option>
+        </select>
+        <br>
+        <br>
+        <md-input placeholder="Info" class="meetinginput" [formControl]="createform.controls['info']"></md-input>
+        <br>
+        <br>
+        <input type="date">
+        <button md-raised-button type="submit">Create request</button>
+    </form>
 </div>

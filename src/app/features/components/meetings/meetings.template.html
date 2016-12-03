@@ -1,9 +1,9 @@
 <div class="meetings">
-    <button md-raised-button (click)="click()">add</button>
-    <button md-raised-button (click)="replace()">replace</button>
-    <button md-raised-button (click)="remove()">remove</button>
-    <br>
-    <br>
+    <div class="createbutton">
+        <button md-mini-fab color="warn" (click)="create()">
+            <md-icon class="md-24">add</md-icon>
+        </button>
+    </div>
     <md-card *ngFor="let meeting of (meetings | async)" class="meeting" (click)="openDialog(meeting)">
         <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
         <md-card-title>{{meeting.prof}}</md-card-title>

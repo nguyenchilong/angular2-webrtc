@@ -1,4 +1,6 @@
-.meetings{
-    max-height: 100vh;
-    overflow-y: scroll;
-}
+.meetings {
+  max-height: 100vh;
+  overflow-y: scroll; }
+
+md-card:hover {
+  background: #e6e5e5; }

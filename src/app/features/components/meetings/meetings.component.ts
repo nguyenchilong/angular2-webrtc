@@ -63,6 +63,14 @@ export class MeetingsCompontent {
         this.store.dispatch({ type: 'REPLACE_MEETING', payload: this.meeting2 });
     }
 
+    create(): void {
+        let config: MdDialogConfig = { disableClose: false };
+        this.dialogRef = this.dialog.open(MeetingDialog, config);
+        // when closing dialog
+        this.dialogRef.afterClosed().subscribe(result => {
+        });
+    }
+
     openDialog(meeting) {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(MeetingDialog, config);
@@ -71,7 +79,6 @@ export class MeetingsCompontent {
 
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {
-            this.dialogRef.componentInstance.none = true;
         });
     }
 }

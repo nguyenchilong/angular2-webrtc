@@ -43,7 +43,10 @@ export class RestService {
                 },
                 prof: 'Prof. Dr. Otto Offline',
                 vorlesung: 'Mathe 1/2',
-                time: 'Mo 15:30 13.12.16'
+                info: 'Besprechen bzgl. 1 Abgabe',
+                duration: 5,
+                time: 'Mo 15:30 13.12.16',
+                status: 'canceled'
             },
             {
                 id: 2,
@@ -56,7 +59,10 @@ export class RestService {
                 },
                 prof: 'Prof. Dr. Ralf Kramer',
                 vorlesung: 'Datenbanksysteme',
-                time: 'Do 12:30 20.12.16'
+                info: 'Besprechen bzgl. 1 Abgabe',
+                duration: 15,
+                time: 'Do 12:30 20.12.16',
+                status: 'open'
             },
             {
                 id: 3,
@@ -69,7 +75,10 @@ export class RestService {
                 },
                 prof: 'Prof. Dr. Oliver Höß',
                 vorlesung: 'Softwaremodellierung',
-                time: 'Fr 13:30 01.12.16'
+                info: 'Besprechen bzgl. 1 Abgabe',
+                duration: 25,
+                time: 'Fr 13:30 01.12.16',
+                status: 'accepted'
             }
         ];
         this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
@@ -98,10 +107,12 @@ export class RestService {
         // dummipersons
         let persons: Object = [
             {
-                name: 'Prof. Dr. Ralf Kramer'
+                name: 'Prof. Dr. Ralf Kramer',
+                id: 1
             },
             {
-                name: 'Prof. Dr. Oliver Höß'
+                name: 'Prof. Dr. Oliver Höß',
+                id: 2
             },
         ];
         this.store.dispatch({ type: 'ADD_PERSONS', payload: persons });
