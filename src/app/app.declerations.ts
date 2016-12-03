@@ -21,8 +21,10 @@ import { MeetingsDialog } from './features/dialogs/meetings-dialog/meetings-dial
 import { MeetingDialog } from './features/dialogs/meeting-dialog/meeting-dialog.component';
 import { ForgotDialog } from './features/dialogs/forgot-dialog/forgot-dialog.component';
 
-
 import { NavComponent } from './features/components/nav/nav.component';
+
+// Pipes
+import { TransformDatePipe } from './app.pipes';
 
 
 export const APP_DECLERATIONS = [
@@ -55,5 +57,8 @@ export const APP_DECLERATIONS = [
   ForgotDialog,
 
   // Structure
-  NavComponent
+  NavComponent,
+
+  // Pipes
+  TransformDatePipe
 ];
