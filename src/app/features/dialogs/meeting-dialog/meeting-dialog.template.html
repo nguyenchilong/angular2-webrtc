@@ -28,7 +28,7 @@
         <md-input placeholder="Title" class="meetinginput" [formControl]="createform.controls['title']"></md-input>
         <br>
         <br>
-        <select (change)="setSelectedPerson($event.target.value)">
+        <select>
             <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.name}}</option>
         </select>
         <br>
@@ -39,7 +39,7 @@
         <md-input placeholder="Start" class="meetinginput"></md-input>
         <br>
         <br>
-        <select (change)="setSelectedPerson($event.target.value)">
+        <select>
             <option *ngFor="let duration of durationoptions" [value]="duration">{{duration}}</option>
         </select>
         <br>
