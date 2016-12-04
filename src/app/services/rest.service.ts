@@ -108,11 +108,29 @@ export class RestService {
         let persons: Object = [
             {
                 name: 'Prof. Dr. Ralf Kramer',
-                id: 1
+                id: 1,
+                vorlesungen: [
+                    {
+                        title: 'Verteilte Systeme'
+                    },
+                    {
+                        title: 'IT-Sicherheit'
+                    }
+                ]
             },
             {
                 name: 'Prof. Dr. Oliver Höß',
-                id: 2
+                id: 2,
+                vorlesungen: [
+                    {
+                        title: 'Verteilte Systeme',
+                        id: 5
+                    },
+                    {
+                        title: 'IT-Sicherheit',
+                        id: 6
+                    }
+                ]
             },
         ];
         this.store.dispatch({ type: 'ADD_PERSONS', payload: persons });

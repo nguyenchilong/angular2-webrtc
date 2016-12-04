@@ -33,7 +33,9 @@
         </select>
         <br>
         <br>
-        <md-input placeholder="Vorlesung" class="meetinginput"></md-input>
+        <select>
+            <option *ngFor="let vorlesung of selectedperson.vorlesungen" [value]="vorlesung.id">{{vorlesung.title}}</option>
+        </select>
         <br>
         <br>
         <md-input placeholder="Start" class="meetinginput"></md-input>

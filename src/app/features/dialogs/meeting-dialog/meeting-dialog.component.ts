@@ -17,6 +17,7 @@ export class MeetingDialog {
     pers: any;
     durationoptions: any[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
+    selectedperson: Object;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
@@ -26,6 +27,10 @@ export class MeetingDialog {
         this.persons = this.store.select(store => store.persons);
         this.persons.subscribe((data) => {
             this.pers = data;
+        });
+        this.persons.first().subscribe(data => {
+            this.selectedperson = data[0];
+            console.log(data[0]);
         });
         this.createform = this.formBuilder.group({
             title: '',
