@@ -70,9 +70,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authservice.isAuthorized) {
-      this.restservice.getPersons();
-      this.restservice.getMeetings();
-    }
+
   }
 }

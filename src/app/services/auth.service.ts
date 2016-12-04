@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { RestService } from './rest.service';
 
 @Injectable()
 
@@ -9,11 +10,12 @@ export class AuthService implements CanActivate {
 
     // JWT_KEY ist for getting the JWT from localStorage
     JWT_KEY: string = 'retain_token';
-    JWT: string = '';
+    JWT: string;
 
     constructor(
         private router: Router,
-        private store: Store<any>
+        private store: Store<any>,
+        private restservice: RestService
     ) {
         const token = window.localStorage.getItem(this.JWT_KEY);
         // check if token already exists in localStorage
@@ -47,16 +49,12 @@ export class AuthService implements CanActivate {
         }
         this.JWT = jwt;
         this.store.dispatch({ type: 'LOGIN_USER' });
-    }
 
-    // here we do a http post request for getting
-    // the jwt, set it to local storage and push in into the
-    // user object in the store
-    authenticate(path: string, credentials: any): Observable<any> {
-        /*
-        return this.http....do(setJWT(jwt)).....
-        */
-        return;
+        if (this.isAuthorized()) {
+            console.log('Started initial loading of data');
+            this.restservice.getPersons();
+            this.restservice.getMeetings();
+        }
     }
 
     signout(): void {
