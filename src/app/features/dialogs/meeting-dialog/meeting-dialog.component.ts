@@ -17,7 +17,7 @@ export class MeetingDialog {
     pers: any;
     durationoptions: any[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
-    selectedperson: Object;
+    selectedperson: any;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
@@ -46,7 +46,7 @@ export class MeetingDialog {
                 primary: '#ad2121',
                 secondary: '#FAE3E3'
             },
-            prof: 'Prof. Dr. Oliver Höß',
+            prof: this.selectedperson.name,
             vorlesung: 'Softwaremodellierung',
             info: this.createform.get('info').value,
             duration: 25,

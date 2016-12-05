@@ -3,4 +3,6 @@
   overflow-y: scroll; }
 
 md-card:hover {
-  background: #e6e5e5; }
+  background: #e6e5e5;
+  cursor: pointer;
+  cursor: hand; }

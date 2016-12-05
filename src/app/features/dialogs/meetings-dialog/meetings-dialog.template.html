@@ -1,6 +1,5 @@
-
-    <md-card *ngFor="let event of events" (click)="openDialog(event)">
-        <h4>{{event.title}}</h4>
-        <p>{{event.prof}}</p>
-        <p>{{event.start | transformdate}}</p>
-    </md-card>
+<md-card *ngFor="let event of events" (click)="openDialog(event)">
+    <h4>{{event.title}}</h4>
+    <p>{{event.prof}}</p>
+    <p>{{event.start | transformdate}}</p>
+</md-card>
