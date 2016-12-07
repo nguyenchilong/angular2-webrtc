@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { RestService } from '../../../services/rest.service';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { ForgotDialog } from '../../dialogs/forgot-dialog/forgot-dialog.component';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class LoginComponent {
         private restservice: RestService,
         private changeDetectionRef: ChangeDetectorRef,
         public dialog: MdDialog,
+        private store: Store<any>
     ) {
         if (this.authservice.isAuthorized) {
             this.router.navigate(['']);
@@ -49,9 +51,9 @@ export class LoginComponent {
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
+                this.store.dispatch({type: 'SET_USER', payload : data.user});
                 this.authservice.setJWT('token');
                 this.router.navigate(['']);
-
             },
             (err) => {
                 this.isloading = false;

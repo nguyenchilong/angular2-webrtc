@@ -7,18 +7,18 @@ export class WampService {
     con: any;
     constructor() { }
 
-    initWamp(): void {
+    initWamp(id): void {
         let conn = new ab.Session(
             // URL of socket
             WAMP,
             // onsuc:
             function () {
-                /*
-                conn.subscribe('signaling/', function (topic, data) {
+
+                conn.subscribe('signaling/' + id, function (topic, data) {
                     console.log(data);
-                    
+
                 });
-                */
+
             },
             // on err
             function () {
