@@ -7,6 +7,7 @@ import { LoginComponent } from './features/components/login/login.component';
 import { ChatComponent } from './features/components/chat/chat.component';
 import { CalendarComponent } from './features/components/calendar/calendar.component';
 import { MeetingsCompontent } from './features/components/meetings/meetings.component';
+import { PasswordChangeComponent } from './features/components/passwordchange/passwordchange.component';
 
 import { DashboardViewComponent } from './features/views/dashboard-view/dashboard-view.component';
 import { CallerViewComponent } from './features/views/caller-view/caller-view.component';
@@ -38,6 +39,7 @@ export const APP_DECLERATIONS = [
   ChatComponent,
   CalendarComponent,
   MeetingsCompontent,
+  PasswordChangeComponent,
 
   // Views
   DashboardViewComponent,
