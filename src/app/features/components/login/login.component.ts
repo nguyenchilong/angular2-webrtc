@@ -51,6 +51,7 @@ export class LoginComponent {
                 this.changeDetectionRef.markForCheck();
                 this.authservice.setJWT(data.token);
                 this.router.navigate(['']);
+
             },
             (err) => {
                 this.isloading = false;

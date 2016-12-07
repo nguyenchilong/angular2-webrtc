@@ -3,6 +3,7 @@ import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RestService } from './rest.service';
+import { WampService } from './wamp.service';
 
 @Injectable()
 
@@ -15,7 +16,8 @@ export class AuthService implements CanActivate {
     constructor(
         private router: Router,
         private store: Store<any>,
-        private restservice: RestService
+        private restservice: RestService,
+        private wampservice: WampService
     ) {
         const token = window.localStorage.getItem(this.JWT_KEY);
         // check if token already exists in localStorage
@@ -54,6 +56,7 @@ export class AuthService implements CanActivate {
             console.log('Started initial loading of data');
             this.restservice.getPersons();
             this.restservice.getMeetings();
+            this.wampservice.initWamp();
         }
     }
 

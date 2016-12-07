@@ -26,7 +26,7 @@ export class RestService {
         let headers = new Headers();
         headers.append('Content-Type', 'text/plain');
         headers.append('Authorization', values);
-        return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/tokens', {}, { headers: headers });
+        return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/tokens', {}, { headers: headers, withCredentials: true });
     }
 
 
