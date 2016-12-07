@@ -12,7 +12,6 @@ export class AuthService implements CanActivate {
     // JWT_KEY ist for getting the JWT from localStorage
     JWT_KEY: string = 'retain_token';
     JWT: string;
-    user: any;
 
     constructor(
         private router: Router,
@@ -26,11 +25,6 @@ export class AuthService implements CanActivate {
         if (token) {
             this.setJWT(token);
         }
-
-        this.store.select(store => store.user).subscribe(user => {
-            this.user = user;
-            console.log(this.user);
-        });
     };
 
     isAuthorized(): boolean {
@@ -62,7 +56,7 @@ export class AuthService implements CanActivate {
             console.log('Started initial loading of data');
             this.restservice.getPersons();
             this.restservice.getMeetings();
-            this.wampservice.initWamp(this.user.id);
+            this.wampservice.initWamp();
         }
     }
 

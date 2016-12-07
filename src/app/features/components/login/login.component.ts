@@ -51,7 +51,6 @@ export class LoginComponent {
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                this.store.dispatch({type: 'SET_USER', payload : data.user});
                 this.authservice.setJWT('token');
                 this.router.navigate(['']);
             },

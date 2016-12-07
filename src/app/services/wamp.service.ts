@@ -7,7 +7,7 @@ export class WampService {
     con: any;
     constructor() { }
 
-    initWamp(id): void {
+    initWamp(): void {
         let conn = new ab.Session(
             // URL of socket
             WAMP,
