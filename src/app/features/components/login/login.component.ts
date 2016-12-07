@@ -49,7 +49,7 @@ export class LoginComponent {
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                this.authservice.setJWT(data.token);
+                this.authservice.setJWT('token');
                 this.router.navigate(['']);
 
             },
