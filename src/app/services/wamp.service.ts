@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { WAMP } from './constants';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 @Injectable()
 
 export class WampService {
     con: any;
+    signaling: Subject<any>;
     constructor(
         private http: Http
     ) { }
@@ -16,8 +17,9 @@ export class WampService {
             WAMP,
             // onsuc:
             () => {
-                this.con.subscribe('signaling/' + id, function (topic, data) {
-                    console.log(data);
+                this.con.subscribe('signaling/' + id, (topic, data) => {
+                    console.log(JSON.parse(data));
+                    this.signaling.next(JSON.parse(data));
                 });
             },
             // on err
