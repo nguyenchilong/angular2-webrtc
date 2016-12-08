@@ -38,7 +38,8 @@ export class WampService {
         {
         },
         {
-            headers: headers
+            headers: headers,
+            withCredentials: true
         });
     }
     sendIceCandidate(): void {
