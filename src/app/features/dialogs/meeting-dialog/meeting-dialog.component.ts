@@ -18,6 +18,7 @@ export class MeetingDialog {
     durationoptions: any[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
     selectedperson: any;
+    user: Observable<any>;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
@@ -36,6 +37,7 @@ export class MeetingDialog {
             title: '',
             info: ''
         });
+        this.user = this.store.select(store => store.user);
     }
 
     save(): void {

@@ -9,28 +9,6 @@ export class WampService {
     constructor(
         private http: Http
     ) { }
-/*
-    initWamp(id): void {
-        let conn = new ab.Session(
-            // URL of socket
-            WAMP,
-            // onsuc:
-            function () {
-
-                conn.subscribe('signaling/' + id, function (topic, data) {
-                    console.log(data);
-
-                });
-
-            },
-            // on err
-            function () {
-            },
-            { 'skipSubprotocolCheck': true }
-        );
-        this.con = conn;
-    }
-    */
 
     initWamp(id): void {
         this.con = new ab.Session(

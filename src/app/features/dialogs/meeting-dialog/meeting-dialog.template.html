@@ -1,4 +1,6 @@
 <div *ngIf="meeting">
+    <button md-raised-button *ngIf="(user | async).role === 'prof'">Join Meeting</button>
+    <br>
     <md-input placeholder="Status" class="meetinginput" disabled>{{meeting.status}}</md-input>
     <md-input placeholder="Title" value="{{meeting.title}}" class="meetinginput" disabled></md-input>
     <br>
