@@ -21,6 +21,10 @@ export class DashboardViewComponent {
                 private wamp: WampService
         ) {
                 this.user = this.store.select(store => store.user);
+                this.wamp.signaling.subscribe(data => {
+                        console.log('data from subscriber:');
+                        console.log(data);
+                });
         }
 
         toProf(): void {

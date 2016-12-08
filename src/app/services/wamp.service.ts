@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 
 export class WampService {
     con: any;
-    signaling: Subject<any>;
+    signaling: Subject<any> = new Subject();
     constructor(
         private http: Http
     ) { }
