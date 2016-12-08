@@ -59,7 +59,19 @@ export class MeetingDialog {
     }
 
     joinMeeting(): void {
-        
+
+    }
+
+    acceptMeeting(): void {
+
+    }
+
+    rejectMeeting(): void {
+
+    }
+
+    deleteMeeting(): void {
+
     }
 }
 

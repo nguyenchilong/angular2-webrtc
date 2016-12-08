@@ -1,5 +1,5 @@
 <div class="meetings">
-    <div class="createbutton">
+    <div class="createbutton" *ngIf="(user | async).role === 'stud'">
         <button md-mini-fab color="warn" (click)="create()">
             <md-icon class="md-24">add</md-icon>
         </button>

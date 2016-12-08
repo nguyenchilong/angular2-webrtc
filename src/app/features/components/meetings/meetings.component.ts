@@ -15,12 +15,14 @@ export class MeetingsCompontent {
 
     meetings: Observable<any>;
     dialogRef: MdDialogRef<MeetingDialog>;
+    user: Observable<any>;
 
     constructor(
         private store: Store<any>,
         public dialog: MdDialog
     ) {
         this.meetings = this.store.select(store => store.meetings);
+        this.user = this.store.select(store => store.user);
     };
 
     create(): void {

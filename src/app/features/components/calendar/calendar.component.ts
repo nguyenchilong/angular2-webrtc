@@ -21,12 +21,16 @@ export class CalendarComponent implements OnInit {
     dialogRef2: MdDialogRef<MeetingDialog>;
     viewDate: Date = new Date();
     view: string = 'month';
+    user: any;
 
     constructor(
         public dialog: MdDialog,
         public store: Store<any>,
         public restservice: RestService) {
         this.meetings = this.store.select(store => store.meetings);
+        this.store.select(store => store.user).subscribe(user => {
+            this.user = user;
+        });
     }
 
     ngOnInit() {
@@ -61,9 +65,11 @@ export class CalendarComponent implements OnInit {
             if (e.events.length !== 0) {
             } else {
                 this.dialogRef.close();
-                this.dialogRef2 = this.dialog.open(MeetingDialog, config);
-                this.dialogRef2.afterClosed().subscribe(result => {
-                });
+                if (this.user.role === 'stud') {
+                    this.dialogRef2 = this.dialog.open(MeetingDialog, config);
+                    this.dialogRef2.afterClosed().subscribe(result => {
+                    });
+                }
             }
         }
         // when closing dialog
