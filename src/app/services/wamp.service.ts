@@ -32,11 +32,7 @@ export class WampService {
     }
 
     sendOfferOrAnswer(): Observable<any> {
-        let body = JSON.stringify({
-            key: 'certificate_request',
-            receiver: 'test2',
-            certificate: 'sdfsdf'
-        });
+        let body = 'key=certificate_request';
         let headers = new Headers();
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
         body,
