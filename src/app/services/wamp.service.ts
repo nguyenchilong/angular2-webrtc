@@ -32,8 +32,8 @@ export class WampService {
         console.log('send offer');
     }
 
-    sendOfferOrAnswer(): void {
-        this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
+    sendOfferOrAnswer(): any {
+        return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
         {
             key: 'certificate_request'
         });
