@@ -34,7 +34,7 @@ export class DashboardViewComponent {
         }
         test(): void {
                 console.log('starter request');
-                this.wamp.sendOfferOrAnswer().subscribe(data => {
+                this.wamp.sendOfferOrAnswer(2, 'testoffer').subscribe(data => {
                         console.log(data);
                 });
         }

@@ -28,8 +28,8 @@ export class WampService {
     }
 
 
-    sendOfferOrAnswer(to?, offeroranswer?): Observable<any> {
-        let body = 'key=certificate_request&receiver=test2&certificate=certificate';
+    sendOfferOrAnswer(to, offeroranswer): Observable<any> {
+        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + offeroranswer;
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
