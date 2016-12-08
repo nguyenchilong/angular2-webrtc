@@ -18,7 +18,8 @@ export class WampService {
             // onsuc:
             () => {
                 this.con.subscribe('signaling/' + id, (topic, data) => {
-                    this.signaling.next(data);
+                    let signalingdata = JSON.parse(data);
+                    this.signaling.next(signalingdata);
                 });
             },
             // on err
