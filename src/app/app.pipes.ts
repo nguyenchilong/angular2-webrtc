@@ -7,7 +7,7 @@ import * as moment from 'moment';
 
 export class TransformDatePipe implements PipeTransform {
     transform(value: string): string {
-        return moment(value).lang('de').format('Do MMMM, h:mm') + ' Uhr';
+        return moment(value).locale('de').format('Do MMMM, h:mm') + ' Uhr';
     }
 
 }
