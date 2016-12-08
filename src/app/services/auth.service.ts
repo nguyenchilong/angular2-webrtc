@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RestService } from './rest.service';
 import { WampService } from './wamp.service';
@@ -60,7 +59,6 @@ export class AuthService implements CanActivate {
             this.wampservice.initWamp(userid);
             this.store.dispatch({ type: 'SET_NAME', payload: localStorage.getItem('user_name') });
             this.store.dispatch({ type: 'SET_ROLE', payload: localStorage.getItem('user_role') });
-
         }
     }
 

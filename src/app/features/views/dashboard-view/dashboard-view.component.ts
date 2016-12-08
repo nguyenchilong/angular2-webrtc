@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
 import { Observable } from 'rxjs';
@@ -14,7 +14,6 @@ export class DashboardViewComponent {
 
         user: Observable<any>;
         switch: boolean = true;
-        @ViewChild('input') input;
 
         constructor(
                 private store: Store<any>,
@@ -22,10 +21,6 @@ export class DashboardViewComponent {
                 private wamp: WampService
         ) {
                 this.user = this.store.select(store => store.user);
-        }
-
-        setName(): void {
-                this.store.dispatch({ type: 'SET_NAME', payload: this.input._value });
         }
 
         toProf(): void {

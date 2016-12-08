@@ -4,8 +4,6 @@ import { Store } from '@ngrx/store';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
 
-
-
 @Component({
     selector: 'meetings-component',
     templateUrl: './meetings.template.html',

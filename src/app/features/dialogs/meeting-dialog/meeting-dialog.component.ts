@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'meeting-dialog',

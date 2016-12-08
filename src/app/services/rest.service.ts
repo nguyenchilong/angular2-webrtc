@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { REST } from './constants';
 import { Store } from '@ngrx/store';

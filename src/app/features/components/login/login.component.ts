@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { RestService } from '../../../services/rest.service';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { ForgotDialog } from '../../dialogs/forgot-dialog/forgot-dialog.component';
