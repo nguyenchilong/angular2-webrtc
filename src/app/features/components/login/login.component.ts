@@ -52,6 +52,7 @@ export class LoginComponent {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
                 this.authservice.setJWT('token');
+                localStorage.setItem('user', data.user);
                 this.router.navigate(['']);
             },
             (err) => {
