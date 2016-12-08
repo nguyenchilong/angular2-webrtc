@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { WAMP } from './constants';
-
+import { Http } from '@angular/http';
 @Injectable()
 
 export class WampService {
     con: any;
-    constructor() { }
+    constructor(
+        private http: Http
+    ) { }
 
     initWamp(id): void {
         let conn = new ab.Session(
@@ -26,6 +28,19 @@ export class WampService {
             { 'skipSubprotocolCheck': true }
         );
         this.con = conn;
+        this.sendOfferOrAnswer();
+        console.log('send offer');
+    }
+
+    sendOfferOrAnswer(): void {
+        this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
+        {
+            key: 'certificate_request'
+        });
+    }
+    sendIceCandidate(): void {
+        this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate', {});
+
     }
 
 }
