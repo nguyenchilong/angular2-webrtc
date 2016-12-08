@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WAMP } from './constants';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs';
 @Injectable()
 
 export class WampService {
@@ -28,18 +29,20 @@ export class WampService {
             { 'skipSubprotocolCheck': true }
         );
         this.con = conn;
-        this.sendOfferOrAnswer();
         console.log('send offer');
     }
 
-    sendOfferOrAnswer(): any {
+    sendOfferOrAnswer(): Observable<any> {
+        let headers = new Headers();
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
         {
-            key: 'certificate_request'
+        },
+        {
+            headers: headers
         });
     }
     sendIceCandidate(): void {
-        this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate', {});
+        this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate', {}, {});
 
     }
 

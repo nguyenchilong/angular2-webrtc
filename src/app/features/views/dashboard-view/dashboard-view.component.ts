@@ -38,6 +38,9 @@ export class DashboardViewComponent {
                 this.switch = !this.switch;
         }
         test(): void {
-                this.wamp.sendOfferOrAnswer();
+                console.log('starter request');
+                this.wamp.sendOfferOrAnswer().subscribe(data => {
+                        console.log(data);
+                });
         }
 }
