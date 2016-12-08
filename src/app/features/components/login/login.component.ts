@@ -52,7 +52,7 @@ export class LoginComponent {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
                 this.authservice.setJWT('token');
-                localStorage.setItem('user', data.user);
+                localStorage.setItem('user_id', data.user.id);
                 this.router.navigate(['']);
             },
             (err) => {

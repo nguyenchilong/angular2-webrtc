@@ -56,7 +56,8 @@ export class AuthService implements CanActivate {
             console.log('Started initial loading of data');
             this.restservice.getPersons();
             this.restservice.getMeetings();
-            this.wampservice.initWamp();
+            let userid = localStorage.getItem('user_id');
+            this.wampservice.initWamp(userid);
         }
     }
 
