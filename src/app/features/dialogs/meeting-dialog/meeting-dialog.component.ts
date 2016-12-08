@@ -57,5 +57,9 @@ export class MeetingDialog {
         };
         this.store.dispatch({ type: 'ADD_MEETING', payload: init });
     }
+
+    joinMeeting(): void {
+        
+    }
 }
 

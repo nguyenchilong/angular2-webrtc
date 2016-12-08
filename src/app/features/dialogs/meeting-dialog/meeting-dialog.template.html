@@ -1,6 +1,7 @@
 <div *ngIf="meeting">
-    <button md-raised-button *ngIf="(user | async).role === 'prof'">Join Meeting</button>
-    <br>
+    <div *ngIf="((user | async).role === 'prof') && meeting.status ==='accepted'">
+        <button md-raised-button (click)="joinMeeting()">Join Meeting</button>
+    </div>
     <md-input placeholder="Status" class="meetinginput" disabled>{{meeting.status}}</md-input>
     <md-input placeholder="Title" value="{{meeting.title}}" class="meetinginput" disabled></md-input>
     <br>
