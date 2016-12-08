@@ -1,6 +1,5 @@
 import { Component, ViewChild, OnInit, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { CalendarComponent } from '../../components/calendar/calendar.component';
-import { WampService } from '../../../services/wamp.service';
 @Component({
     selector: 'calendar-view-component',
     templateUrl: './calendar-view.template.html',
@@ -28,15 +27,12 @@ export class CalendarViewComponent implements OnInit {
     ];
 
     constructor(
-        private wamp: WampService
+
     ) {}
 
     ngOnInit() {
     }
 
-    click(): void {
-        this.wamp.sendOfferOrAnswer();
-    }
 
 
 }

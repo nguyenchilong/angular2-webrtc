@@ -2,6 +2,7 @@ import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
 import { Observable } from 'rxjs';
+import { WampService } from '../../../services/wamp.service';
 
 @Component({
         selector: 'dashboard-view-component',
@@ -17,7 +18,8 @@ export class DashboardViewComponent {
 
         constructor(
                 private store: Store<any>,
-                private restservice: RestService
+                private restservice: RestService,
+                private wamp: WampService
         ) {
                 this.user = this.store.select(store => store.user);
         }
@@ -36,8 +38,6 @@ export class DashboardViewComponent {
                 this.switch = !this.switch;
         }
         test(): void {
-                this.restservice.test().subscribe( (res) => {
-                        console.log(res.json());
-                });
+                this.wamp.sendOfferOrAnswer();
         }
 }
