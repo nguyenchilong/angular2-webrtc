@@ -51,10 +51,10 @@ export class LoginComponent {
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                this.authservice.setJWT('token');
                 localStorage.setItem('user_id', data.user.id);
                 localStorage.setItem('user_role', data.user.roles[0]);
                 localStorage.setItem('user_name', data.user.username);
+                this.authservice.setJWT('token');
                 this.router.navigate(['']);
             },
             (err) => {
