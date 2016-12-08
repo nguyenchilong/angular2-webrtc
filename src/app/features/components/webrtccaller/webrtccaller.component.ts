@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
+import { WampService } from '../../../services/wamp.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -25,7 +26,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
-        private store: Store<any>) {
+        private store: Store<any>,
+        private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
     }
 
@@ -95,7 +97,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
                         // HIER KOMMT DER PUSHOFFERANSER HIN
                         this.socket.emit('push1', offer);
-
+                        this.wamp.sendOfferOrAnswer(3, JSON.stringify(offer));
                         // start listening for an answer
 
                         // DAS MUSS PASSIEREN WENN VON CHANNEL EINE MSG KOMMT VOM TYP answer
