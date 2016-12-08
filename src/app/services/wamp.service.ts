@@ -29,13 +29,15 @@ export class WampService {
             { 'skipSubprotocolCheck': true }
         );
         this.con = conn;
-        console.log('send offer');
     }
 
     sendOfferOrAnswer(): Observable<any> {
         let headers = new Headers();
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
         {
+            key: 'certificate_request',
+            receiver: 'test2',
+            certificate: 'sdfsdf'
         },
         {
             headers: headers,
