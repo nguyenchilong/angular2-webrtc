@@ -25,15 +25,26 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
             return Object.assign(
                 {},
                 state,
-                { name: action.payload}
+                { name: action.payload }
             );
         case 'SET_ROLE':
-            return Object.assign(
-                {},
-                state,
-                { role: action.payload}
-            );
-        case 'Set_USER':
+            switch (action.payload) {
+                case 'ROLE_STUDENT':
+                    return Object.assign(
+                        {},
+                        state,
+                        { role: 'stud' }
+                    );
+                case 'ROLE_PROF':
+                    return Object.assign(
+                        {},
+                        state,
+                        { role: 'prof' }
+                    );
+                default:
+                    return state;
+            };
+        case 'SET_USER':
             return Object.assign(
                 {},
                 state,

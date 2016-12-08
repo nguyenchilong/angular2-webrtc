@@ -53,7 +53,8 @@ export class LoginComponent {
                 this.changeDetectionRef.markForCheck();
                 this.authservice.setJWT('token');
                 localStorage.setItem('user_id', data.user.id);
-                console.log(data);
+                localStorage.setItem('user_role', data.user.roles[0]);
+                localStorage.setItem('user_name', data.user.username);
                 this.router.navigate(['']);
             },
             (err) => {
