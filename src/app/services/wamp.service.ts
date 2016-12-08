@@ -19,7 +19,7 @@ export class WampService {
             () => {
                 this.con.subscribe('signaling/' + id, (topic, data) => {
                     this.signaling.next(data);
-                    console.log(data.key);
+                    console.log(data);
                 });
             },
             // on err
