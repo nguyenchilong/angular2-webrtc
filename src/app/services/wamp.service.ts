@@ -31,7 +31,7 @@ export class WampService {
         this.con = conn;
     }
 
-    sendOfferOrAnswer(): Observable<any> {
+    sendOfferOrAnswer(to?, offeroranswer?): Observable<any> {
         let body = 'key=certificate_request&receiver=test2&certificate=certificate';
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
