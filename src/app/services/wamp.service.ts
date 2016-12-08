@@ -9,7 +9,7 @@ export class WampService {
     constructor(
         private http: Http
     ) { }
-
+/*
     initWamp(id): void {
         let conn = new ab.Session(
             // URL of socket
@@ -30,6 +30,28 @@ export class WampService {
         );
         this.con = conn;
     }
+    */
+
+    initWamp(id): void {
+        this.con = new ab.Session(
+            // URL of socket
+            WAMP,
+            // onsuc:
+            () => {
+
+                this.con.subscribe('signaling/' + id, function (topic, data) {
+                    console.log(data);
+
+                });
+
+            },
+            // on err
+            function () {
+            },
+            { 'skipSubprotocolCheck': true }
+        );
+    }
+
 
     sendOfferOrAnswer(to?, offeroranswer?): Observable<any> {
         let body = 'key=certificate_request&receiver=test2&certificate=certificate';
