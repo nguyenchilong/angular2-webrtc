@@ -1,6 +1,6 @@
 <div *ngIf="meeting">
     <md-input placeholder="Status" class="meetinginput" value="{{meeting.status}}" disabled></md-input>
-    <md-input placeholder="Title" value="{{meeting.title}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Title" value="{{meeting.title}}" class="meetinginput" [formControl]="createform.controls['title']" disabled></md-input>
     <br>
     <br>
     <select (change)="setSelectedPerson($event.target.value)" disabled>
@@ -20,9 +20,11 @@
     <br>
     <br>
     <md-input placeholder="Info" value="{{meeting.info}}" class="meetinginput" disabled></md-input>
-    <br>
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="meeting.status ==='open'">
+            <br>
+            <md-input placeholder="Additional information for student"></md-input>
+            <br>
             <button md-raised-button (click)="acceptMeeting()">Accept</button>
             <button md-raised-button (click)="rejectMeeting()" color="warn">Reject</button>
         </div>

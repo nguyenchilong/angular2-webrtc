@@ -75,6 +75,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
+
+        // DAS MUSS NACH UNTEN
         this.socket.on('getice2',
             (msg) => {
                 console.log('new icecandidate');
@@ -90,8 +92,14 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
+
+                        // HIER KOMMT DER PUSHOFFERANSER HIN
                         this.socket.emit('push1', offer);
+
                         // start listening for an answer
+
+                        // DAS MUSS PASSIEREN WENN VON CHANNEL EINE MSG KOMMT VOM TYP answer
+                        // HIER KANN AUCH GLEICH DAS EMPFANGEN DES ICECANDIDATE KOMMEN
                         this.socket.on('get2', (msg) => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
