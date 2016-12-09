@@ -24,9 +24,6 @@ export class DashboardViewComponent {
                 this.wamp.offer.subscribe(data => {
                         console.log('data from subscriber:');
                         console.log(data);
-                        // STRING WIEDER UMWANDELN!!!!!! KEIN ' erlaubt
-                        console.log(JSON.parse(data.certificate));
-                        // ALSO
                         console.log(JSON.parse(data.certificate.replace(/'/g, '"')));
                 });
         }
