@@ -97,8 +97,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
                         // HIER KOMMT DER PUSHOFFERANSER HIN
                         this.socket.emit('push1', offer);
-                        this.wamp.sendOfferOrAnswer(3, JSON.stringify(offer).replace('"', "'" )).subscribe(data=>{});
-                        console.log(JSON.stringify(offer).replace('"', "'" ));
+                        this.wamp.sendOfferOrAnswer(3, JSON.stringify(offer).replace(/"/g, "'" )).subscribe(data=>{});
+                        console.log(JSON.stringify(offer).replace(/"/g, "'" ));
                         // start listening for an answer
 
                         // DAS MUSS PASSIEREN WENN VON CHANNEL EINE MSG KOMMT VOM TYP answer
