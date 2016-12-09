@@ -19,10 +19,12 @@ export class WampService {
             // onsuc:
             () => {
                 this.con.subscribe('signaling/' + id, (topic, data) => {
-                    let d = JSON.parse(data);
-                    console.log(d);
-                    this.offer.next(data);
-                    console.log(data);
+                    if (typeof data === typeof new Object()) {
+                        console.log(data);
+                    } else {
+                        this.offer.next(JSON.parse(data));
+                        console.log(JSON.parse(data));
+                    }
                 });
             },
             // on err
@@ -38,11 +40,11 @@ export class WampService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
-        body,
-        {
-            headers: headers,
-            withCredentials: true
-        });
+            body,
+            {
+                headers: headers,
+                withCredentials: true
+            });
     }
     sendIceCandidate(): void {
         this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate', {}, {});
