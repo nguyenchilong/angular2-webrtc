@@ -97,12 +97,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
                         // HIER KOMMT DER PUSHOFFERANSER HIN
                         this.socket.emit('push1', offer);
-                        this.wamp.sendOfferOrAnswer(3, JSON.stringify(offer).replace(/"/g, "'")).subscribe(data=>{});
-                        console.log(JSON.stringify(offer).replace(/"/g, "'" ));
-                        // start listening for an answer
-
-                        // DAS MUSS PASSIEREN WENN VON CHANNEL EINE MSG KOMMT VOM TYP answer
-                        // HIER KANN AUCH GLEICH DAS EMPFANGEN DES ICECANDIDATE KOMMEN
+                        this.wamp.sendOfferOrAnswer(3, btoa(JSON.stringify(offer))).subscribe(data=>{});
                         this.socket.on('get2', (msg) => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc

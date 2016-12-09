@@ -25,6 +25,7 @@ export class DashboardViewComponent {
                         console.log('data from subscriber:');
                         console.log(data);
                         console.log(data.certificate);
+                        console.log(JSON.parse(atob(data.certificate)));
                 });
         }
 
