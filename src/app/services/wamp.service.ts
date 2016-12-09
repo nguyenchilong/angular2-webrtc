@@ -7,7 +7,8 @@ import { Observable, Subject } from 'rxjs';
 export class WampService {
     con: any;
     offer: Subject<any> = new Subject();
-
+    answer: Subject<any> = new Subject();
+    icecandidate: Subject<any> = new Subject();
     constructor(
         private http: Http
     ) { }
@@ -22,7 +23,14 @@ export class WampService {
                     if (typeof data === typeof new Object()) {
                         console.log(data);
                     } else {
-                        this.offer.next(JSON.parse(data));
+                        let obj = JSON.parse(atob(data.certificate));
+                        if (obj.type === 'offer') {
+                            this.offer.next(obj);
+                        } else if (obj.type === 'answer') {
+                            this.answer.next(obj);
+                        } else {
+                            this.icecandidate.next(obj);
+                        }
                     }
                 });
             },
@@ -34,8 +42,8 @@ export class WampService {
     }
 
 
-    sendOfferOrAnswer(to, offeroranswer): Observable<any> {
-        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + offeroranswer;
+    sendOfferOrAnswer(to, objecttosend): Observable<any> {
+        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
