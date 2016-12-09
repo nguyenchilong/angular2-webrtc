@@ -24,7 +24,7 @@ export class DashboardViewComponent {
                 this.wamp.offer.subscribe(data => {
                         console.log('data from subscriber:');
                         console.log(data);
-                        console.log(JSON.parse(data.certificate.replace(/'/g, '"')));
+                        console.log(data.certificate);
                 });
         }
 
