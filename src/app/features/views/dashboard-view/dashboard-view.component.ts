@@ -24,7 +24,10 @@ export class DashboardViewComponent {
                 this.wamp.offer.subscribe(data => {
                         console.log('data from subscriber:');
                         console.log(data);
+                        // STRING WIEDER UMWANDELN!!!!!! KEIN ' erlaubt
                         console.log(JSON.parse(data.certificate));
+                        // ALSO
+                        console.log(JSON.parse(data.certificate.replace(/'/g, '"')));
                 });
         }
 
@@ -36,10 +39,5 @@ export class DashboardViewComponent {
         toStud(): void {
                 this.store.dispatch({ type: 'SET_ROLE', payload: 'stud' });
                 this.switch = !this.switch;
-        }
-        test(): void {
-                console.log('starter request');
-                this.wamp.sendOfferOrAnswer(2, 'testoffer').subscribe(data => {
-                });
         }
 }
