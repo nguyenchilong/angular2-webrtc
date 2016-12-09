@@ -20,7 +20,7 @@ export class WampService {
             () => {
                 this.con.subscribe('signaling/' + id, (topic, data) => {
                     this.offer.next(JSON.parse(data));
-                    console.log(JSON.parse(data));
+                    console.log(data);
                 });
             },
             // on err
