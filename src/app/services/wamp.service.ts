@@ -6,7 +6,8 @@ import { Observable, Subject } from 'rxjs';
 
 export class WampService {
     con: any;
-    signaling: Subject<any> = new Subject();
+    offer: Subject<any> = new Subject();
+
     constructor(
         private http: Http
     ) { }
@@ -18,8 +19,8 @@ export class WampService {
             // onsuc:
             () => {
                 this.con.subscribe('signaling/' + id, (topic, data) => {
-                    this.signaling.next(data);
-                    console.log(data);
+                    this.offer.next(JSON.parse(data));
+                    console.log(JSON.parse(data));
                 });
             },
             // on err
