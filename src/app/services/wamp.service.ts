@@ -22,8 +22,7 @@ export class WampService {
                     if (typeof data === typeof new Object()) {
                         console.log(data);
                     } else {
-                        this.offer.next(JSON.parse(data));
-                        console.log(JSON.parse(data));
+                        this.offer.next(data);
                     }
                 });
             },
