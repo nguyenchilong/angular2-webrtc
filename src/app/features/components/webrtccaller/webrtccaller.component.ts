@@ -1,6 +1,4 @@
 import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import * as io from 'socket.io-client';
-import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { WampService } from '../../../services/wamp.service';
 import { Store } from '@ngrx/store';
@@ -20,7 +18,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         video: true
     };
     stream: MediaStream;
-    socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     storecon: Observable<any>;
     @ViewChild('Video') video;
 
@@ -70,7 +67,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     startCall(): void {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                // this.socket.emit('pushice1', evt.candidate);
                 this.wamp.sendWithSocket(3, evt.candidate).subscribe(data => { });
             }
         };
@@ -78,15 +74,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
-        /*
-        // DAS MUSS NACH UNTEN
-        this.socket.on('getice2',
-            (msg) => {
-                console.log('new icecandidate');
-                this.peerconnectionservice.pc.addIceCandidate(msg);
-            }
-        );
-        */
         // add stream to pc
         this.peerconnectionservice.pc.addStream(this.stream);
         // create offer
@@ -96,7 +83,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
-                        // this.socket.emit('push1', offer);
                         this.wamp.sendWithSocket(3, offer).subscribe(data => { });
                         this.wamp.answer.subscribe(data => {
                             console.log('new answer');
@@ -114,21 +100,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                 this.peerconnectionservice.pc.addIceCandidate(data);
                             });
                         });
-                        /*
-                        this.socket.on('get2', (msg) => {
-                            console.log('new answer');
-                            // adding the answer as remotedescription to this.pc
-                            this.peerconnectionservice.pc.setRemoteDescription(
-                                new RTCSessionDescription(msg),
-                                () => {
-                                    this.store.dispatch({ type: 'CALL_STARTED' });
-                                },
-                                () => {
-                                    this.peerconnectionservice.recreateConnection();
-                                }
-                            );
-                        });
-                        */
                     },
                     () => {
                         this.peerconnectionservice.recreateConnection();
@@ -143,17 +114,22 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     stopCall(): void {
         this.peerconnectionservice.recreateConnection();
-        this.socket.removeAllListeners();
+        this.wamp.offer.unsubscribe();
+        this.wamp.icecandidate.unsubscribe();
     }
 
     ngOnInit() {
         this.startVideostream();
+        this.wamp.offer.unsubscribe();
+        this.wamp.icecandidate.unsubscribe();
         this.peerconnectionservice.createConnection();
     }
 
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
+        this.wamp.offer.unsubscribe();
+        this.wamp.icecandidate.unsubscribe();
     }
 
 }
