@@ -71,17 +71,13 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 // this.socket.emit('pushice1', evt.candidate);
-                this.wamp.sendWithSocket(3, evt.candidate).subscribe(data=>{});
+                this.wamp.sendWithSocket(3, evt.candidate).subscribe(data => { });
             }
         };
         // add remote stream to otherVideo after stream from other peer arrives
         this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
-
-        this.wamp.icecandidate.subscribe(data => {
-            this.peerconnectionservice.pc.addIceCandidate(data);
-        });
         /*
         // DAS MUSS NACH UNTEN
         this.socket.on('getice2',
@@ -101,7 +97,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     () => {
                         // push offer to signalingchannel
                         // this.socket.emit('push1', offer);
-                        this.wamp.sendWithSocket(3, offer).subscribe(data=>{});
+                        this.wamp.sendWithSocket(3, offer).subscribe(data => { });
                         this.wamp.answer.subscribe(data => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
@@ -114,6 +110,9 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                     this.peerconnectionservice.recreateConnection();
                                 }
                             );
+                            this.wamp.icecandidate.subscribe(data => {
+                                this.peerconnectionservice.pc.addIceCandidate(data);
+                            });
                         });
                         /*
                         this.socket.on('get2', (msg) => {

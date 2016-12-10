@@ -83,6 +83,9 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                                 // push answer to signalingchannel
                                 // this.socket.emit('push2', answer);
                                 this.wamp.sendWithSocket(2, answer);
+                                this.wamp.icecandidate.subscribe(ice => {
+                                    this.peerconnectionservice.pc.addIceCandidate(ice);
+                                });
                                 this.store.dispatch({ type: 'CALL_STARTED' });
                             },
                             () => {
@@ -104,9 +107,6 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     configurateRTCPeerConnection(): void {
         this.wamp.offer.subscribe(offer => {
             this.handleOffer(offer);
-        });
-        this.wamp.icecandidate.subscribe(ice => {
-            this.peerconnectionservice.pc.addIceCandidate(ice);
         });
         /*
         this.socket.on('get1',
