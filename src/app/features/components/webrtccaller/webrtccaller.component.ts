@@ -70,7 +70,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     startCall(): void {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                this.socket.emit('pushice1', evt.candidate);
+                // this.socket.emit('pushice1', evt.candidate);
                 this.wamp.sendWithSocket(3, evt.candidate).subscribe(data=>{});
             }
         };
@@ -79,6 +79,10 @@ export class WebrtcCaller implements OnInit, OnDestroy {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
 
+        this.wamp.icecandidate.subscribe(data => {
+            this.peerconnectionservice.pc.addIceCandidate(data);
+        });
+        /*
         // DAS MUSS NACH UNTEN
         this.socket.on('getice2',
             (msg) => {
@@ -86,6 +90,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                 this.peerconnectionservice.pc.addIceCandidate(msg);
             }
         );
+        */
         // add stream to pc
         this.peerconnectionservice.pc.addStream(this.stream);
         // create offer
@@ -95,10 +100,22 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
-
-                        // HIER KOMMT DER PUSHOFFERANSER HIN
-                        this.socket.emit('push1', offer);
+                        // this.socket.emit('push1', offer);
                         this.wamp.sendWithSocket(3, offer).subscribe(data=>{});
+                        this.wamp.answer.subscribe(data => {
+                            console.log('new answer');
+                            // adding the answer as remotedescription to this.pc
+                            this.peerconnectionservice.pc.setRemoteDescription(
+                                new RTCSessionDescription(data),
+                                () => {
+                                    this.store.dispatch({ type: 'CALL_STARTED' });
+                                },
+                                () => {
+                                    this.peerconnectionservice.recreateConnection();
+                                }
+                            );
+                        });
+                        /*
                         this.socket.on('get2', (msg) => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
@@ -112,6 +129,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                 }
                             );
                         });
+                        */
                     },
                     () => {
                         this.peerconnectionservice.recreateConnection();

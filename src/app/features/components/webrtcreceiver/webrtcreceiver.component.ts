@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from
 import * as io from 'socket.io-client';
 import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
+import { WampService } from '../../../services/wamp.service';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -27,6 +28,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
+        private wamp: WampService
     ) {
         this.storecon = this.store.select(store => store.peerconn);
     }
@@ -79,7 +81,8 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                             new RTCSessionDescription(answer),
                             () => {
                                 // push answer to signalingchannel
-                                this.socket.emit('push2', answer);
+                                // this.socket.emit('push2', answer);
+                                this.wamp.sendWithSocket(2, answer);
                                 this.store.dispatch({ type: 'CALL_STARTED' });
                             },
                             () => {
@@ -99,6 +102,13 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     }
 
     configurateRTCPeerConnection(): void {
+        this.wamp.offer.subscribe(offer => {
+            this.handleOffer(offer);
+        });
+        this.wamp.icecandidate.subscribe(ice => {
+            this.peerconnectionservice.pc.addIceCandidate(ice);
+        });
+        /*
         this.socket.on('get1',
             (msg) => {
                 console.log('new offer');
@@ -111,6 +121,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                 this.peerconnectionservice.pc.addIceCandidate(msg);
             }
         );
+        */
         // add remote stream to otherVideo
         this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
@@ -118,7 +129,8 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         // push ice candidates from config to server
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                this.socket.emit('pushice2', evt.candidate);
+                // this.socket.emit('pushice2', evt.candidate);
+                this.wamp.sendWithSocket(2, evt.candidate);
             }
         };
     }
