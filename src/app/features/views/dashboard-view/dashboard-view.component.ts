@@ -29,6 +29,10 @@ export class DashboardViewComponent {
                         console.log('ICE:');
                         console.log(data);
                 });
+                this.wamp.answer.subscribe(data => {
+                        console.log('ANSWER:');
+                        console.log(data);
+                });
         }
 
         toProf(): void {
