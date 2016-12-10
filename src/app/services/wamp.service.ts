@@ -43,7 +43,7 @@ export class WampService {
     }
 
 
-    sendOfferOrAnswer(to, objecttosend): Observable<any> {
+    sendWithSocket(to, objecttosend): Observable<any> {
         let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');

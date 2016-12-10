@@ -71,6 +71,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 this.socket.emit('pushice1', evt.candidate);
+                this.wamp.sendWithSocket(3, evt.candidate).subscribe(data=>{});
             }
         };
         // add remote stream to otherVideo after stream from other peer arrives
@@ -97,7 +98,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
                         // HIER KOMMT DER PUSHOFFERANSER HIN
                         this.socket.emit('push1', offer);
-                        this.wamp.sendOfferOrAnswer(3, offer).subscribe(data=>{});
+                        this.wamp.sendWithSocket(3, offer).subscribe(data=>{});
                         this.socket.on('get2', (msg) => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
