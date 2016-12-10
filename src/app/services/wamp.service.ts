@@ -23,14 +23,15 @@ export class WampService {
                     if (typeof data === typeof new Object()) {
                         console.log(data);
                     } else {
-                        let obj = JSON.parse(atob(data.certificate));
-                        if (obj.type === 'offer') {
-                            this.offer.next(obj);
-                        } else if (obj.type === 'answer') {
-                            this.answer.next(obj);
-                        } else {
-                            this.icecandidate.next(obj);
-                        }
+                        // hier muss noch data in ein object verwandelt werden, bevor das certificate mit atob deserialisert werden kann
+                        let seri = JSON.parse(data);
+                        let cert = JSON.parse(atob(seri.certificate));
+                        if (cert.type === 'offer') {
+                            this.offer.next(cert);
+                        } else if (cert.type === 'answer') {
+                            this.answer.next(cert);
+                        } else {}
+                        
                     }
                 });
             },
@@ -42,8 +43,8 @@ export class WampService {
     }
 
 
-    sendOfferOrAnswer(to, objecttosend): Observable<any> {
-        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));
+    sendOfferOrAnswer(to, offeroranswer): Observable<any> {
+        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + offeroranswer;
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
