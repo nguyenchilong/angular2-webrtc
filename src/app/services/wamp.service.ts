@@ -23,7 +23,6 @@ export class WampService {
                     if (typeof data === typeof new Object()) {
                         console.log(data);
                     } else {
-                        // hier muss noch data in ein object verwandelt werden, bevor das certificate mit atob deserialisert werden kann
                         let seri = JSON.parse(data);
                         let cert = JSON.parse(atob(seri.certificate));
                         if (cert.type === 'offer') {
