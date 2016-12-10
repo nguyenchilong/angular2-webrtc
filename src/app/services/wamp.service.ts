@@ -29,8 +29,9 @@ export class WampService {
                             this.offer.next(cert);
                         } else if (cert.type === 'answer') {
                             this.answer.next(cert);
-                        } else {}
-                        
+                        } else {
+                            this.icecandidate.next(cert);
+                        }
                     }
                 });
             },
@@ -42,8 +43,8 @@ export class WampService {
     }
 
 
-    sendOfferOrAnswer(to, offeroranswer): Observable<any> {
-        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + offeroranswer;
+    sendOfferOrAnswer(to, objecttosend): Observable<any> {
+        let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
