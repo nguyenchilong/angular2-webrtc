@@ -22,7 +22,11 @@ export class DashboardViewComponent {
         ) {
                 this.user = this.store.select(store => store.user);
                 this.wamp.offer.subscribe(data => {
-                        console.log('data from subscriber:');
+                        console.log('OFFER:');
+                        console.log(data);
+                });
+                this.wamp.icecandidate.subscribe(data => {
+                        console.log('ICE:');
                         console.log(data);
                 });
         }
