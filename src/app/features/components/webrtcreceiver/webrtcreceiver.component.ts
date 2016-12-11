@@ -120,8 +120,6 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         this.startVideostream();
         this.storecon.subscribe((con) => {
             if (con.connectionexists === true && con.callactive === false) {
-                this.wamp.offer.unsubscribe();
-                this.wamp.icecandidate.unsubscribe();
                 this.configurateRTCPeerConnection();
                 console.log('config receiver');
             }
@@ -131,8 +129,6 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.stopVideostream();
-        this.wamp.offer.unsubscribe();
-        this.wamp.icecandidate.unsubscribe();
         this.peerconnectionservice.closeConnection();
 
     }

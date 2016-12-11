@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
 import { Observable } from 'rxjs';
-import { WampService } from '../../../services/wamp.service';
 
 @Component({
         selector: 'dashboard-view-component',
@@ -17,22 +16,9 @@ export class DashboardViewComponent {
 
         constructor(
                 private store: Store<any>,
-                private restservice: RestService,
-                private wamp: WampService
+                private restservice: RestService
         ) {
                 this.user = this.store.select(store => store.user);
-                this.wamp.offer.subscribe(data => {
-                        console.log('OFFER:');
-                        console.log(data);
-                });
-                this.wamp.icecandidate.subscribe(data => {
-                        console.log('ICE:');
-                        console.log(data);
-                });
-                this.wamp.answer.subscribe(data => {
-                        console.log('ANSWER:');
-                        console.log(data);
-                });
         }
 
         toProf(): void {

@@ -114,22 +114,16 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     stopCall(): void {
         this.peerconnectionservice.recreateConnection();
-        this.wamp.offer.unsubscribe();
-        this.wamp.icecandidate.unsubscribe();
     }
 
     ngOnInit() {
         this.startVideostream();
-        this.wamp.offer.unsubscribe();
-        this.wamp.icecandidate.unsubscribe();
         this.peerconnectionservice.createConnection();
     }
 
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
-        this.wamp.offer.unsubscribe();
-        this.wamp.icecandidate.unsubscribe();
     }
 
 }
