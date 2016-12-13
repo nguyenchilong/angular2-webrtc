@@ -22,6 +22,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     storecon: Observable<any>;
     offerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
+    storeconStream: Subscription = new Subscription();
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
@@ -124,7 +125,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.startVideostream();
-        this.storecon.subscribe((con) => {
+        this.storeconStream = this.storecon.subscribe((con) => {
             if (con.connectionexists === true && con.callactive === false) {
                 this.configurateRTCPeerConnection();
                 console.log('config receiver');
@@ -136,7 +137,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
-        this.icecandidateStream.unsubscribe();
+        this.storeconStream.unsubscribe();
         this.icecandidateStream.unsubscribe();
         this.offerStream.unsubscribe();
     }
