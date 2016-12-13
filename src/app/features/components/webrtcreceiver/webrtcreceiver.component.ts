@@ -143,6 +143,9 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     }
 
     stopCall(): void {
+        this.storeconStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
+        this.offerStream.unsubscribe();
         this.peerconnectionservice.recreateConnection();
     }
 
