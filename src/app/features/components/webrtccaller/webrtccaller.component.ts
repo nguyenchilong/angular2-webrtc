@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { WampService } from '../../../services/wamp.service';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'webrtccaller-component',
@@ -20,12 +20,16 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     stream: MediaStream;
     storecon: Observable<any>;
     @ViewChild('Video') video;
+    answerStream: Subject<any>;
+    icecandidateStream: Subject<any>;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
         private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
+        this.answerStream = this.wamp.answer;
+        this.icecandidateStream = this.wamp.answer;
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
@@ -84,7 +88,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     () => {
                         // push offer to signalingchannel
                         this.wamp.sendWithSocket(3, offer).subscribe(data => { });
-                        this.wamp.answer.subscribe(data => {
+                        this.answerStream.subscribe(data => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
                             this.peerconnectionservice.pc.setRemoteDescription(
@@ -93,26 +97,28 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                     this.store.dispatch({ type: 'CALL_STARTED' });
                                 },
                                 () => {
-                                    this.peerconnectionservice.recreateConnection();
+                                    this.stopCall();
                                 }
                             );
-                            this.wamp.icecandidate.subscribe(data => {
+                            this.icecandidateStream.subscribe(data => {
                                 this.peerconnectionservice.pc.addIceCandidate(data);
                             });
                         });
                     },
                     () => {
-                        this.peerconnectionservice.recreateConnection();
+                        this.stopCall();
                     }
                 );
             },
             () => {
-                this.peerconnectionservice.recreateConnection();
+                this.stopCall();
             }
         );
     }
 
     stopCall(): void {
+        this.answerStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.recreateConnection();
     }
 
@@ -124,6 +130,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
+        this.answerStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
     }
 
 }
