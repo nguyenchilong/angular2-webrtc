@@ -87,7 +87,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
-                        this.wamp.sendWithSocket(3, offer).subscribe(data => { });
+                        this.wamp.sendWithSocket(1, offer).subscribe(data => { });
                         console.log('subscribe answerStream');
                         this.answerStream.subscribe(data => {
                             console.log('new answer');
