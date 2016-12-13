@@ -29,7 +29,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
         this.answerStream = this.wamp.answer;
-        this.icecandidateStream = this.wamp.answer;
+        this.icecandidateStream = this.wamp.icecandidate;
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
@@ -101,6 +101,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                 }
                             );
                             this.icecandidateStream.subscribe(data => {
+                                console.log('new icecandidate:');
                                 this.peerconnectionservice.pc.addIceCandidate(data);
                             });
                         });
