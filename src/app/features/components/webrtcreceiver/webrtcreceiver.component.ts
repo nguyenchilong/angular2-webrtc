@@ -20,9 +20,9 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     stream: MediaStream;
     @ViewChild('Video') video;
     storecon: Observable<any>;
-    offerStream: Subscription;
-    icecandidateStream: Subscription;
-    storeconStream: Subscription;
+    offerStream: Subscription = new Subscription();
+    icecandidateStream: Subscription = new Subscription();
+    storeconStream: Subscription = new Subscription();
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
