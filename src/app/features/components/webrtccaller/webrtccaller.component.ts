@@ -131,6 +131,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
+        this.answerStream = null;
+        this.icecandidateStream = null;
     }
 
 }
