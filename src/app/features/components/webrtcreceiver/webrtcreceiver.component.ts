@@ -136,10 +136,10 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.stopVideostream();
-        this.peerconnectionservice.closeConnection();
         this.storeconStream.unsubscribe();
         this.icecandidateStream.unsubscribe();
         this.offerStream.unsubscribe();
+        this.peerconnectionservice.closeConnection();
     }
 
     stopCall(): void {
