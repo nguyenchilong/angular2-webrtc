@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { WampService } from '../../../services/wamp.service';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'webrtccaller-component',
@@ -20,16 +20,14 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     stream: MediaStream;
     storecon: Observable<any>;
     @ViewChild('Video') video;
-    answerStream: Observable<any>;
-    icecandidateStream: Observable<any>;
+    answerStream: Subscription = new Subscription();
+    icecandidateStream: Subscription = new Subscription();
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
         private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
-        this.answerStream = this.wamp.answer.asObservable();
-        this.icecandidateStream = this.wamp.icecandidate.asObservable();
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
@@ -89,7 +87,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                         // push offer to signalingchannel
                         this.wamp.sendWithSocket(1, offer).subscribe(data => { });
                         console.log('subscribe answerStream');
-                        this.answerStream.subscribe(data => {
+                        this.answerStream = this.wamp.answerObservable.subscribe(data => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
                             this.peerconnectionservice.pc.setRemoteDescription(
@@ -102,7 +100,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                 }
                             );
                             console.log('subscribe icecandidateStream');
-                            this.icecandidateStream.subscribe(data => {
+                            this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(data => {
                                 console.log('new icecandidate:');
                                 this.peerconnectionservice.pc.addIceCandidate(data);
                             });
@@ -120,6 +118,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     stopCall(): void {
+        this.answerStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.recreateConnection();
     }
 
@@ -130,9 +130,9 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.stopVideostream();
+        this.answerStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.closeConnection();
-        this.answerStream = null;
-        this.icecandidateStream = null;
     }
 
 }

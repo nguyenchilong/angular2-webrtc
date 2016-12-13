@@ -6,14 +6,14 @@ import { Observable, Subject } from 'rxjs';
 
 export class WampService {
     con: any;
-    offer: Subject<any> = new Subject();
-    answer: Subject<any> = new Subject();
-    offerObservable: Observable<any> = this.offer.asObservable();
-    icecandidate: Subject<any> = new Subject();
-    icecandidateObservable: Observable<any> = this.icecandidate.asObservable();
-    constructor(
-        private http: Http
-    ) { }
+    offerSubject: Subject<any> = new Subject();
+    answerSubject: Subject<any> = new Subject();
+    icecandidateSubject: Subject<any> = new Subject();
+    offerObservable: Observable<any> = this.offerSubject.asObservable();
+    answerObservable: Observable<any> = this.answerSubject.asObservable();
+    icecandidateObservable: Observable<any> = this.icecandidateSubject.asObservable();
+
+    constructor(private http: Http) { }
 
     initWamp(id): void {
         this.con = new ab.Session(
@@ -28,11 +28,11 @@ export class WampService {
                         let seri = JSON.parse(data);
                         let cert = JSON.parse(atob(seri.certificate));
                         if (cert.type === 'offer') {
-                            this.offer.next(cert);
+                            this.offerSubject.next(cert);
                         } else if (cert.type === 'answer') {
-                            this.answer.next(cert);
+                            this.answerSubject.next(cert);
                         } else {
-                            this.icecandidate.next(cert);
+                            this.icecandidateSubject.next(cert);
                         }
                     }
                 });
@@ -55,10 +55,6 @@ export class WampService {
                 headers: headers,
                 withCredentials: true
             });
-    }
-    sendIceCandidate(): void {
-        this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate', {}, {});
-
     }
 
 }
