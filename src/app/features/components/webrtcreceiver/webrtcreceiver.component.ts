@@ -20,8 +20,8 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     stream: MediaStream;
     @ViewChild('Video') video;
     storecon: Observable<any>;
-    offerStream: Subject<any>;
-    icecandidateStream: Subject<any>;
+    offerStream: Observable<any>;
+    icecandidateStream: Observable<any>;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
@@ -29,8 +29,8 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         private wamp: WampService
     ) {
         this.storecon = this.store.select(store => store.peerconn);
-        this.offerStream = this.wamp.offer;
-        this.icecandidateStream = this.wamp.icecandidate;
+        this.offerStream = this.wamp.offer.asObservable();
+        this.icecandidateStream = this.wamp.icecandidate.asObservable();
     }
 
     startVideostream(): void {
@@ -138,17 +138,9 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
-        console.log('unsubscribe offerstream');
-        this.offerStream.unsubscribe();
-        console.log('unsubscribe icecandiatestream');
-        this.icecandidateStream.unsubscribe();
     }
 
     stopCall(): void {
-        console.log('unsubscribe offerstream');
-        this.offerStream.unsubscribe();
-        console.log('unsubscribe icecandiatestream');
-        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.recreateConnection();
     }
 

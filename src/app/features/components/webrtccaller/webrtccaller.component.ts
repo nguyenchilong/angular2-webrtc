@@ -20,16 +20,16 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     stream: MediaStream;
     storecon: Observable<any>;
     @ViewChild('Video') video;
-    answerStream: Subject<any>;
-    icecandidateStream: Subject<any>;
+    answerStream: Observable<any>;
+    icecandidateStream: Observable<any>;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
         private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
-        this.answerStream = this.wamp.answer;
-        this.icecandidateStream = this.wamp.icecandidate;
+        this.answerStream = this.wamp.answer.asObservable();
+        this.icecandidateStream = this.wamp.icecandidate.asObservable();
     }
 
     // this method starts the stream of the camera and pushes it to this.stream
@@ -120,10 +120,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     stopCall(): void {
-        console.log('unsubscribe answerstream');
-        this.answerStream.unsubscribe();
-        console.log('unsubscribe icecandidateStream');
-        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.recreateConnection();
     }
 
@@ -135,10 +131,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.stopVideostream();
         this.peerconnectionservice.closeConnection();
-        console.log('unsubscribe answerstream');
-        this.answerStream.unsubscribe();
-        console.log('unsubscribe icecandidateStream');
-        this.icecandidateStream.unsubscribe();
     }
 
 }
