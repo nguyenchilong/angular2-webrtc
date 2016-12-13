@@ -20,9 +20,9 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     stream: MediaStream;
     @ViewChild('Video') video;
     storecon: Observable<any>;
-    offerStream: Subscription = new Subscription();
-    icecandidateStream: Subscription = new Subscription();
-    storeconStream: Subscription = new Subscription();
+    offerStream: Subscription;
+    icecandidateStream: Subscription;
+    storeconStream: Subscription;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
@@ -82,7 +82,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                                 // push answer to signalingchannel
                                 this.wamp.sendWithSocket(4, answer).subscribe(data => { });
                                 console.log('subscribe icecandiatestream');
-                                this.icecandidateStream = this.wamp.icecandidate.subscribe(ice => {
+                                this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(ice => {
                                     console.log('new icecandidate:');
                                     this.peerconnectionservice.pc.addIceCandidate(ice);
                                 });
@@ -106,7 +106,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     configurateRTCPeerConnection(): void {
         console.log('subscribe offerstream');
-        this.offerStream = this.wamp.offer.subscribe(offer => {
+        this.offerStream = this.wamp.offerObservable.subscribe(offer => {
             console.log('new offer:');
             this.handleOffer(offer);
         });

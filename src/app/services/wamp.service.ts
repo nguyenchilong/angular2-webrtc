@@ -8,7 +8,9 @@ export class WampService {
     con: any;
     offer: Subject<any> = new Subject();
     answer: Subject<any> = new Subject();
+    offerObservable: Observable<any> = this.offer.asObservable();
     icecandidate: Subject<any> = new Subject();
+    icecandidateObservable: Observable<any> = this.icecandidate.asObservable();
     constructor(
         private http: Http
     ) { }
