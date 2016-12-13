@@ -71,7 +71,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     startCall(): void {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                this.wamp.sendWithSocket(3, evt.candidate).subscribe(data => { });
+                this.wamp.sendWithSocket(1, evt.candidate).subscribe(data => { });
             }
         };
         // add remote stream to otherVideo after stream from other peer arrives
