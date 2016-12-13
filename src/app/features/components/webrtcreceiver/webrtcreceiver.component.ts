@@ -105,7 +105,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     configurateRTCPeerConnection(): void {
         console.log('subscribe offerstream');
-        this.wamp.offer.asObservable().subscribe(offer => {
+        this.offerStream = this.wamp.offer.asObservable().subscribe(offer => {
             console.log('new offer:');
             this.handleOffer(offer);
         });
