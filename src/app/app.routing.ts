@@ -2,7 +2,6 @@
 import { Routes } from '@angular/router';
 
 import { NotFound404Component } from './not-found404.component';
-import { DashboardViewComponent } from './features/views/dashboard-view/dashboard-view.component';
 import { CallerViewComponent } from './features/views/caller-view/caller-view.component';
 import { ReceiverViewComponent } from './features/views/receiver-view/receiver-view.component';
 import { LoginViewComponent } from './features/views/login-view/login-view.component';
@@ -20,7 +19,6 @@ export const routes: Routes = [
   { path: 'receiver', component: ReceiverViewComponent, canActivate: [AuthService, ProfguardService] },
   { path: 'auth', component: LoginViewComponent },
   { path: 'calendar', component: CalendarViewComponent },
-  { path: 'dashboard', component: DashboardViewComponent},
   { path: 'profprofil', component: ProfprofilViewComponent, canActivate: [AuthService, ProfguardService] },
   { path: 'studprofil', component: StudprofilViewComponent, canActivate: [AuthService, StudguardService] },
   { path: '**', component: NotFound404Component }

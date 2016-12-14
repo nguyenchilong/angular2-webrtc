@@ -1,9 +1,5 @@
 export const STUDVIEWS: Object[] = [
   {
-    name: 'Dashboard',
-    link: ['dashboard']
-  },
-  {
     name: 'Caller',
     link: ['caller']
   },
@@ -14,10 +10,6 @@ export const STUDVIEWS: Object[] = [
 ];
 
 export const PROFVIEWS: Object[] = [
-  {
-    name: 'Dashboard',
-    link: ['dashboard']
-  },
   {
     name: 'Receiver',
     link: ['receiver']
