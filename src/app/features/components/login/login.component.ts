@@ -65,11 +65,15 @@ export class LoginComponent {
             );
     }
 
-    openDialog() {
+    openForgotDialog(): void {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(ForgotDialog, config);
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {
         });
+    }
+
+    openRegisterDialog(): void {
+        // HIER BITTE DEN REGISTERDIALOG ÖFFNEN
     }
 }
