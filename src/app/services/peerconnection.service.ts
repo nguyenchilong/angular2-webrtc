@@ -18,6 +18,7 @@ export class PeerconnectionService {
     };
 
     createConnection(): void {
+        this.store.dispatch({type: 'DELETE_MESSAGES'});
         // create new pc and add listener
         this.pc = new RTCPeerConnection(this.pccfg);
         // listener for incomming datachannel

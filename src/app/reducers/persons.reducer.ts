@@ -9,6 +9,8 @@ export const personsrx: ActionReducer<any> = (state: any = init, action: Action)
             return [
                 ...action.payload
             ];
+        case 'CLEAR':
+            return init;
         default:
             return state;
     }

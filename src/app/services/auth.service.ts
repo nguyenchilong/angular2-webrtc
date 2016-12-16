@@ -63,6 +63,7 @@ export class AuthService implements CanActivate {
     }
 
     signout(): void {
+        this.store.dispatch({type: 'CLEAR'});
         localStorage.removeItem(this.JWT_KEY);
         localStorage.removeItem('user_id');
         localStorage.removeItem('user_name');

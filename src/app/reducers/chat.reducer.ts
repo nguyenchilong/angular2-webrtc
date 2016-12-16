@@ -29,6 +29,10 @@ export const chatrx: ActionReducer<any> = (state: any = init, action: Action) =>
                     ]
                 }
             );
+        case 'REMOVE_MESSAGES':
+            return init;
+        case 'CLEAR':
+            return init;
         default:
             return state;
     }
