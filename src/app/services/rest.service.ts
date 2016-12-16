@@ -26,7 +26,7 @@ export class RestService {
         let headers = new Headers();
         headers.append('Content-Type', 'text/plain');
         headers.append('Authorization', values);
-        return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/tokens', {}, { headers: headers, withCredentials: true });
+        return this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true });
     }
 
 
@@ -82,10 +82,6 @@ export class RestService {
             }
         ];
         this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
-    }
-
-    test(): Observable<any> {
-        return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/hello', {}, this.AuthHeaders());
     }
 
     AuthHeaders(): Object {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WAMP } from './constants';
+import { WAMP, REST } from './constants';
 import { Http, Headers } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
 @Injectable()
@@ -49,7 +49,7 @@ export class WampService {
         let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this.http.post('https://chor-am-killesberg.de:8001/web/app_test.php/certificate',
+        return this.http.post(REST + '/certificate',
             body,
             {
                 headers: headers,
