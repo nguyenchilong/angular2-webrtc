@@ -45,9 +45,7 @@ export class WampService {
     }
 
     closeWamp(): void {
-        console.log(this.con);
         this.con.close();
-        console.log(this.con);
         this.answerSubject.complete();
         this.offerSubject.complete();
         this.icecandidateSubject.complete();

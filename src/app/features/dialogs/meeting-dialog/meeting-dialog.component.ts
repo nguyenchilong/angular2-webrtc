@@ -31,7 +31,6 @@ export class MeetingDialog {
         });
         this.persons.first().subscribe(data => {
             this.selectedperson = data[0];
-            console.log(data[0]);
         });
         this.createform = this.formBuilder.group({
             title: '',
