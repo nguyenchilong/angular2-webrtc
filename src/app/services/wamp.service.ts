@@ -44,6 +44,15 @@ export class WampService {
         );
     }
 
+    closeWamp(): void {
+        console.log(this.con);
+        this.con.close();
+        console.log(this.con);
+        this.answerSubject.complete();
+        this.offerSubject.complete();
+        this.icecandidateSubject.complete();
+    }
+
 
     sendWithSocket(to, objecttosend): Observable<any> {
         let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));
