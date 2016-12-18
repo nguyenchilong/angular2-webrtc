@@ -32,3 +32,7 @@ md-icon {
 
 md-progress-circle {
   margin: 0 auto; }
+
+.register {
+  position: absolute;
+  right: 24px; }

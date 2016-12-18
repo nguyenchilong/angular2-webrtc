@@ -4,8 +4,6 @@ import { Store } from '@ngrx/store';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
 
-
-
 @Component({
     selector: 'meetings-component',
     templateUrl: './meetings.template.html',
@@ -16,51 +14,23 @@ import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.compo
 export class MeetingsCompontent {
 
     meetings: Observable<any>;
-    meeting1: any = {
-        id: 4,
-        title: 'Hinzugefügt',
-        start: new Date(),
-        end: new Date(),
-        color: {
-            primary: '#ad2121',
-            secondary: '#FAE3E3'
-        },
-        prof: 'Hinzugefügt',
-        vorlesung: '1312313',
-        time: '123123'
-    };
-
-    meeting2: any = {
-        id: 4,
-        title: 'Ersetzt',
-        start: new Date(),
-        end: new Date(),
-        color: {
-            primary: '#ad2121',
-            secondary: '#FAE3E3'
-        },
-        prof: 'Ersetzt',
-        vorlesung: '1312313',
-        time: '123123'
-    };
-
     dialogRef: MdDialogRef<MeetingDialog>;
+    user: Observable<any>;
 
     constructor(
         private store: Store<any>,
         public dialog: MdDialog
     ) {
         this.meetings = this.store.select(store => store.meetings);
+        this.user = this.store.select(store => store.user);
     };
 
-    click(): void {
-        this.store.dispatch({ type: 'ADD_MEETING', payload: this.meeting1 });
-    }
-    remove(): void {
-        this.store.dispatch({ type: 'REMOVE_MEETING', payload: this.meeting1 });
-    }
-    replace(): void {
-        this.store.dispatch({ type: 'REPLACE_MEETING', payload: this.meeting2 });
+    create(): void {
+        let config: MdDialogConfig = { disableClose: false };
+        this.dialogRef = this.dialog.open(MeetingDialog, config);
+        // when closing dialog
+        this.dialogRef.afterClosed().subscribe(result => {
+        });
     }
 
     openDialog(meeting) {
@@ -71,7 +41,6 @@ export class MeetingsCompontent {
 
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {
-            this.dialogRef.componentInstance.none = true;
         });
     }
 }

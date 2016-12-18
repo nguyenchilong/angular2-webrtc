@@ -591,3 +591,9 @@ ul, ol {
 
 #my-page-card {
   min-height: 100%; }
+
+.cal-month-view .cal-event {
+  background-color: #f44336 !important; }
+
+.cal-month-view .cal-day-badge {
+  background-color: #f44336; }

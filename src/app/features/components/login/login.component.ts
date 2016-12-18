@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { RestService } from '../../../services/rest.service';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { ForgotDialog } from '../../dialogs/forgot-dialog/forgot-dialog.component';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class LoginComponent {
         private restservice: RestService,
         private changeDetectionRef: ChangeDetectorRef,
         public dialog: MdDialog,
+        private store: Store<any>
     ) {
         if (this.authservice.isAuthorized) {
             this.router.navigate(['']);
@@ -49,7 +51,10 @@ export class LoginComponent {
             (data) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                this.authservice.setJWT(data.token);
+                localStorage.setItem('user_id', data.user.id);
+                localStorage.setItem('user_role', data.user.roles[0]);
+                localStorage.setItem('user_name', data.user.username);
+                this.authservice.setJWT('token');
                 this.router.navigate(['']);
             },
             (err) => {
@@ -60,11 +65,15 @@ export class LoginComponent {
             );
     }
 
-    openDialog() {
+    openForgotDialog(): void {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(ForgotDialog, config);
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {
         });
+    }
+
+    openRegisterDialog(): void {
+        // HIER BITTE DEN REGISTERDIALOG ÖFFNEN
     }
 }

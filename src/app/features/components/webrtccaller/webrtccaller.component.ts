@@ -1,9 +1,8 @@
 import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import * as io from 'socket.io-client';
-import { SOCKET } from '../../../services/constants';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
+import { WampService } from '../../../services/wamp.service';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'webrtccaller-component',
@@ -19,13 +18,15 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         video: true
     };
     stream: MediaStream;
-    socket: SocketIOClient.Socket = io(SOCKET, { secure: true });
     storecon: Observable<any>;
     @ViewChild('Video') video;
+    answerStream: Subscription = new Subscription();
+    icecandidateStream: Subscription = new Subscription();
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
-        private store: Store<any>) {
+        private store: Store<any>,
+        private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
     }
 
@@ -68,19 +69,13 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     startCall(): void {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                this.socket.emit('pushice1', evt.candidate);
+                this.wamp.sendWithSocket(1, evt.candidate).subscribe(data => { });
             }
         };
         // add remote stream to otherVideo after stream from other peer arrives
         this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
         };
-        this.socket.on('getice2',
-            (msg) => {
-                console.log('new icecandidate');
-                this.peerconnectionservice.pc.addIceCandidate(msg);
-            }
-        );
         // add stream to pc
         this.peerconnectionservice.pc.addStream(this.stream);
         // create offer
@@ -90,36 +85,42 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
-                        this.socket.emit('push1', offer);
-                        // start listening for an answer
-                        this.socket.on('get2', (msg) => {
+                        this.wamp.sendWithSocket(1, offer).subscribe(data => { });
+                        console.log('subscribe answerStream');
+                        this.answerStream = this.wamp.answerObservable.subscribe(data => {
                             console.log('new answer');
                             // adding the answer as remotedescription to this.pc
                             this.peerconnectionservice.pc.setRemoteDescription(
-                                new RTCSessionDescription(msg),
+                                new RTCSessionDescription(data),
                                 () => {
                                     this.store.dispatch({ type: 'CALL_STARTED' });
                                 },
                                 () => {
-                                    this.peerconnectionservice.recreateConnection();
+                                    this.stopCall();
                                 }
                             );
+                            console.log('subscribe icecandidateStream');
+                            this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(data => {
+                                console.log('new icecandidate:');
+                                this.peerconnectionservice.pc.addIceCandidate(data);
+                            });
                         });
                     },
                     () => {
-                        this.peerconnectionservice.recreateConnection();
+                        this.stopCall();
                     }
                 );
             },
             () => {
-                this.peerconnectionservice.recreateConnection();
+                this.stopCall();
             }
         );
     }
 
     stopCall(): void {
+        this.answerStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.recreateConnection();
-        this.socket.removeAllListeners();
     }
 
     ngOnInit() {
@@ -129,6 +130,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.stopVideostream();
+        this.answerStream.unsubscribe();
+        this.icecandidateStream.unsubscribe();
         this.peerconnectionservice.closeConnection();
     }
 

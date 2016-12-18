@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SOCKET } from './constants';
+
 @Injectable()
 
 export class PeerconnectionService {
@@ -18,6 +18,7 @@ export class PeerconnectionService {
     };
 
     createConnection(): void {
+        this.store.dispatch({type: 'DELETE_MESSAGES'});
         // create new pc and add listener
         this.pc = new RTCPeerConnection(this.pccfg);
         // listener for incomming datachannel

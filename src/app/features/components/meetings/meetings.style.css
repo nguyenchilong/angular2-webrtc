@@ -3,6 +3,8 @@
   padding: 7px 7px 7px 7px; }
 
 md-card:hover {
+  cursor: pointer;
+  cursor: hand;
   background: #e6e5e5; }
 
 md-card-subtitle {
@@ -14,3 +16,24 @@ md-card-title {
 md-card {
   padding-top: 15px;
   padding-bottom: 15px; }
+
+.createbutton {
+  right: 0px !important;
+  margin-bottom: 5px;
+  text-align: right; }
+
+.canceled {
+  background-color: #f44336; }
+
+.open {
+  background-color: grey; }
+
+.accepted {
+  background-color: #5cb85c; }
+
+.type {
+  position: absolute;
+  height: 100%;
+  width: 7px;
+  left: 0px;
+  top: 0px; }

@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'studprofil-view-component',
@@ -9,4 +11,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 export class StudprofilViewComponent {
 
+    user: Observable<any>;
+    constructor(private store: Store<any>) {
+        this.user = this.store.select(store => store.user);
+    }
 }

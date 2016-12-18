@@ -26,6 +26,8 @@ export const meetingsrx: ActionReducer<meeting[]> = (state: meeting[] = init, ac
                 ..._.reject(state, { 'id': action.payload.id }),
                 action.payload
             ];
+        case 'CLEAR':
+            return init;
         default:
             return state;
     }

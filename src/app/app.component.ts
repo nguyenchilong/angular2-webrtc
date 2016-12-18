@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
     this.user = this.store.select(store => store.user);
     // change website to view of profile
     this.user.subscribe((user) => {
-      console.log(user);
       if (user.role === 'stud') {
         this.views = STUDVIEWS;
       } else if (user.role === 'prof') {
@@ -70,9 +69,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authservice.isAuthorized) {
-      this.restservice.getPersons();
-      this.restservice.getMeetings();
-    }
+
   }
 }

@@ -2,8 +2,8 @@ import { ActionReducer, Action } from '@ngrx/store';
 
 let init: any = {
     loggedin: false,
-    name: 'Max Mustermann',
-    role: 'stud'
+    name: '',
+    role: ''
 };
 
 export const userrx: ActionReducer<any> = (state: any = init, action: Action) => {
@@ -16,22 +16,35 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
                 { loggedin: true }
             );
         case 'LOGOUT_USER':
-            return Object.assign(
-                {},
-                state,
-                { loggedin: false }
-            );
+            return init;
         case 'SET_NAME':
             return Object.assign(
                 {},
                 state,
-                { name: action.payload}
+                { name: action.payload }
             );
         case 'SET_ROLE':
+            switch (action.payload) {
+                case 'ROLE_STUDENT':
+                    return Object.assign(
+                        {},
+                        state,
+                        { role: 'stud' }
+                    );
+                case 'ROLE_PROF':
+                    return Object.assign(
+                        {},
+                        state,
+                        { role: 'prof' }
+                    );
+                default:
+                    return state;
+            };
+        case 'SET_USER':
             return Object.assign(
                 {},
                 state,
-                { role: action.payload}
+                action.payload
             );
         default:
             return state;

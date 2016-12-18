@@ -1,4 +1,24 @@
-.meetings{
-    max-height: 100vh;
-    overflow-y: scroll;
-}
+.meetings {
+  max-height: 100vh;
+  overflow-y: scroll; }
+
+md-card:hover {
+  background: #e6e5e5;
+  cursor: pointer;
+  cursor: hand; }
+
+.type {
+  position: absolute;
+  height: 100%;
+  width: 7px;
+  left: 0px;
+  top: 0px; }
+
+.canceled {
+  background-color: #f44336; }
+
+.open {
+  background-color: grey; }
+
+.accepted {
+  background-color: #5cb85c; }
