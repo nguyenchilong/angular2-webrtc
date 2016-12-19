@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import { REST } from './constants';
 import { Store } from '@ngrx/store';
 
-import { Test } from '../model/test';
 import { User } from '../model/user';
 import { Meeting } from '../model/meeting';
 import { Slot } from '../model/slot';
@@ -19,29 +18,50 @@ export class RestService {
         private store: Store<any>) {
     }
 
-    authorizeUser(user: string, password: string): Observable<any> {
-        let values: string = 'Basic ' + btoa(user + ':' + password);
+    authorizeUser(user: string, password: string): Observable<User> {
         let headers = new Headers();
         headers.append('Content-Type', 'text/plain');
-        headers.append('Authorization', values);
-        return this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true });
+        headers.append('Authorization', 'Basic ' + btoa(user + ':' + password));
+        let response: Observable<User> = this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true })
+                .map((res: Response) => res.json().user as User);
+        response.subscribe((authorizedUser: User) => {
+            console.log(authorizedUser);
+            localStorage.setItem('user_id', '' + authorizedUser.id);
+            localStorage.setItem('user_role', authorizedUser.roles[0]);
+            localStorage.setItem('user_name', authorizedUser.username);
+        });
+        return response;
     }
 
-    createUser(user: User): void {
-        // POST /users
+    createUser(user: User): Observable<User> {
+        let response: Observable<User> = this.http.post(REST + '/users', user)
+                .map((res: Response) => res.json() as User);
+        response.subscribe((createdUser: User) => {
+            console.log(createdUser); //TODO
+        });
+        return response;
     }
 
-    updateUserPassword(userId: number, oldPassword: string, newPasswordFirst: string, newPasswordSecond: string): void {
-        // PATCH /users/{userId}/change-password
-        let request = {
-            "app_password[oldPassword]": oldPassword,
-            "app_password[newPassword][first]": newPasswordFirst,
-            "app_password[newPassword][second]": newPasswordSecond
+    updateUserPassword(userId: number, oldPassword: string, newPasswordFirst: string, newPasswordSecond: string): Observable<User> {
+        let requestBody = {
+            'app_password[oldPassword]': oldPassword,
+            'app_password[newPassword][first]': newPasswordFirst,
+            'app_password[newPassword][second]': newPasswordSecond
         };
+        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody)
+                .map((res: Response) => res.json() as User);
+        response.subscribe((updatedUser: User) => {
+            console.log(updatedUser); //TODO
+        });
+        return response;
     }
 
-    readProfessors(): void {
-        // GET /users/professors
+    readProfessors(): Observable<Array<User>> {
+        let response: Observable<Array<User>> = this.http.get(REST + '/users/professors')
+                .map((res: Response) => res.json() as Array<User>);
+        response.subscribe((professors: Array<User>) => {
+            console.log(professors); //TODO
+        });
         
         // delete:
         let persons: Object = [
@@ -73,17 +93,26 @@ export class RestService {
             },
         ];
         this.store.dispatch({ type: 'ADD_PERSONS', payload: persons });
+
+        return response;
     }
 
-    readMeetings(): void {
-  //readMeetings(userId: number, userRole: string): void {
-        // GET /users/{userId}/meetings/professor
-        // GET /users/{userId}/meetings/student
+    readMeetings(): Observable<Array<Meeting>> {
+  //readMeetings(userId: number, userRole: string): Observable<Array<Meeting>> {
+        let userId = 3;
+        let userRole = 'ROLE_STUDENT';
 
-        console.log('getMeetings() called');
-        let obs: Observable<Test> = this.http.get('http://ddaeuble.de/test.json')
-                .map(res => res.json() as Test);
-        obs.subscribe((resJson: Test) => console.log(resJson));
+        let response: Observable<Array<Meeting>>;
+        if (userRole === 'ROLE_PROF') {
+            response = this.http.get(REST + '/users/' + userId + '/meetings/professor')
+                    .map((res: Response) => res.json() as Array<Meeting>);
+        } else { // if userRole === 'ROLE_STUDENT'
+            response = this.http.get(REST + '/users/' + userId + '/meetings/student')
+                    .map((res: Response) => res.json() as Array<Meeting>);
+        }
+        response.subscribe((meetings: Array<Meeting>) => {
+            console.log(meetings); //TODO
+        });
 
         //delete:
         let d1 = new Date();
@@ -143,32 +172,54 @@ export class RestService {
             }
         ];
         this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
+
+        return response;
     }
 
-    createSlot(meedingId: number, name: string, duration: number, comment: string): void {
-        // POST /meetings/{meetingId}/slots
-        let request = {
-            "app_slot[name]": name,
-            "app_slot[duration]": duration,
-            "app_slot[comment]": comment
+    createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Slot> {
+        let requestBody = {
+            'app_slot[name]': name,
+            'app_slot[duration]': duration,
+            'app_slot[comment]': comment
         };
+        let response: Observable<Slot> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody)
+                .map((res: Response) => res.json() as Slot);
+        response.subscribe((createdSlot: Slot) => {
+            console.log(createdSlot); //TODO
+        });
+        //TODO check if response is Slot or Array<Slot>
+        return response;
     }
 
     updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): void {
-        // PATCH /meetings/{meetingId}/slots/{slotId}
-        let request = {
-            "app_slot[duration]": duration,
-            "app_slot[comment]": comment,
-            "app_slot[status]": status
+        let requestBody = {
+            'app_slot[duration]': duration,
+            'app_slot[comment]': comment,
+            'app_slot[status]': status
         };
+        this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody);
+        //TODO check if there really no response
     }
 
-    readSlots(userId: number, meeting: Meeting): void {
-        // GET /users/{userId}/slots
+    readSlots(userId: number, meeting: Meeting): Observable<Array<Slot>> {
+        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots')
+                .map((res: Response) => res.json() as Array<Slot>);
+        response.subscribe((slots: Array<Slot>) => {
+            console.log(slots); //TODO
+        });
+        return response;
     }
 
-    updateMeeting(meetingId: number): void {
-        // PUT /meetings/{meetingId}
+    updateMeeting(meeting: Meeting): void {
+        let requestBody = { // MeetingProfessor
+            id: meeting.id,
+            startDate: meeting.startDate,
+            endDate: meeting.endDate,
+            status: meeting.status,
+            slots: meeting.slots
+        };
+        this.http.put(REST + '/meetings/' + meeting.id, requestBody);
+        //TODO check if there really no response
     }
 
 }
