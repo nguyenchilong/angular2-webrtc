@@ -42,7 +42,8 @@ export class RestService {
         return response;
     }
 
-    updateUserPassword(userId: number, oldPassword: string, newPassword: string): Observable<User> {
+    updateUserPassword(oldPassword: string, newPassword: string): Observable<User> {
+        let userId = localStorage.getItem('user_id');
         let requestBody = {
             'app_password[oldPassword]': oldPassword,
             'app_password[newPassword][first]': newPassword,
@@ -98,10 +99,8 @@ export class RestService {
     }
 
     readMeetings(): Observable<Array<Meeting>> {
-  //readMeetings(userId: number, userRole: string): Observable<Array<Meeting>> {
-        let userId = 3;
-        let userRole = 'ROLE_STUDENT';
-
+        let userId = localStorage.getItem('user_id');
+        let userRole = localStorage.getItem('user_role');
         let response: Observable<Array<Meeting>>;
         if (userRole === 'ROLE_PROF') {
             response = this.http.get(REST + '/users/' + userId + '/meetings/professor')
@@ -198,10 +197,11 @@ export class RestService {
             'app_slot[status]': status
         };
         this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody);
-        //TODO check if there really no response
+        //TODO check if there really is no response
     }
 
-    readSlots(userId: number, meeting: Meeting): Observable<Array<Slot>> {
+    readSlots(meeting: Meeting): Observable<Array<Slot>> {
+        let userId = localStorage.getItem('user_id');
         let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots')
                 .map((res: Response) => res.json() as Array<Slot>);
         response.subscribe((slots: Array<Slot>) => {
@@ -219,7 +219,7 @@ export class RestService {
             slots: meeting.slots
         };
         this.http.put(REST + '/meetings/' + meeting.id, requestBody);
-        //TODO check if there really no response
+        //TODO check if there really is no response
     }
 
 }
