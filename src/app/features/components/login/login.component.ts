@@ -6,6 +6,7 @@ import { RestService } from '../../../services/rest.service';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { ForgotDialog } from '../../dialogs/forgot-dialog/forgot-dialog.component';
 import { Store } from '@ngrx/store';
+import { User } from '../../../model/user';
 
 
 @Component({
@@ -45,24 +46,19 @@ export class LoginComponent {
         this.restservice.authorizeUser(
             this.loginform.get('username').value,
             this.loginform.get('password').value
-        )
-            .map((res) => res.json())
-            .subscribe(
-            (data) => {
+        ).subscribe(
+            (user: User) => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                localStorage.setItem('user_id', data.user.id);
-                localStorage.setItem('user_role', data.user.roles[0]);
-                localStorage.setItem('user_name', data.user.username);
                 this.authservice.setJWT('token');
                 this.router.navigate(['']);
             },
-            (err) => {
+            err => {
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
                 this.loginform.get('password').setValue('');
             }
-            );
+        );
     }
 
     openForgotDialog(): void {

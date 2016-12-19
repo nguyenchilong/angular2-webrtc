@@ -4,7 +4,7 @@
     <br>
     <br>
     <select (change)="setSelectedPerson($event.target.value)" disabled>
-            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.name}}</option>
+            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.lastname}}</option>
         </select>
     <br>
     <br>
@@ -45,7 +45,7 @@
         <br>
         <br>
         <select>
-            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.name}}</option>
+            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.lastname}}</option>
         </select>
         <br>
         <br>
