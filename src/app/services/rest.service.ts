@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import { User } from '../model/user';
 import { Meeting } from '../model/meeting';
 import { Slot } from '../model/slot';
-import { StudyCourse } from '../model/study-course';
 import { Error } from '../model/error';
 
 @Injectable()
@@ -18,10 +17,10 @@ export class RestService {
         private store: Store<any>) {
     }
 
-    authorizeUser(user: string, password: string): Observable<User> {
+    authorizeUser(username: string, password: string): Observable<User> {
         let headers = new Headers();
         headers.append('Content-Type', 'text/plain');
-        headers.append('Authorization', 'Basic ' + btoa(user + ':' + password));
+        headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
         let response: Observable<User> = this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true })
                 .map((res: Response) => res.json().user as User);
         response.subscribe((authorizedUser: User) => {
@@ -175,6 +174,31 @@ export class RestService {
         return response;
     }
 
+    updateMeeting(meeting: Meeting): void {
+        let requestBody = { // MeetingProfessor
+            id: meeting.id,
+            startDate: meeting.startDate,
+            endDate: meeting.endDate,
+            status: meeting.status,
+            slots: meeting.slots
+        };
+        this.http.put(REST + '/meetings/' + meeting.id, requestBody);
+        //TODO check if there really is no response
+    }
+
+    readSlots(meeting: Meeting): Observable<Array<Slot>> {
+        let userId = localStorage.getItem('user_id');
+        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots')
+                .map((res: Response) => res.json() as Array<Slot>);
+        response.subscribe((slots: Array<Slot>) => {
+            console.log(slots); //TODO
+        });
+        return response;
+    }
+
+    createSlotSimple(meetingId: number, slot: Slot): Observable<Slot> {
+        return this.createSlot(meetingId, slot.name, slot.duration, slot.comment);
+    }
     createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Slot> {
         let requestBody = {
             'app_slot[name]': name,
@@ -190,6 +214,9 @@ export class RestService {
         return response;
     }
 
+    updateSlotSimple(meetingId: number, slot: Slot): void {
+        return this.updateSlot(meetingId, slot.id, slot.duration, slot.comment, slot.status);
+    }
     updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): void {
         let requestBody = {
             'app_slot[duration]': duration,
@@ -197,28 +224,6 @@ export class RestService {
             'app_slot[status]': status
         };
         this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody);
-        //TODO check if there really is no response
-    }
-
-    readSlots(meeting: Meeting): Observable<Array<Slot>> {
-        let userId = localStorage.getItem('user_id');
-        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots')
-                .map((res: Response) => res.json() as Array<Slot>);
-        response.subscribe((slots: Array<Slot>) => {
-            console.log(slots); //TODO
-        });
-        return response;
-    }
-
-    updateMeeting(meeting: Meeting): void {
-        let requestBody = { // MeetingProfessor
-            id: meeting.id,
-            startDate: meeting.startDate,
-            endDate: meeting.endDate,
-            status: meeting.status,
-            slots: meeting.slots
-        };
-        this.http.put(REST + '/meetings/' + meeting.id, requestBody);
         //TODO check if there really is no response
     }
 
