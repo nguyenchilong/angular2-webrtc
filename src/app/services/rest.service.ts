@@ -61,7 +61,11 @@ export class RestService {
 
     readProfessors(): Observable<Array<Professor>> {
         let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors')
-                .map((res: Response) => res.json() as Array<Professor>);
+                .map((res: Response) => res.json() as Array<Professor>)
+                .catch((error: Error) => {
+                        console.log(error);
+                        return Observable.of<Array<Professor>>([]);
+                });
         response.subscribe((professors: Array<Professor>) => {
             console.log(professors); //TODO
         });
@@ -114,10 +118,18 @@ export class RestService {
         let response: Observable<Array<Meeting>>;
         if (userRole === 'ROLE_PROF') {
             response = this.http.get(REST + '/users/' + userId + '/meetings/professor')
-                    .map((res: Response) => res.json() as Array<MeetingProfessor>);
+                    .map((res: Response) => res.json() as Array<MeetingProfessor>)
+                    .catch((error: Error) => {
+                            console.log(error);
+                            return Observable.of<Array<MeetingProfessor>>([]);
+                    });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + userId + '/meetings/student')
-                    .map((res: Response) => res.json() as Array<MeetingStudent>);
+                    .map((res: Response) => res.json() as Array<MeetingStudent>)
+                    .catch((error: Error) => {
+                            console.log(error);
+                            return Observable.of<Array<MeetingStudent>>([]);
+                    });
         }
         response.subscribe((meetings: Array<Meeting>) => {
             console.log(meetings); //TODO
