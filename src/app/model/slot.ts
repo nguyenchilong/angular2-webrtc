@@ -1,5 +1,5 @@
-import { Meeting } from './meeting';
-import { User } from './user';
+import { MeetingStudent } from './meeting-student';
+import { Student } from './student';
 
 export class Slot {
     id: number;
@@ -8,6 +8,6 @@ export class Slot {
     date: Date;
     comment: string;
     status: string; // 'OPEN', 'ACCEPTED', 'DECLINED' or 'CANCELED'
-    meeting: Meeting;
-    student: User;
+    meeting: MeetingStudent;
+    student: Student;
 }
