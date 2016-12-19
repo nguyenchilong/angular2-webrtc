@@ -42,11 +42,11 @@ export class RestService {
         return response;
     }
 
-    updateUserPassword(userId: number, oldPassword: string, newPasswordFirst: string, newPasswordSecond: string): Observable<User> {
+    updateUserPassword(userId: number, oldPassword: string, newPassword: string): Observable<User> {
         let requestBody = {
             'app_password[oldPassword]': oldPassword,
-            'app_password[newPassword][first]': newPasswordFirst,
-            'app_password[newPassword][second]': newPasswordSecond
+            'app_password[newPassword][first]': newPassword,
+            'app_password[newPassword][second]': newPassword
         };
         let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody)
                 .map((res: Response) => res.json() as User);
