@@ -3,6 +3,7 @@ import { MdDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { User } from '../../../model/user';
 
 @Component({
     selector: 'meeting-dialog',
@@ -13,12 +14,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class MeetingDialog {
 
     meeting: any;
-    persons: Observable<any>;
+    persons: Observable<Array<User>>;
     pers: any;
     durationoptions: any[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
     selectedperson: any;
-    user: Observable<any>;
+    user: Observable<User>;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,

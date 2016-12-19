@@ -64,30 +64,38 @@ export class RestService {
         });
         
         // delete:
-        let persons: Object = [
+        let persons: Array<User> = [
             {
-                name: 'Prof. Dr. Ralf Kramer',//lastname
                 id: 1,
-                vorlesungen: [//studyCourses
+                username: '',
+                firstname: '',
+                lastname: 'Prof. Dr. Ralf Kramer',
+                roles: ['ROLE_PROF'],
+                studyCourses: [
                     {
-                        title: 'Verteilte Systeme'//name
+                        id: 5,
+                        name: 'Verteilte Systeme'
                     },
                     {
-                        title: 'IT-Sicherheit'
+                        id: 6,
+                        name: 'IT-Sicherheit'
                     }
                 ]
             },
             {
-                name: 'Prof. Dr. Oliver Höß',
                 id: 2,
-                vorlesungen: [
+                username: '',
+                firstname: '',
+                lastname: 'Prof. Dr. Oliver Höß',
+                roles: ['ROLE_PROF'],
+                studyCourses: [
                     {
-                        title: 'Verteilte Systeme',
-                        id: 5
+                        id: 5,
+                        name: 'Verteilte Systeme'
                     },
                     {
-                        title: 'IT-Sicherheit',
-                        id: 6
+                        id: 6,
+                        name: 'IT-Sicherheit'
                     }
                 ]
             },
