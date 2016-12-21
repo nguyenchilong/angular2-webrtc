@@ -28,6 +28,8 @@ export class RestService {
             localStorage.setItem('user_id', '' + authorizedUser.id);
             localStorage.setItem('user_role', authorizedUser.roles[0]);
             localStorage.setItem('user_name', authorizedUser.username);
+            localStorage.setItem('user_firstname', authorizedUser.firstname);
+            localStorage.setItem('user_lastname', authorizedUser.lastname);
         });
         return response;
     }

@@ -7,9 +7,9 @@
         <br>
         <md-card-title>Your profil</md-card-title>
         <md-card-content>
-            <p><b>Name:</b> Prof. Dr. Otto Offline</p>
-            <p><b>Studiengang:</b> Wirtschaftsinformatik</p>
-            <p><b>Fakultät:</b> C</p>
+            <p><b>Name:</b> {{(user | async).firstname}} {{(user | async).lastname}}</p>
+            <p><b>Studiengang:</b> statischer Dummie</p>
+            <p><b>Fakultät:</b> statischer Dummie</p>
         </md-card-content>
         <md-divider></md-divider>
         <br>
