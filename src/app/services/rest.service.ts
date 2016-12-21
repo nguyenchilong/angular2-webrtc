@@ -5,7 +5,10 @@ import { REST } from './constants';
 import { Store } from '@ngrx/store';
 
 import { User } from '../model/user';
+import { Professor } from '../model/professor';
 import { Meeting } from '../model/meeting';
+import { MeetingStudent } from '../model/meeting-student';
+import { MeetingProfessor } from '../model/meeting-professor';
 import { Slot } from '../model/slot';
 import { Error } from '../model/error';
 
@@ -58,15 +61,19 @@ export class RestService {
         return response;
     }
 
-    readProfessors(): Observable<Array<User>> {
-        let response: Observable<Array<User>> = this.http.get(REST + '/users/professors')
-                .map((res: Response) => res.json() as Array<User>);
-        response.subscribe((professors: Array<User>) => {
+    readProfessors(): Observable<Array<Professor>> {
+        let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors')
+                .map((res: Response) => res.json() as Array<Professor>)
+                .catch((error: Error) => {
+                        console.log(error);
+                        return Observable.of<Array<Professor>>([]);
+                });
+        response.subscribe((professors: Array<Professor>) => {
             console.log(professors); //TODO
         });
         
         // delete:
-        let persons: Array<User> = [
+        let persons: Array<Professor> = [
             {
                 id: 1,
                 username: '',
@@ -113,10 +120,18 @@ export class RestService {
         let response: Observable<Array<Meeting>>;
         if (userRole === 'ROLE_PROF') {
             response = this.http.get(REST + '/users/' + userId + '/meetings/professor')
-                    .map((res: Response) => res.json() as Array<Meeting>);
+                    .map((res: Response) => res.json() as Array<MeetingProfessor>)
+                    .catch((error: Error) => {
+                            console.log(error);
+                            return Observable.of<Array<MeetingProfessor>>([]);
+                    });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + userId + '/meetings/student')
-                    .map((res: Response) => res.json() as Array<Meeting>);
+                    .map((res: Response) => res.json() as Array<MeetingStudent>)
+                    .catch((error: Error) => {
+                            console.log(error);
+                            return Observable.of<Array<MeetingStudent>>([]);
+                    });
         }
         response.subscribe((meetings: Array<Meeting>) => {
             console.log(meetings); //TODO
