@@ -71,6 +71,8 @@ export class AuthService implements CanActivate {
         localStorage.removeItem('user_id');
         localStorage.removeItem('user_name');
         localStorage.removeItem('user_role');
+        localStorage.removeItem('user_firstname');
+        localStorage.removeItem('user_lastname');
         this.JWT = '';
         this.store.dispatch({ type: 'LOGOUT_USER' });
         this.router.navigate(['auth']);
