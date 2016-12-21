@@ -17,7 +17,7 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
             );
         case 'LOGOUT_USER':
             return init;
-        case 'SET_NAME':
+        case 'SET_USERNAME':
             return Object.assign(
                 {},
                 state,
@@ -45,6 +45,18 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
                 {},
                 state,
                 action.payload
+            );
+        case 'SET_FIRSTNAME':
+            return Object.assign(
+                {},
+                state,
+                { firstname: action.payload}
+            );
+        case 'SET_LASTNAME':
+            return Object.assign(
+                {},
+                state,
+                { lastname: action.payload}
             );
         default:
             return state;
