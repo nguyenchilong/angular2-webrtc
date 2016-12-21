@@ -64,14 +64,16 @@ export class RestService {
     readProfessors(): Observable<Array<Professor>> {
         let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors')
                 .map((res: Response) => res.json() as Array<Professor>)
-                .catch((error: Error) => {
-                        console.log(error);
+                .catch((error: any) => {
+                        console.log(error.json());
+                        //Observable.throw(error.json());
                         return Observable.of<Array<Professor>>([]);
                 });
         response.subscribe((professors: Array<Professor>) => {
             console.log(professors); //TODO
+            this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
         });
-        
+
         // delete:
         let persons: Array<Professor> = [
             {
@@ -121,20 +123,23 @@ export class RestService {
         if (userRole === 'ROLE_PROF') {
             response = this.http.get(REST + '/users/' + userId + '/meetings/professor')
                     .map((res: Response) => res.json() as Array<MeetingProfessor>)
-                    .catch((error: Error) => {
-                            console.log(error);
+                    .catch((error: any) => {
+                            console.log(error.json());
+                            //Observable.throw(error.json());
                             return Observable.of<Array<MeetingProfessor>>([]);
                     });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + userId + '/meetings/student')
                     .map((res: Response) => res.json() as Array<MeetingStudent>)
-                    .catch((error: Error) => {
-                            console.log(error);
+                    .catch((error: any) => {
+                            console.log(error.json());
+                            //Observable.throw(error.json());
                             return Observable.of<Array<MeetingStudent>>([]);
                     });
         }
         response.subscribe((meetings: Array<Meeting>) => {
             console.log(meetings); //TODO
+            this.store.dispatch({ type: 'ADD_MEETINGS', payload: meetings });
         });
 
         //delete:
@@ -199,7 +204,7 @@ export class RestService {
         return response;
     }
 
-    updateMeeting(meeting: Meeting): void {
+    updateMeeting(meeting: MeetingProfessor): void {
         let requestBody = { // MeetingProfessor
             id: meeting.id,
             startDate: meeting.startDate,
