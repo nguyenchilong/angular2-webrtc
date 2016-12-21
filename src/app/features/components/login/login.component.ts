@@ -48,9 +48,17 @@ export class LoginComponent {
             this.loginform.get('password').value
         ).subscribe(
             (user: User) => {
+                // localStorage must be set before the rest of this method is processed,
+                // problem is that there might be a race condition if we set this localStorage in the RestService
+                // so please let it stay here:
+                localStorage.setItem('user_id', '' + user.id);
+                localStorage.setItem('user_role', user.roles[0]);
+                localStorage.setItem('user_name', user.username);
+                localStorage.setItem('user_firstname', user.firstname);
+                localStorage.setItem('user_lastname', user.lastname);
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
-                this.authservice.setJWT('token');
+                this.authservice.setJWT('token is set in the http-only cookie');
                 this.router.navigate(['']);
             },
             err => {

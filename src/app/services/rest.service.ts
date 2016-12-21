@@ -28,17 +28,12 @@ export class RestService {
                 .map((res: Response) => res.json().user as User);
         response.subscribe((authorizedUser: User) => {
             console.log(authorizedUser);
-            localStorage.setItem('user_id', '' + authorizedUser.id);
-            localStorage.setItem('user_role', authorizedUser.roles[0]);
-            localStorage.setItem('user_name', authorizedUser.username);
-            localStorage.setItem('user_firstname', authorizedUser.firstname);
-            localStorage.setItem('user_lastname', authorizedUser.lastname);
         });
         return response;
     }
 
     createUser(user: User): Observable<User> {
-        let response: Observable<User> = this.http.post(REST + '/users', user)
+        let response: Observable<User> = this.http.post(REST + '/users', user, { withCredentials: true })
                 .map((res: Response) => res.json() as User);
         response.subscribe((createdUser: User) => {
             console.log(createdUser); //TODO
@@ -53,7 +48,7 @@ export class RestService {
             'app_password[newPassword][first]': newPassword,
             'app_password[newPassword][second]': newPassword
         };
-        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody)
+        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
                 .map((res: Response) => res.json() as User);
         response.subscribe((updatedUser: User) => {
             console.log(updatedUser); //TODO
@@ -62,16 +57,18 @@ export class RestService {
     }
 
     readProfessors(): Observable<Array<Professor>> {
-        let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors')
+        let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Professor>)
-                .catch((error: Error) => {
-                        console.log(error);
+                .catch((error: any) => {
+                        console.log(error.json());
+                        //Observable.throw(error.json());
                         return Observable.of<Array<Professor>>([]);
                 });
         response.subscribe((professors: Array<Professor>) => {
             console.log(professors); //TODO
+            this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
         });
-        
+
         // delete:
         let persons: Array<Professor> = [
             {
@@ -119,22 +116,25 @@ export class RestService {
         let userRole = localStorage.getItem('user_role');
         let response: Observable<Array<Meeting>>;
         if (userRole === 'ROLE_PROF') {
-            response = this.http.get(REST + '/users/' + userId + '/meetings/professor')
+            response = this.http.get(REST + '/users/' + userId + '/meetings/professor', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingProfessor>)
-                    .catch((error: Error) => {
-                            console.log(error);
+                    .catch((error: any) => {
+                            console.log(error.json());
+                            //Observable.throw(error.json());
                             return Observable.of<Array<MeetingProfessor>>([]);
                     });
         } else { // if userRole === 'ROLE_STUDENT'
-            response = this.http.get(REST + '/users/' + userId + '/meetings/student')
+            response = this.http.get(REST + '/users/' + userId + '/meetings/student', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingStudent>)
-                    .catch((error: Error) => {
-                            console.log(error);
+                    .catch((error: any) => {
+                            console.log(error.json());
+                            //Observable.throw(error.json());
                             return Observable.of<Array<MeetingStudent>>([]);
                     });
         }
         response.subscribe((meetings: Array<Meeting>) => {
             console.log(meetings); //TODO
+            this.store.dispatch({ type: 'ADD_MEETINGS', payload: meetings });
         });
 
         //delete:
@@ -199,7 +199,7 @@ export class RestService {
         return response;
     }
 
-    updateMeeting(meeting: Meeting): void {
+    updateMeeting(meeting: MeetingProfessor): void {
         let requestBody = { // MeetingProfessor
             id: meeting.id,
             startDate: meeting.startDate,
@@ -207,13 +207,13 @@ export class RestService {
             status: meeting.status,
             slots: meeting.slots
         };
-        this.http.put(REST + '/meetings/' + meeting.id, requestBody);
+        this.http.put(REST + '/meetings/' + meeting.id, requestBody, { withCredentials: true });
         //TODO check if there really is no response
     }
 
     readSlots(meeting: Meeting): Observable<Array<Slot>> {
         let userId = localStorage.getItem('user_id');
-        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots')
+        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Slot>);
         response.subscribe((slots: Array<Slot>) => {
             console.log(slots); //TODO
@@ -230,7 +230,7 @@ export class RestService {
             'app_slot[duration]': duration,
             'app_slot[comment]': comment
         };
-        let response: Observable<Slot> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody)
+        let response: Observable<Slot> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true })
                 .map((res: Response) => res.json() as Slot);
         response.subscribe((createdSlot: Slot) => {
             console.log(createdSlot); //TODO
@@ -248,7 +248,7 @@ export class RestService {
             'app_slot[comment]': comment,
             'app_slot[status]': status
         };
-        this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody);
+        this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true });
         //TODO check if there really is no response
     }
 
