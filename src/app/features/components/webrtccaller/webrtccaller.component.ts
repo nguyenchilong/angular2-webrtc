@@ -46,7 +46,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     stopVideostream(): void {
-        if (this.stream.active) {
+        if (this.stream && this.stream.active) {
             this.stream.getAudioTracks().forEach((track) => track.stop());
             this.stream.getVideoTracks().forEach((track) => track.stop());
         }
