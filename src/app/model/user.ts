@@ -1,5 +1,5 @@
 export class User {
-    id: number;
+    id?: number;
     username: string;
     password?: string;
     roles: Array<string>; // 'ROLE_PROF' or 'ROLE_STUDENT'
