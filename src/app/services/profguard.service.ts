@@ -9,9 +9,10 @@ export class ProfguardService implements CanActivate {
 
     role: string;
     user: Observable<UserLogin>;
+
     constructor(
-        private store: Store<any>,
-        private router: Router) {
+            private store: Store<any>,
+            private router: Router) {
         this.user =  this.store.select(store => store.user);
         this.user.subscribe((user) => {
             this.role = user.role;
@@ -25,4 +26,5 @@ export class ProfguardService implements CanActivate {
             this.router.navigate(['']);
         };
     }
+
 }

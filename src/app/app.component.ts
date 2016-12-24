@@ -15,21 +15,22 @@ import { Observable } from 'rxjs';
 import { UserLogin } from './model/user-login';
 
 @Component({
-  selector: 'my-app',
-  styleUrls: ['./app.component.css'],
-  templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'my-app',
+    styleUrls: ['./app.component.css'],
+    templateUrl: './app.component.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+
     showMonitor = (ENV === 'development' && !AOT &&
         ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
     );
     mobile = MOBILE;
     sideNavMode = MOBILE ? 'over' : 'side';
     views;
-    @ViewChild(MdSidenav) sidenav: MdSidenav;
-
+    @ViewChild(MdSidenav)
+    sidenav: MdSidenav;
     user: Observable<UserLogin>;
 
     constructor(
@@ -71,4 +72,5 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
 
     }
+
 }

@@ -6,12 +6,16 @@ import { Component, ViewChild, ChangeDetectionStrategy, Output, EventEmitter } f
     styleUrls: ['./video.style.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class VideoComponent {
-    @Output() toggleAudio =  new EventEmitter();
-    @Output() toggleVideo = new EventEmitter();
-    @ViewChild('myVideo') myVideo;
-    @ViewChild('otherVideo') otherVideo;
+
+    @Output()
+    toggleAudio =  new EventEmitter();
+    @Output()
+    toggleVideo = new EventEmitter();
+    @ViewChild('myVideo')
+    myVideo;
+    @ViewChild('otherVideo')
+    otherVideo;
     showmenu: boolean = false;
     videoactive: boolean = true;
     audioactive: boolean = true;
@@ -32,4 +36,5 @@ export class VideoComponent {
         this.toggleVideo.emit();
         this.videoactive = !this.videoactive;
     }
+
 }

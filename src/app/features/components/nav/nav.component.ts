@@ -15,13 +15,13 @@ export class NavComponent {
 
     dialogRef: MdDialogRef<InfoDialog>;
     user: Observable<UserLogin>;
-    @Output() toggleoutput = new EventEmitter();
+    @Output()
+    toggleoutput = new EventEmitter();
 
     constructor(
-        private store: Store<any>,
-        private authservice: AuthService,
-        public dialog: MdDialog,
-        ) {
+            private store: Store<any>,
+            private authservice: AuthService,
+            public dialog: MdDialog) {
         this.user = this.store.select(store => store.user);
     }
 
@@ -41,4 +41,5 @@ export class NavComponent {
         this.dialogRef.afterClosed().subscribe(result => {
         });
     }
+
 }

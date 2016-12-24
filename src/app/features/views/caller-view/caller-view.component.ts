@@ -4,7 +4,6 @@ import { PeerconnectionService } from '../../../services/peerconnection.service'
 import { WebrtcCaller } from '../../components/webrtccaller/webrtccaller.component';
 import { ChatComponent } from '../../components/chat/chat.component';
 
-
 @Component({
     selector: 'caller-view-component',
     templateUrl: './caller-view.template.html',
@@ -14,9 +13,12 @@ import { ChatComponent } from '../../components/chat/chat.component';
 })
 export class CallerViewComponent {
 
-    @ViewChild('Caller') caller: WebrtcCaller;
-    @ViewChild('Chat') chat: ChatComponent;
+    @ViewChild('Caller')
+    caller: WebrtcCaller;
+    @ViewChild('Chat')
+    chat: ChatComponent;
 
     constructor(private peerconnectionservice: PeerconnectionService) {
     }
+
 }

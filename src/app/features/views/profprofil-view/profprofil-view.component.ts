@@ -12,7 +12,9 @@ import { UserLogin } from '../../../model/user-login';
 export class ProfprofilViewComponent {
 
     user: Observable<UserLogin>;
+
     constructor(private store: Store<any>) {
         this.user = this.store.select(store => store.user);
     }
+
 }

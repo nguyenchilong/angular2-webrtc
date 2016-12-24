@@ -10,7 +10,6 @@ import { UserLogin } from '../../../model/user-login';
     selector: 'meetings-component',
     templateUrl: './meetings.template.html',
     styleUrls: ['./meetings.style.css']
-
 })
 export class MeetingsCompontent {
 
@@ -43,4 +42,5 @@ export class MeetingsCompontent {
         this.dialogRef.afterClosed().subscribe(result => {
         });
     }
+
 }

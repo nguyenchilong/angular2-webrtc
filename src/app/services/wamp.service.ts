@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { WAMP, REST } from './constants';
 import { Http, Headers } from '@angular/http';
 import { Observable, Subject } from 'rxjs';
-@Injectable()
 
+@Injectable()
 export class WampService {
+
     con: any;
     offerSubject: Subject<any> = new Subject();
     answerSubject: Subject<any> = new Subject();
@@ -13,7 +14,8 @@ export class WampService {
     answerObservable: Observable<any> = this.answerSubject.asObservable();
     icecandidateObservable: Observable<any> = this.icecandidateSubject.asObservable();
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     initWamp(id): void {
         this.con = new ab.Session(
@@ -50,7 +52,6 @@ export class WampService {
         this.offerSubject.complete();
         this.icecandidateSubject.complete();
     }
-
 
     sendWithSocket(to, objecttosend): Observable<any> {
         let body = 'key=certificate_request&receiver=' + to + '&certificate=' + btoa(JSON.stringify(objecttosend));

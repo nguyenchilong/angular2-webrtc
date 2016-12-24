@@ -10,7 +10,6 @@ import { Observable, Subject, Subscription } from 'rxjs';
     templateUrl: './webrtcreceiver.template.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class WebrtcReceiver implements OnInit, OnDestroy {
 
     constraints = {
@@ -18,17 +17,17 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         audio: true
     };
     stream: MediaStream;
-    @ViewChild('Video') video;
+    @ViewChild('Video')
+    video;
     storecon: Observable<any>;
     offerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
     storeconStream: Subscription = new Subscription();
 
     constructor(
-        private peerconnectionservice: PeerconnectionService,
-        private store: Store<any>,
-        private wamp: WampService
-    ) {
+            private peerconnectionservice: PeerconnectionService,
+            private store: Store<any>,
+            private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
     }
 

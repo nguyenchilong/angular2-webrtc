@@ -9,7 +9,6 @@ import { MdDialogRef } from '@angular/material/dialog';
 export class ForgotDialog {
 
     constructor(public dialogRef: MdDialogRef<ForgotDialog>) {
-
-     }
+    }
 
 }

@@ -9,6 +9,7 @@ export class StudguardService implements CanActivate {
 
     role: string;
     user: Observable<UserLogin>;
+
     constructor(
         private store: Store<any>,
         private router: Router) {
@@ -25,4 +26,5 @@ export class StudguardService implements CanActivate {
             this.router.navigate(['']);
         };
     }
+
 }

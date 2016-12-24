@@ -7,7 +7,6 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class CalendarViewComponent {
 
     events = [
@@ -24,10 +23,7 @@ export class CalendarViewComponent {
         }
     ];
 
-    constructor(
-
-    ) {}
-
-
+    constructor() {
+    }
 
 }

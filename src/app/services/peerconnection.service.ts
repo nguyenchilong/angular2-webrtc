@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 @Injectable()
-
 export class PeerconnectionService {
 
     pccfg = { 'iceServers': [{ 'url': 'stun:23.21.150.121' }] };

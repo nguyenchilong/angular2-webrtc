@@ -9,8 +9,7 @@ import { Store } from '@ngrx/store';
 })
 export class PasswordChangeComponent {
 
-    constructor(
-        private store: Store<any>) {
-    };
+    constructor(private store: Store<any>) {
+    }
 
 }

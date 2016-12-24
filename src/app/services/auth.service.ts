@@ -5,7 +5,6 @@ import { RestService } from './rest.service';
 import { WampService } from './wamp.service';
 
 @Injectable()
-
 export class AuthService implements CanActivate {
 
     // JWT_KEY ist for getting the JWT from localStorage
@@ -13,11 +12,10 @@ export class AuthService implements CanActivate {
     JWT: string;
 
     constructor(
-        private router: Router,
-        private store: Store<any>,
-        private restservice: RestService,
-        private wampservice: WampService
-    ) {
+            private router: Router,
+            private store: Store<any>,
+            private restservice: RestService,
+            private wampservice: WampService) {
         const token = window.localStorage.getItem(this.JWT_KEY);
         // check if token already exists in localStorage
         // and execute setJWT
@@ -77,4 +75,5 @@ export class AuthService implements CanActivate {
         this.store.dispatch({ type: 'LOGOUT_USER' });
         this.router.navigate(['auth']);
     }
+
 }

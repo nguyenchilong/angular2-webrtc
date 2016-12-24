@@ -12,22 +12,20 @@ import { UserLogin } from '../../../model/user-login';
     templateUrl: './meeting-dialog.template.html',
     styleUrls: ['./meeting-dialog.style.css']
 })
-
 export class MeetingDialog {
 
     slot: Slot;
     professors: Observable<Array<Professor>>;
     profs: Array<Professor>;
-    durationoptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+    durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
     selectedProfessor: Professor;
     user: Observable<UserLogin>;
 
     constructor(
-        public dialogRef: MdDialogRef<MeetingDialog>,
-        public store: Store<any>,
-        private formBuilder: FormBuilder
-    ) {
+            public dialogRef: MdDialogRef<MeetingDialog>,
+            public store: Store<any>,
+            private formBuilder: FormBuilder) {
         this.professors = this.store.select(store => store.professors);
         this.professors.subscribe((professors: Array<Professor>) => {
             this.profs = professors;
@@ -75,5 +73,6 @@ export class MeetingDialog {
     deleteSlot(): void {
 
     }
+
 }
 

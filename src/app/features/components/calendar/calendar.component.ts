@@ -8,7 +8,6 @@ import { RestService } from '../../../services/rest.service';
 import { Slot } from '../../../model/slot';
 import { UserLogin } from '../../../model/user-login';
 
-
 @Component({
     selector: 'calendar-component',
     templateUrl: './calendar.template.html',

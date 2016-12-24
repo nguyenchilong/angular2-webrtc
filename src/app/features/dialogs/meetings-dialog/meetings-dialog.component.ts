@@ -13,12 +13,9 @@ export class MeetingsDialog {
     events: any[];
     dialogRef2: MdDialogRef<MeetingDialog>;
 
-
     constructor(
-        public dialogRef: MdDialogRef<MeetingsDialog>,
-        public dialog: MdDialog
-    ) {
-
+            public dialogRef: MdDialogRef<MeetingsDialog>,
+            public dialog: MdDialog) {
     }
 
     openDialog(slot: Slot) {

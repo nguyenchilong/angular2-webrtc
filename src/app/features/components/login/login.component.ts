@@ -8,30 +8,26 @@ import { ForgotDialog } from '../../dialogs/forgot-dialog/forgot-dialog.componen
 import { Store } from '@ngrx/store';
 import { User } from '../../../model/user';
 
-
 @Component({
     selector: 'login-component',
     templateUrl: './login.template.html',
     styleUrls: ['./login.style.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class LoginComponent {
 
     loginform: FormGroup;
     isloading: boolean = false;
     dialogRef: MdDialogRef<ForgotDialog>;
 
-
     constructor(
-        private authservice: AuthService,
-        private router: Router,
-        private formBuilder: FormBuilder,
-        private restservice: RestService,
-        private changeDetectionRef: ChangeDetectorRef,
-        public dialog: MdDialog,
-        private store: Store<any>
-    ) {
+            private authservice: AuthService,
+            private router: Router,
+            private formBuilder: FormBuilder,
+            private restservice: RestService,
+            private changeDetectionRef: ChangeDetectorRef,
+            public dialog: MdDialog,
+            private store: Store<any>) {
         if (this.authservice.isAuthorized) {
             this.router.navigate(['']);
         }
@@ -80,4 +76,5 @@ export class LoginComponent {
     openRegisterDialog(): void {
         // HIER BITTE DEN REGISTERDIALOG ÖFFNEN
     }
+
 }

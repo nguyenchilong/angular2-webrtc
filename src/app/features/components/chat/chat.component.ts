@@ -15,20 +15,21 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-
 export class ChatComponent implements AfterViewChecked {
 
-    @ViewChild('Input') input: MdInput;
-    @ViewChild('Messages') messages;
+    @ViewChild('Input')
+    input: MdInput;
+    @ViewChild('Messages')
+    messages;
     chat: Observable<any>;
     storecon: Observable<any>;
     showbutton: boolean = false;
     chatform: FormGroup;
 
     constructor(
-        private peerconnectionservice: PeerconnectionService,
-        private store: Store<any>,
-        private formBuilder: FormBuilder) {
+            private peerconnectionservice: PeerconnectionService,
+            private store: Store<any>,
+            private formBuilder: FormBuilder) {
         this.chat = this.store.select(store => store.chat);
         this.storecon = this.store.select(store => store.peerconn);
         this.storecon.subscribe((con) => {
@@ -59,4 +60,5 @@ export class ChatComponent implements AfterViewChecked {
     scrollToBottom(): void {
         this.messages.nativeElement.scrollTop = this.messages.nativeElement.scrollHeight;
     }
+
 }

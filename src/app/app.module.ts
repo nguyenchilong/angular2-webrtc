@@ -23,50 +23,57 @@ import { AppComponent } from './app.component';
 import { AppState } from './reducers';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    APP_DECLERATIONS
-  ],
-  imports: [
-    APP_IMPORTS,
-    BrowserModule,
-    HttpModule,
-  ],
-  entryComponents: [
-    APP_ENTRY
-  ],
-  bootstrap: [AppComponent],
-  providers: [APP_PROVIDERS]
+    declarations: [
+        AppComponent,
+        APP_DECLERATIONS
+    ],
+    imports: [
+        APP_IMPORTS,
+        BrowserModule,
+        HttpModule,
+    ],
+    entryComponents: [
+        APP_ENTRY
+    ],
+    bootstrap: [AppComponent],
+    providers: [APP_PROVIDERS]
 })
-
 export class AppModule {
-  constructor(public appRef: ApplicationRef,
-    private _store: Store<AppState>) { }
 
-  hmrOnInit(store) {
-    if (!store || !store.rootState) return;
-
-    // restore state by dispatch a SET_ROOT_STATE action
-    if (store.rootState) {
-      this._store.dispatch({
-        type: 'SET_ROOT_STATE',
-        payload: store.rootState
-      });
+    constructor(
+            public appRef: ApplicationRef,
+            private _store: Store<AppState>) {
     }
 
-    if ('restoreInputValues' in store) { store.restoreInputValues(); }
-    this.appRef.tick();
-    Object.keys(store).forEach(prop => delete store[prop]);
-  }
-  hmrOnDestroy(store) {
-    const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
-    this._store.take(1).subscribe(s => store.rootState = s);
-    store.disposeOldHosts = createNewHosts(cmpLocation);
-    store.restoreInputValues = createInputTransfer();
-    removeNgStyles();
-  }
-  hmrAfterDestroy(store) {
-    store.disposeOldHosts();
-    delete store.disposeOldHosts;
-  }
+    hmrOnInit(store) {
+        if (!store || !store.rootState) return;
+
+        // restore state by dispatch a SET_ROOT_STATE action
+        if (store.rootState) {
+            this._store.dispatch({
+                type: 'SET_ROOT_STATE',
+                payload: store.rootState
+            });
+        }
+
+        if ('restoreInputValues' in store) {
+            store.restoreInputValues();
+        }
+        this.appRef.tick();
+        Object.keys(store).forEach(prop => delete store[prop]);
+    }
+
+    hmrOnDestroy(store) {
+        const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
+        this._store.take(1).subscribe(s => store.rootState = s);
+        store.disposeOldHosts = createNewHosts(cmpLocation);
+        store.restoreInputValues = createInputTransfer();
+        removeNgStyles();
+    }
+
+    hmrAfterDestroy(store) {
+        store.disposeOldHosts();
+        delete store.disposeOldHosts;
+    }
+
 }
