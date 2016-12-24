@@ -1,10 +1,15 @@
-export interface meeting {
+export interface meeting { // Slot
     id: number;
     title: string;
     start: Date;
     end: Date;
-    color: any;
+    color: Color;
     prof: string;
     vorlesung: string;
     time: string;
+}
+
+interface Color {
+    primary: string;
+    secondary: string;
 }

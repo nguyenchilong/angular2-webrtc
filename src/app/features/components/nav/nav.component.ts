@@ -4,17 +4,17 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { InfoDialog } from '../../dialogs/info-dialog/info-dialog.component';
+import { UserLogin } from '../../../model/user-login';
 
 @Component({
     selector: 'nav-component',
     templateUrl: './nav.template.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class NavComponent {
 
     dialogRef: MdDialogRef<InfoDialog>;
-    user: Observable<any>;
+    user: Observable<UserLogin>;
     @Output() toggleoutput = new EventEmitter();
 
     constructor(

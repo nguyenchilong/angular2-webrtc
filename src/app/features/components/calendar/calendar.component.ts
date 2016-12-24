@@ -2,9 +2,11 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { RestService } from '../../../services/rest.service';
 import { MeetingsDialog } from '../../dialogs/meetings-dialog/meetings-dialog.component';
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
+import { RestService } from '../../../services/rest.service';
+import { Slot } from '../../../model/slot';
+import { UserLogin } from '../../../model/user-login';
 
 
 @Component({
@@ -13,25 +15,20 @@ import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.compo
     styleUrls: ['./calendar.style.css'],
     encapsulation: ViewEncapsulation.None,
 })
-
 export class CalendarComponent implements OnInit {
 
-    meetings: Observable<any>;
+    meetings: Observable<Array<Slot>>;
     dialogRef: MdDialogRef<MeetingsDialog>;
     dialogRef2: MdDialogRef<MeetingDialog>;
     viewDate: Date = new Date();
     view: string = 'month';
-    user: any;
+    user: UserLogin;
 
     constructor(
             public dialog: MdDialog,
             public store: Store<any>,
             public restservice: RestService) {
         this.meetings = this.store.select(store => store.slots);
-this.meetings.subscribe(data => {
-console.log('CalendarComponent => ');
-console.log(data);
-});
         this.store.select(store => store.user).subscribe(user => {
             this.user = user;
         });

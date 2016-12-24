@@ -1,12 +1,13 @@
 import { ActionReducer, Action } from '@ngrx/store';
+import { UserLogin } from '../model/user-login';
 
-let init: any = {
+let init: UserLogin = {
     loggedin: false,
-    name: '',
+    username: '',
     role: ''
 };
 
-export const userrx: ActionReducer<any> = (state: any = init, action: Action) => {
+export const userrx: ActionReducer<UserLogin> = (state: UserLogin = init, action: Action) => {
     switch (action.type) {
         case 'LOGIN_USER':
             return Object.assign(
@@ -20,7 +21,7 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
             return Object.assign(
                 {},
                 state,
-                { name: action.payload }
+                { username: action.payload }
             );
         case 'SET_ROLE':
             switch (action.payload) {
@@ -39,12 +40,6 @@ export const userrx: ActionReducer<any> = (state: any = init, action: Action) =>
                 default:
                     return state;
             };
-        case 'SET_USER':
-            return Object.assign(
-                {},
-                state,
-                action.payload
-            );
         case 'SET_FIRSTNAME':
             return Object.assign(
                 {},

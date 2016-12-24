@@ -28,7 +28,7 @@
 		</button>
 	</span>
 	<span *ngIf="(user | async).loggedin">
-		{{(user | async).name}}
+		{{(user | async).username}}
 	</span>
 	<span *ngIf="(user | async).loggedin">
         <button md-icon-button (click)="logoutUser()">

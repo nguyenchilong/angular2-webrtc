@@ -3,7 +3,9 @@ import { MdDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { User } from '../../../model/user';
+import { Professor } from '../../../model/professor';
+import { Slot } from '../../../model/slot';
+import { UserLogin } from '../../../model/user-login';
 
 @Component({
     selector: 'meeting-dialog',
@@ -13,22 +15,22 @@ import { User } from '../../../model/user';
 
 export class MeetingDialog {
 
-    meeting: any;
-    persons: Observable<Array<User>>;
-    pers: any;
-    durationoptions: any[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+    meeting: Slot;
+    persons: Observable<Array<Professor>>;
+    pers: Array<Professor>;
+    durationoptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
-    selectedperson: any;
-    user: Observable<User>;
+    selectedperson: Professor;
+    user: Observable<UserLogin>;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
         public store: Store<any>,
         private formBuilder: FormBuilder
     ) {
-        this.persons = this.store.select(store => store.persons);
-        this.persons.subscribe((data) => {
-            this.pers = data;
+        this.persons = this.store.select(store => store.professors);
+        this.persons.subscribe((persons: Array<Professor>) => {
+            this.pers = persons;
         });
         this.persons.first().subscribe(data => {
             this.selectedperson = data[0];
@@ -42,7 +44,7 @@ export class MeetingDialog {
 
     save(): void {
         //
-        let init: any = {
+        /*let init: Slot = {
             title: this.createform.get('title').value,
             color: {
                 primary: '#ad2121',
@@ -55,7 +57,7 @@ export class MeetingDialog {
             time: 'Fr 13:30 01.12.16',
             status: 'created'
         };
-        this.store.dispatch({ type: 'ADD_SLOT', payload: init });
+        this.store.dispatch({ type: 'ADD_SLOT', payload: init });*/
     }
 
     joinMeeting(): void {

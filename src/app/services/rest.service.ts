@@ -68,11 +68,11 @@ export class RestService {
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
 //this.store.dispatch({ type: 'CLEAR' });
-                this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
+                this.store.dispatch({ type: 'ADD_PROFESSORS', payload: professors });
         });
 
         // delete:
-        let persons: Array<Professor> = [
+        let professors: Array<Professor> = [
             {
                 id: 1,
                 username: '',
@@ -108,7 +108,7 @@ export class RestService {
                 ]
             },
         ];
-        this.store.dispatch({ type: 'ADD_PERSONS', payload: persons });
+        this.store.dispatch({ type: 'ADD_PROFESSORS', payload: professors });
 
         return response;
     }

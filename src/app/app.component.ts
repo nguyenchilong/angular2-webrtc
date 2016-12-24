@@ -9,9 +9,10 @@ import { WampService } from './services/wamp.service';
 import { RestService } from './services/rest.service';
 import { AuthService } from './services/auth.service';
 
-
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
+import { UserLogin } from './model/user-login';
 
 @Component({
   selector: 'my-app',
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   views;
   @ViewChild(MdSidenav) sidenav: MdSidenav;
 
-  user: Observable<any>;
+  user: Observable<UserLogin>;
 
   constructor(
     public route: ActivatedRoute,
@@ -41,7 +42,7 @@ export class AppComponent implements OnInit {
   ) {
     this.user = this.store.select(store => store.user);
     // change website to view of profile
-    this.user.subscribe((user) => {
+    this.user.subscribe((user: UserLogin) => {
       if (user.role === 'stud') {
         this.views = STUDVIEWS;
       } else if (user.role === 'prof') {

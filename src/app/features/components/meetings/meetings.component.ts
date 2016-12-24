@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
+import { Slot } from '../../../model/slot';
+import { UserLogin } from '../../../model/user-login';
 
 @Component({
     selector: 'meetings-component',
@@ -10,21 +12,16 @@ import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.compo
     styleUrls: ['./meetings.style.css']
 
 })
-
 export class MeetingsCompontent {
 
-    meetings: Observable<any>;
+    meetings: Observable<Array<Slot>>;
     dialogRef: MdDialogRef<MeetingDialog>;
-    user: Observable<any>;
+    user: Observable<UserLogin>;
 
     constructor(
             private store: Store<any>,
             public dialog: MdDialog) {
         this.meetings = this.store.select(store => store.slots);
-this.meetings.subscribe(data => {
-console.log('MeetingsComponent => ');
-console.log(data);
-});
         this.user = this.store.select(store => store.user);
     };
 

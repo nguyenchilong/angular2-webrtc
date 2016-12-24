@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { UserLogin } from '../model/user-login';
 
 @Injectable()
-
 export class ProfguardService implements CanActivate {
 
     role: string;
-    user: Observable<any>;
+    user: Observable<UserLogin>;
     constructor(
         private store: Store<any>,
         private router: Router) {

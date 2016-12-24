@@ -1,10 +1,11 @@
 import { ActionReducer, Action } from '@ngrx/store';
+import { Professor } from '../model/professor';
 
-let init: any[] = [];
+let init: Array<Professor> = [];
 
-export const personsrx: ActionReducer<any> = (state: any = init, action: Action) => {
+export const professorsrx: ActionReducer<Array<Professor>> = (state: Array<Professor> = init, action: Action) => {
     switch (action.type) {
-        case 'ADD_PERSONS':
+        case 'ADD_PROFESSORS':
             return [
                 ...action.payload
             ];
