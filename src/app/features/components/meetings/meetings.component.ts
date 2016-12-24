@@ -18,10 +18,13 @@ export class MeetingsCompontent {
     user: Observable<any>;
 
     constructor(
-        private store: Store<any>,
-        public dialog: MdDialog
-    ) {
-        this.meetings = this.store.select(store => store.meetings);
+            private store: Store<any>,
+            public dialog: MdDialog) {
+        this.meetings = this.store.select(store => store.slots);
+this.meetings.subscribe(data => {
+console.log('MeetingsComponent => ');
+console.log(data);
+});
         this.user = this.store.select(store => store.user);
     };
 

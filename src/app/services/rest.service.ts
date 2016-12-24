@@ -67,7 +67,7 @@ export class RestService {
                 });
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
-                this.store.dispatch({ type: 'CLEAR' });
+//this.store.dispatch({ type: 'CLEAR' });
                 this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
         });
 
@@ -132,7 +132,7 @@ export class RestService {
         }
         this.printResponse('readMeetings', response);
         response.subscribe((meetings: Array<Meeting>) => {
-                this.store.dispatch({ type: 'ADD_MEETINGS', payload: meetings });
+                this.store.dispatch({ type: 'ADD_SLOTS', payload: meetings });
         });
 
         //delete:
@@ -192,7 +192,7 @@ export class RestService {
                 status: 'accepted'
             }
         ];
-        this.store.dispatch({ type: 'ADD_MEETINGS', payload: data });
+        this.store.dispatch({ type: 'ADD_SLOTS', payload: data });
 
         return response;
     }

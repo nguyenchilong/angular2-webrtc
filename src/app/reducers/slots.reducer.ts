@@ -1,26 +1,26 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { meeting } from '../app.interfaces';
+import { Slot } from '../model/slot';
 import * as _ from 'lodash';
 
-let init: meeting[] = [];
+let init: Array<Slot> = [];
 
-export const meetingsrx: ActionReducer<meeting[]> = (state: meeting[] = init, action: Action) => {
+export const slotsrx: ActionReducer<Array<Slot>> = (state: Array<Slot> = init, action: Action) => {
     switch (action.type) {
-        case 'ADD_MEETINGS':
+        case 'ADD_SLOTS':
             return [
                 ...state,
                 ...action.payload
             ];
-        case 'ADD_MEETING':
+        case 'ADD_SLOT':
             return [
                 ...state,
                 action.payload
             ];
-        case 'REMOVE_MEETING':
+        case 'REMOVE_SLOT':
             return [
                 ..._.reject(state, { 'id': action.payload.id })
             ];
-        case 'REPLACE_MEETING':
+        case 'REPLACE_SLOT':
             return [
                 ..._.reject(state, { 'id': action.payload.id }),
                 action.payload

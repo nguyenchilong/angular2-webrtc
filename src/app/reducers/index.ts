@@ -8,7 +8,7 @@ import { routerReducer, RouterState } from '@ngrx/router-store';
 import { userrx } from './user.reducer';
 import { peerconnrx } from './peerconn.reducer';
 import { chatrx } from './chat.reducer';
-import { meetingsrx } from './meetings.reducer';
+import { slotsrx } from './slots.reducer';
 import { personsrx } from './persons.reducer';
 
 export interface AppState {
@@ -20,7 +20,7 @@ export const reducers = {
   user: userrx,
   peerconn: peerconnrx,
   chat: chatrx,
-  meetings: meetingsrx,
+  slots: slotsrx,
   persons: personsrx
 };
 

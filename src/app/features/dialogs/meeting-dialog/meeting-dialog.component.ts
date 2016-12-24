@@ -55,7 +55,7 @@ export class MeetingDialog {
             time: 'Fr 13:30 01.12.16',
             status: 'created'
         };
-        this.store.dispatch({ type: 'ADD_MEETING', payload: init });
+        this.store.dispatch({ type: 'ADD_SLOT', payload: init });
     }
 
     joinMeeting(): void {

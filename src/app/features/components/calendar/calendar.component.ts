@@ -24,10 +24,14 @@ export class CalendarComponent implements OnInit {
     user: any;
 
     constructor(
-        public dialog: MdDialog,
-        public store: Store<any>,
-        public restservice: RestService) {
-        this.meetings = this.store.select(store => store.meetings);
+            public dialog: MdDialog,
+            public store: Store<any>,
+            public restservice: RestService) {
+        this.meetings = this.store.select(store => store.slots);
+this.meetings.subscribe(data => {
+console.log('CalendarComponent => ');
+console.log(data);
+});
         this.store.select(store => store.user).subscribe(user => {
             this.user = user;
         });
