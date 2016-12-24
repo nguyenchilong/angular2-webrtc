@@ -46,9 +46,9 @@ export class RestService {
     updateUserPassword(oldPassword: string, newPassword: string): Observable<User> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams({
-            'app_password[oldPassword]': oldPassword,
-            'app_password[newPassword][first]': newPassword,
-            'app_password[newPassword][second]': newPassword
+                'app_password[oldPassword]': oldPassword,
+                'app_password[newPassword][first]': newPassword,
+                'app_password[newPassword][second]': newPassword
         });
         let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
                 .map((res: Response) => res.json() as User)
@@ -196,8 +196,25 @@ export class RestService {
         return response;
     }
 
-    updateMeeting(meeting: MeetingProfessor): Observable<void> {
-        let response: Observable<void> = this.http.put(REST + '/meetings/' + meeting.id, MeetingProfessor, { withCredentials: true })
+    createMeeting(meeting: MeetingProfessor): Observable<void> {
+        let userId = localStorage.getItem('user_id');
+        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings', meeting, { withCredentials: true })
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('createMeeting', response);
+        return response;
+    }
+
+    updateMeetingSimple(meetingId: number, meeting: Meeting): Observable<void> {
+        return this.updateMeeting(meetingId, meeting.status);
+    }
+    updateMeeting(meetingId: number, newStatus: string): Observable<void> {
+        let userId = localStorage.getItem('user_id');
+        let requestBody = this.serializeAsUrlParams({
+                'app_meeting_edit[status]': newStatus
+        });
+        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true })
                 .catch((err: any) => {
                         return Observable.throw(err.json());
                 });
@@ -221,9 +238,9 @@ export class RestService {
     }
     createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Array<Slot>> {
         let requestBody = this.serializeAsUrlParams({
-            'app_slot[name]': name,
-            'app_slot[duration]': duration,
-            'app_slot[comment]': comment
+                'app_slot_create[name]': name,
+                'app_slot_create[duration]': duration,
+                'app_slot_create[comment]': comment
         });
         let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Slot>)
@@ -239,9 +256,9 @@ export class RestService {
     }
     updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): Observable<void> {
         let requestBody = this.serializeAsUrlParams({
-            'app_slot[duration]': duration,
-            'app_slot[comment]': comment,
-            'app_slot[status]': status
+                'app_slot_edit[duration]': duration,
+                'app_slot_edit[comment]': comment,
+                'app_slot_edit[status]': status
         });
         let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true })
                 .catch((err: any) => {

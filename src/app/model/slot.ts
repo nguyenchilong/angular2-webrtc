@@ -2,7 +2,7 @@ import { MeetingStudent } from './meeting-student';
 import { Student } from './student';
 
 export class Slot {
-    id: number;
+    id?: number; // not set while the object is not created yet (server creates a new id)
     name: string;
     duration: number;
     date: Date;
