@@ -8,7 +8,6 @@ let init: any = {
 
 export const userrx: ActionReducer<any> = (state: any = init, action: Action) => {
     switch (action.type) {
-
         case 'LOGIN_USER':
             return Object.assign(
                 {},

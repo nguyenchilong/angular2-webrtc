@@ -7,7 +7,6 @@ let init: any = {
 
 export const peerconnrx: ActionReducer<any> = (state: any = init, action: Action) => {
     switch (action.type) {
-
         case 'CONNECTION_CREATED':
             return Object.assign(
                 {},

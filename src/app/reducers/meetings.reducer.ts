@@ -6,7 +6,6 @@ let init: meeting[] = [];
 
 export const meetingsrx: ActionReducer<meeting[]> = (state: meeting[] = init, action: Action) => {
     switch (action.type) {
-
         case 'ADD_MEETINGS':
             return [
                 ...state,
