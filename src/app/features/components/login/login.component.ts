@@ -44,7 +44,7 @@ export class LoginComponent {
             this.loginform.get('password').value
         ).subscribe(
             (user: User) => {
-                // localStorage must be set before the rest of this method is processed,
+                // localStorage must be set before router.navigate() gets called,
                 // problem is that there might be a race condition if we set this localStorage in the RestService
                 // so please let it stay here:
                 localStorage.setItem('user_id', '' + user.id);

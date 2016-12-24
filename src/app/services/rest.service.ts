@@ -27,9 +27,11 @@ export class RestService {
         let response: Observable<User> = this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true })
                 .map((res: Response) => res.json().user as User)
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('authorizeUser', response);
+        // response.subscribe() is done in LoginComponent.login()
         return response;
     }
 
@@ -37,8 +39,9 @@ export class RestService {
         let response: Observable<User> = this.http.post(REST + '/users', user, { withCredentials: true })
                 .map((res: Response) => res.json() as User)
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('createUser', response);
         return response;
     }
@@ -46,15 +49,16 @@ export class RestService {
     updateUserPassword(oldPassword: string, newPassword: string): Observable<User> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams({
-                'app_password[oldPassword]': oldPassword,
-                'app_password[newPassword][first]': newPassword,
-                'app_password[newPassword][second]': newPassword
+            'app_password[oldPassword]': oldPassword,
+            'app_password[newPassword][first]': newPassword,
+            'app_password[newPassword][second]': newPassword
         });
         let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
                 .map((res: Response) => res.json() as User)
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('updateUserPassword', response);
         return response;
     }
@@ -63,12 +67,13 @@ export class RestService {
         let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Professor>)
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
 //this.store.dispatch({ type: 'CLEAR' });
-                this.store.dispatch({ type: 'ADD_PROFESSORS', payload: professors });
+            this.store.dispatch({ type: 'ADD_PROFESSORS', payload: professors });
         });
 
         // delete:
@@ -120,14 +125,16 @@ export class RestService {
             response = this.http.get(REST + '/users/' + professorId + '/meetings/professor', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingProfessor>)
                     .catch((err: any) => {
-                            return Observable.throw(err.json());
-                    });
+                        return Observable.throw(err.json());
+                    }
+            );
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + professorId + '/meetings/student', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingStudent>)
                     .catch((err: any) => {
-                            return Observable.throw(err.json());
-                    });
+                        return Observable.throw(err.json());
+                    }
+            );
         }
         this.printResponse('readMeetings', response);
         return response;
@@ -137,8 +144,9 @@ export class RestService {
         let userId = localStorage.getItem('user_id');
         let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings', meeting, { withCredentials: true })
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('createMeeting', response);
         return response;
     }
@@ -149,12 +157,13 @@ export class RestService {
     updateMeeting(meetingId: number, newStatus: string): Observable<void> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams({
-                'app_meeting_edit[status]': newStatus
+            'app_meeting_edit[status]': newStatus
         });
         let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true })
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('updateMeeting', response);
         return response;
     }
@@ -164,11 +173,12 @@ export class RestService {
         let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Slot>)
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('readSlots', response);
         response.subscribe((slots: Array<Slot>) => {
-                this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
+            this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
         });
 
         //delete:
@@ -238,15 +248,16 @@ export class RestService {
     }
     createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Array<Slot>> {
         let requestBody = this.serializeAsUrlParams({
-                'app_slot_create[name]': name,
-                'app_slot_create[duration]': duration,
-                'app_slot_create[comment]': comment
+            'app_slot_create[name]': name,
+            'app_slot_create[duration]': duration,
+            'app_slot_create[comment]': comment
         });
         let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Slot>)
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('createSlot', response);
         return response;
     }
@@ -256,28 +267,30 @@ export class RestService {
     }
     updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): Observable<void> {
         let requestBody = this.serializeAsUrlParams({
-                'app_slot_edit[duration]': duration,
-                'app_slot_edit[comment]': comment,
-                'app_slot_edit[status]': status
+            'app_slot_edit[duration]': duration,
+            'app_slot_edit[comment]': comment,
+            'app_slot_edit[status]': status
         });
         let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true })
                 .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
+                    return Observable.throw(err.json());
+                }
+        );
         this.printResponse('updateSlot', response);
         return response;
     }
 
     private printResponse(functionName: string, response: Observable<any>) {
         response.subscribe(data => {
-                console.log(functionName + '() = ' + JSON.stringify(data, null, 2));
-        }, err => {
-                if (typeof err === typeof Error) {
+                    console.log(functionName + '() = ' + JSON.stringify(data, null, 2));
+                }, err => {
+                    if (typeof err === typeof Error) {
                         console.log(functionName + '() error = ' + JSON.stringify(err, null, 2));
-                } else {
+                    } else {
                         console.log(functionName + '() unknown error = ' + JSON.stringify(err, null, 2));
+                    }
                 }
-        });
+        );
     };
 
     private serializeAsUrlParams(o: Object): string {
