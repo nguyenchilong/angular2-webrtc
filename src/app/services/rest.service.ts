@@ -222,7 +222,7 @@ export class RestService {
         return response;
     }
 
-    readSlots(meeting: Meeting): Observable<Array<Slot>> {
+    readSlots(): Observable<Array<Slot>> {
         let userId = localStorage.getItem('user_id');
         let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Slot>)
