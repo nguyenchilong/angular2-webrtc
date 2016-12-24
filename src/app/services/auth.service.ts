@@ -57,7 +57,7 @@ export class AuthService implements CanActivate {
             this.restservice.readMeetings();
             let userid = localStorage.getItem('user_id');
             this.wampservice.initWamp(userid);
-            this.store.dispatch({ type: 'SET_USERNAME', payload: localStorage.getItem('user_name') });
+            this.store.dispatch({ type: 'SET_USERNAME', payload: localStorage.getItem('user_username') });
             this.store.dispatch({ type: 'SET_ROLE', payload: localStorage.getItem('user_role') });
             this.store.dispatch({ type: 'SET_FIRSTNAME', payload: localStorage.getItem('user_firstname') });
             this.store.dispatch({ type: 'SET_LASTNAME', payload: localStorage.getItem('user_lastname') });
@@ -69,7 +69,7 @@ export class AuthService implements CanActivate {
         this.wampservice.closeWamp();
         localStorage.removeItem(this.JWT_KEY);
         localStorage.removeItem('user_id');
-        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_username');
         localStorage.removeItem('user_role');
         localStorage.removeItem('user_firstname');
         localStorage.removeItem('user_lastname');

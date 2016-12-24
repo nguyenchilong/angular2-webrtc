@@ -53,7 +53,7 @@ export class LoginComponent {
                 // so please let it stay here:
                 localStorage.setItem('user_id', '' + user.id);
                 localStorage.setItem('user_role', user.roles[0]);
-                localStorage.setItem('user_name', user.username);
+                localStorage.setItem('user_username', user.username);
                 localStorage.setItem('user_firstname', user.firstname);
                 localStorage.setItem('user_lastname', user.lastname);
                 this.isloading = false;

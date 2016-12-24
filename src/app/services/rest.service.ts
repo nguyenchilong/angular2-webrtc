@@ -67,6 +67,7 @@ export class RestService {
                 });
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
+                this.store.dispatch({ type: 'CLEAR' });
                 this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
         });
 
@@ -78,7 +79,7 @@ export class RestService {
                 firstname: '',
                 lastname: 'Prof. Dr. Ralf Kramer',
                 roles: ['ROLE_PROF'],
-                studyCourses: [
+                studycourses: [
                     {
                         id: 5,
                         name: 'Verteilte Systeme'
@@ -95,7 +96,7 @@ export class RestService {
                 firstname: '',
                 lastname: 'Prof. Dr. Oliver Höß',
                 roles: ['ROLE_PROF'],
-                studyCourses: [
+                studycourses: [
                     {
                         id: 5,
                         name: 'Verteilte Systeme'
