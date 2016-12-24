@@ -25,48 +25,49 @@ export class RestService {
         headers.append('Content-Type', 'text/plain');
         headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
         let response: Observable<User> = this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true })
-                .map((res: Response) => res.json().user as User);
-        response.subscribe((authorizedUser: User) => {
-            console.log(authorizedUser);
-        });
+                .map((res: Response) => res.json().user as User)
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('authorizeUser', response);
         return response;
     }
 
     createUser(user: User): Observable<User> {
         let response: Observable<User> = this.http.post(REST + '/users', user, { withCredentials: true })
-                .map((res: Response) => res.json() as User);
-        response.subscribe((createdUser: User) => {
-            console.log(createdUser); //TODO
-        });
+                .map((res: Response) => res.json() as User)
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('createUser', response);
         return response;
     }
 
     updateUserPassword(oldPassword: string, newPassword: string): Observable<User> {
         let userId = localStorage.getItem('user_id');
-        let requestBody = {
+        let requestBody = this.serializeAsUrlParams({
             'app_password[oldPassword]': oldPassword,
             'app_password[newPassword][first]': newPassword,
             'app_password[newPassword][second]': newPassword
-        };
-        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
-                .map((res: Response) => res.json() as User);
-        response.subscribe((updatedUser: User) => {
-            console.log(updatedUser); //TODO
         });
+        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
+                .map((res: Response) => res.json() as User)
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('updateUserPassword', response);
         return response;
     }
 
     readProfessors(): Observable<Array<Professor>> {
         let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<Professor>)
-                .catch((error: any) => {
-                        console.log(error.json());
-                        //Observable.throw(error.json());
-                        return Observable.of<Array<Professor>>([]);
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
                 });
+        this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
-            console.log(professors); //TODO
-            this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
+                this.store.dispatch({ type: 'ADD_PERSONS', payload: professors });
         });
 
         // delete:
@@ -118,23 +119,19 @@ export class RestService {
         if (userRole === 'ROLE_PROF') {
             response = this.http.get(REST + '/users/' + userId + '/meetings/professor', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingProfessor>)
-                    .catch((error: any) => {
-                            console.log(error.json());
-                            //Observable.throw(error.json());
-                            return Observable.of<Array<MeetingProfessor>>([]);
+                    .catch((err: any) => {
+                            return Observable.throw(err.json());
                     });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + userId + '/meetings/student', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingStudent>)
-                    .catch((error: any) => {
-                            console.log(error.json());
-                            //Observable.throw(error.json());
-                            return Observable.of<Array<MeetingStudent>>([]);
+                    .catch((err: any) => {
+                            return Observable.throw(err.json());
                     });
         }
+        this.printResponse('readMeetings', response);
         response.subscribe((meetings: Array<Meeting>) => {
-            console.log(meetings); //TODO
-            this.store.dispatch({ type: 'ADD_MEETINGS', payload: meetings });
+                this.store.dispatch({ type: 'ADD_MEETINGS', payload: meetings });
         });
 
         //delete:
@@ -199,57 +196,79 @@ export class RestService {
         return response;
     }
 
-    updateMeeting(meeting: MeetingProfessor): void {
-        let requestBody = { // MeetingProfessor
-            id: meeting.id,
-            startDate: meeting.startDate,
-            endDate: meeting.endDate,
-            status: meeting.status,
-            slots: meeting.slots
-        };
-        this.http.put(REST + '/meetings/' + meeting.id, requestBody, { withCredentials: true });
-        //TODO check if there really is no response
+    updateMeeting(meeting: MeetingProfessor): Observable<void> {
+        let response: Observable<void> = this.http.put(REST + '/meetings/' + meeting.id, MeetingProfessor, { withCredentials: true })
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('updateMeeting', response);
+        return response;
     }
 
     readSlots(meeting: Meeting): Observable<Array<Slot>> {
         let userId = localStorage.getItem('user_id');
         let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
-                .map((res: Response) => res.json() as Array<Slot>);
-        response.subscribe((slots: Array<Slot>) => {
-            console.log(slots); //TODO
-        });
+                .map((res: Response) => res.json() as Array<Slot>)
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('readSlots', response);
         return response;
     }
 
-    createSlotSimple(meetingId: number, slot: Slot): Observable<Slot> {
+    createSlotSimple(meetingId: number, slot: Slot): Observable<Array<Slot>> {
         return this.createSlot(meetingId, slot.name, slot.duration, slot.comment);
     }
-    createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Slot> {
-        let requestBody = {
+    createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Array<Slot>> {
+        let requestBody = this.serializeAsUrlParams({
             'app_slot[name]': name,
             'app_slot[duration]': duration,
             'app_slot[comment]': comment
-        };
-        let response: Observable<Slot> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true })
-                .map((res: Response) => res.json() as Slot);
-        response.subscribe((createdSlot: Slot) => {
-            console.log(createdSlot); //TODO
         });
-        //TODO check if response is Slot or Array<Slot>
+        let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true })
+                .map((res: Response) => res.json() as Array<Slot>)
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('createSlot', response);
         return response;
     }
 
-    updateSlotSimple(meetingId: number, slot: Slot): void {
+    updateSlotSimple(meetingId: number, slot: Slot): Observable<void> {
         return this.updateSlot(meetingId, slot.id, slot.duration, slot.comment, slot.status);
     }
-    updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): void {
-        let requestBody = {
+    updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): Observable<void> {
+        let requestBody = this.serializeAsUrlParams({
             'app_slot[duration]': duration,
             'app_slot[comment]': comment,
             'app_slot[status]': status
-        };
-        this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true });
-        //TODO check if there really is no response
+        });
+        let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true })
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('updateSlot', response);
+        return response;
     }
+
+    private printResponse(functionName: string, response: Observable<any>) {
+        response.subscribe(data => {
+                console.log(functionName + '() = ' + JSON.stringify(data, null, 2));
+        }, err => {
+                if (typeof err === typeof Error) {
+                        console.log(functionName + '() error = ' + JSON.stringify(err, null, 2));
+                } else {
+                        console.log(functionName + '() unknown error = ' + JSON.stringify(err, null, 2));
+                }
+        });
+    };
+
+    private serializeAsUrlParams(o: Object): string {
+        var s = '';
+        for (var key in o) {
+            s += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(o[key]);
+        }
+        return s.slice(1);
+    };
 
 }
