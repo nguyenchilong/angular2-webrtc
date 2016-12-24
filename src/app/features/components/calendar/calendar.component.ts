@@ -17,7 +17,7 @@ import { UserLogin } from '../../../model/user-login';
 })
 export class CalendarComponent implements OnInit {
 
-    meetings: Observable<Array<Slot>>;
+    slots: Observable<Array<Slot>>;
     dialogRef: MdDialogRef<MeetingsDialog>;
     dialogRef2: MdDialogRef<MeetingDialog>;
     viewDate: Date = new Date();
@@ -28,7 +28,7 @@ export class CalendarComponent implements OnInit {
             public dialog: MdDialog,
             public store: Store<any>,
             public restservice: RestService) {
-        this.meetings = this.store.select(store => store.slots);
+        this.slots = this.store.select(store => store.slots);
         this.store.select(store => store.user).subscribe(user => {
             this.user = user;
         });

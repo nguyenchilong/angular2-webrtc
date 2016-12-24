@@ -15,12 +15,12 @@ import { UserLogin } from '../../../model/user-login';
 
 export class MeetingDialog {
 
-    meeting: Slot;
-    persons: Observable<Array<Professor>>;
-    pers: Array<Professor>;
+    slot: Slot;
+    professors: Observable<Array<Professor>>;
+    profs: Array<Professor>;
     durationoptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     createform: FormGroup;
-    selectedperson: Professor;
+    selectedProfessor: Professor;
     user: Observable<UserLogin>;
 
     constructor(
@@ -28,12 +28,12 @@ export class MeetingDialog {
         public store: Store<any>,
         private formBuilder: FormBuilder
     ) {
-        this.persons = this.store.select(store => store.professors);
-        this.persons.subscribe((persons: Array<Professor>) => {
-            this.pers = persons;
+        this.professors = this.store.select(store => store.professors);
+        this.professors.subscribe((professors: Array<Professor>) => {
+            this.profs = professors;
         });
-        this.persons.first().subscribe(data => {
-            this.selectedperson = data[0];
+        this.professors.first().subscribe(data => {
+            this.selectedProfessor = data[0];
         });
         this.createform = this.formBuilder.group({
             title: '',
@@ -50,7 +50,7 @@ export class MeetingDialog {
                 primary: '#ad2121',
                 secondary: '#FAE3E3'
             },
-            prof: this.selectedperson.name,
+            prof: this.selectedProfessor.name,
             vorlesung: 'Softwaremodellierung',
             info: this.createform.get('info').value,
             duration: 25,
@@ -60,19 +60,19 @@ export class MeetingDialog {
         this.store.dispatch({ type: 'ADD_SLOT', payload: init });*/
     }
 
-    joinMeeting(): void {
+    joinSlot(): void {
 
     }
 
-    acceptMeeting(): void {
+    acceptSlot(): void {
 
     }
 
-    rejectMeeting(): void {
+    rejectSlot(): void {
 
     }
 
-    deleteMeeting(): void {
+    deleteSlot(): void {
 
     }
 }

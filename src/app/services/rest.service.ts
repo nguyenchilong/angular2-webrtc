@@ -113,26 +113,62 @@ export class RestService {
         return response;
     }
 
-    readMeetings(): Observable<Array<Meeting>> {
-        let userId = localStorage.getItem('user_id');
+    readMeetings(professorId: number): Observable<Array<Meeting>> {
         let userRole = localStorage.getItem('user_role');
         let response: Observable<Array<Meeting>>;
         if (userRole === 'ROLE_PROF') {
-            response = this.http.get(REST + '/users/' + userId + '/meetings/professor', { withCredentials: true })
+            response = this.http.get(REST + '/users/' + professorId + '/meetings/professor', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingProfessor>)
                     .catch((err: any) => {
                             return Observable.throw(err.json());
                     });
         } else { // if userRole === 'ROLE_STUDENT'
-            response = this.http.get(REST + '/users/' + userId + '/meetings/student', { withCredentials: true })
+            response = this.http.get(REST + '/users/' + professorId + '/meetings/student', { withCredentials: true })
                     .map((res: Response) => res.json() as Array<MeetingStudent>)
                     .catch((err: any) => {
                             return Observable.throw(err.json());
                     });
         }
         this.printResponse('readMeetings', response);
-        response.subscribe((meetings: Array<Meeting>) => {
-                this.store.dispatch({ type: 'ADD_SLOTS', payload: meetings });
+        return response;
+    }
+
+    createMeeting(meeting: MeetingProfessor): Observable<void> {
+        let userId = localStorage.getItem('user_id');
+        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings', meeting, { withCredentials: true })
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('createMeeting', response);
+        return response;
+    }
+
+    updateMeetingSimple(meetingId: number, meeting: Meeting): Observable<void> {
+        return this.updateMeeting(meetingId, meeting.status);
+    }
+    updateMeeting(meetingId: number, newStatus: string): Observable<void> {
+        let userId = localStorage.getItem('user_id');
+        let requestBody = this.serializeAsUrlParams({
+                'app_meeting_edit[status]': newStatus
+        });
+        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true })
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('updateMeeting', response);
+        return response;
+    }
+
+    readSlots(): Observable<Array<Slot>> {
+        let userId = localStorage.getItem('user_id');
+        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
+                .map((res: Response) => res.json() as Array<Slot>)
+                .catch((err: any) => {
+                        return Observable.throw(err.json());
+                });
+        this.printResponse('readSlots', response);
+        response.subscribe((slots: Array<Slot>) => {
+                this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
         });
 
         //delete:
@@ -194,43 +230,6 @@ export class RestService {
         ];
         this.store.dispatch({ type: 'ADD_SLOTS', payload: data });
 
-        return response;
-    }
-
-    createMeeting(meeting: MeetingProfessor): Observable<void> {
-        let userId = localStorage.getItem('user_id');
-        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings', meeting, { withCredentials: true })
-                .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
-        this.printResponse('createMeeting', response);
-        return response;
-    }
-
-    updateMeetingSimple(meetingId: number, meeting: Meeting): Observable<void> {
-        return this.updateMeeting(meetingId, meeting.status);
-    }
-    updateMeeting(meetingId: number, newStatus: string): Observable<void> {
-        let userId = localStorage.getItem('user_id');
-        let requestBody = this.serializeAsUrlParams({
-                'app_meeting_edit[status]': newStatus
-        });
-        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true })
-                .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
-        this.printResponse('updateMeeting', response);
-        return response;
-    }
-
-    readSlots(): Observable<Array<Slot>> {
-        let userId = localStorage.getItem('user_id');
-        let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
-                .map((res: Response) => res.json() as Array<Slot>)
-                .catch((err: any) => {
-                        return Observable.throw(err.json());
-                });
-        this.printResponse('readSlots', response);
         return response;
     }
 

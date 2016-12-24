@@ -10,10 +10,8 @@ import { ChatComponent } from '../../components/chat/chat.component';
     templateUrl: './caller-view.template.html',
     styleUrls: ['./caller-view.style.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-
     encapsulation: ViewEncapsulation.None,
 })
-
 export class CallerViewComponent {
 
     @ViewChild('Caller') caller: WebrtcCaller;

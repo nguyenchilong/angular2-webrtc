@@ -1,43 +1,43 @@
-<div *ngIf="meeting">
-    <md-input placeholder="Status" class="meetinginput" value="{{meeting.status}}" disabled></md-input>
-    <md-input placeholder="Title" value="{{meeting.title}}" class="meetinginput" [formControl]="createform.controls['title']" disabled></md-input>
+<div *ngIf="slot">
+    <md-input placeholder="Status" class="meetinginput" value="{{slot.status}}" disabled></md-input>
+    <md-input placeholder="Title" value="{{slot.title}}" class="meetinginput" [formControl]="createform.controls['title']" disabled></md-input>
     <br>
     <br>
-    <select (change)="setSelectedPerson($event.target.value)" disabled>
-            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.lastname}}</option>
+    <select (change)="setSelectedProfessor($event.target.value)" disabled>
+            <option *ngFor="let professor of (professors | async)" [value]="professor.id">{{professor.lastname}}</option>
         </select>
     <br>
     <br>
-    <md-input placeholder="Vorlesung" value="{{meeting.vorlesung}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Vorlesung" value="{{slot.vorlesung}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input placeholder="Start" value="{{meeting.start}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Start" value="{{slot.start}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <select (change)="setSelectedPerson($event.target.value)" disabled>
+    <select (change)="setSelectedProfessor($event.target.value)" disabled>
             <option *ngFor="let duration of durationoptions" [value]="duration">{{duration}}</option>
         </select>
     <br>
     <br>
-    <md-input placeholder="Info" value="{{meeting.info}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Info" value="{{slot.info}}" class="meetinginput" disabled></md-input>
     <div *ngIf="((user | async).role === 'prof')">
-        <div *ngIf="meeting.status ==='open'">
+        <div *ngIf="slot.status ==='open'">
             <br>
             <md-input placeholder="Additional information for student"></md-input>
             <br>
-            <button md-raised-button (click)="acceptMeeting()">Accept</button>
-            <button md-raised-button (click)="rejectMeeting()" color="warn">Reject</button>
+            <button md-raised-button (click)="acceptSlot()">Accept</button>
+            <button md-raised-button (click)="rejectSlot()" color="warn">Reject</button>
         </div>
-        <div *ngIf="meeting.status ==='accepted'">
-            <button md-raised-button (click)="joinMeeting()" color="warn">Join Meeting</button>
+        <div *ngIf="slot.status ==='accepted'">
+            <button md-raised-button (click)="joinSlot()" color="warn">Join Meeting</button>
         </div>
-        <div *ngIf="meeting.status ==='canceled'">
-            <button md-raised-button (click)="deleteMeeting()" color="warn">Delete</button>
+        <div *ngIf="slot.status ==='canceled'">
+            <button md-raised-button (click)="deleteSlot()" color="warn">Delete</button>
         </div>
     </div>
 </div>
 
-<div *ngIf="!meeting">
+<div *ngIf="!slot">
     <h4>Create new requeset</h4>
     <br>
     <form [formGroup]="createform" (ngSubmit)="save()">
@@ -45,12 +45,12 @@
         <br>
         <br>
         <select>
-            <option *ngFor="let person of (persons | async)" [value]="person.id">{{person.lastname}}</option>
+            <option *ngFor="let professor of (professors | async)" [value]="professor.id">{{professor.lastname}}</option>
         </select>
         <br>
         <br>
         <select>
-            <option *ngFor="let vorlesung of selectedperson.vorlesungen" [value]="vorlesung.id">{{vorlesung.title}}</option>
+            <option *ngFor="let vorlesung of selectedProfessor.vorlesungen" [value]="vorlesung.id">{{vorlesung.title}}</option>
         </select>
         <br>
         <br>

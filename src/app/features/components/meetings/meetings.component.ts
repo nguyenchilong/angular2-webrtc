@@ -14,14 +14,14 @@ import { UserLogin } from '../../../model/user-login';
 })
 export class MeetingsCompontent {
 
-    meetings: Observable<Array<Slot>>;
+    slots: Observable<Array<Slot>>;
     dialogRef: MdDialogRef<MeetingDialog>;
     user: Observable<UserLogin>;
 
     constructor(
             private store: Store<any>,
             public dialog: MdDialog) {
-        this.meetings = this.store.select(store => store.slots);
+        this.slots = this.store.select(store => store.slots);
         this.user = this.store.select(store => store.user);
     };
 
@@ -33,11 +33,11 @@ export class MeetingsCompontent {
         });
     }
 
-    openDialog(meeting) {
+    openDialog(slot: Slot) {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(MeetingDialog, config);
 
-        this.dialogRef.componentInstance.meeting = meeting;
+        this.dialogRef.componentInstance.slot = slot;
 
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {

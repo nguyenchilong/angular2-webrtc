@@ -29,21 +29,21 @@
             <mwl-calendar-month-view
                   *ngSwitchCase="'month'"
                   [viewDate]="viewDate"
-                  [events]="(meetings | async)"
+                  [events]="(slots | async)"
                   (dayClicked)="dayClicked($event.day)">
             </mwl-calendar-month-view>
 
             <mwl-calendar-week-view
                   *ngSwitchCase="'week'"
                   [viewDate]="viewDate"
-                  [events]="(meetings | async)"
+                  [events]="(slots | async)"
                   (eventClicked)="dayClicked($event)">
             </mwl-calendar-week-view>
 
             <mwl-calendar-day-view
                   *ngSwitchCase="'day'"
                   [viewDate]="viewDate"
-                  [events]="(meetings | async)"
+                  [events]="(slots | async)"
                   (eventClicked)="dayClicked($event)">
             </mwl-calendar-day-view>
 

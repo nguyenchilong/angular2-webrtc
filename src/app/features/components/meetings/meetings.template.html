@@ -4,12 +4,12 @@
             <md-icon class="md-24">add</md-icon>
         </button>
     </div>
-    <md-card *ngFor="let meeting of (meetings | async)" (click)="openDialog(meeting)">
-            <div class="type" [ngClass]="[meeting.status]"></div>
-            <md-card-subtitle>{{meeting.vorlesung}}</md-card-subtitle>
-            <md-card-title>{{meeting.prof}}</md-card-title>
+    <md-card *ngFor="let slot of (slots | async)" (click)="openDialog(slot)">
+            <div class="type" [ngClass]="[slot.status]"></div>
+            <md-card-subtitle>{{slot.vorlesung}}</md-card-subtitle>
+            <md-card-title>{{slot.prof}}</md-card-title>
             <md-card-content>
-                <p>{{meeting.start | transformdate}}</p>
+                <p>{{slot.start | transformdate}}</p>
             </md-card-content>
     </md-card>
 </div>
