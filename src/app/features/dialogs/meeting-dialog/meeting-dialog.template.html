@@ -50,7 +50,7 @@
         </select>
         <br>
         <br>
-        <select>
+        <select (change)="setSelectedStudycourse($event.target.value)">
             <option *ngFor="let studycourse of selectedProfessor.studycourses" [value]="studycourse.id">{{studycourse.name}}</option>
         </select>
         <br>

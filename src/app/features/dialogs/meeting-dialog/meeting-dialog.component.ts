@@ -39,11 +39,14 @@ export class MeetingDialog {
         this.user = this.store.select(store => store.user);
     }
 
-    setSelectedProfessor(selectedprofessorId: string) {
+    setSelectedProfessor(selectedprofessorId: string): void {
         this.selectedProfessor = _.find(this.professors, function (item) {
             return item.id === parseInt(selectedprofessorId);
         });
-        console.log(this.selectedProfessor);
+    }
+
+    setSelectedStudycourse(selectedstudycourse: string): void {
+        console.log(selectedstudycourse);
     }
 
     save(): void {
