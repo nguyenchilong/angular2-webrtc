@@ -80,6 +80,7 @@ export class AuthService implements CanActivate {
         localStorage.removeItem('user_lastname');
         this.JWT = '';
         this.store.dispatch({ type: 'LOGOUT_USER' });
+        this.callservice.unsubscribeCall();
         this.router.navigate(['auth']);
     }
 
