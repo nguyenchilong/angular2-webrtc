@@ -46,7 +46,9 @@ export class MeetingsCompontent {
     }
 
     testCall(): void {
-        this.wampservice.sendWithSocket(206, { type: 'call'});
+        this.wampservice.sendWithSocket(206, { type: 'call'}).subscribe(data => {
+            
+        });
     }
 
 }
