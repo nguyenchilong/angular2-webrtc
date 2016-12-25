@@ -40,6 +40,7 @@ export class MeetingDialog {
     }
 
     setSelectedProfessor(selectedprofessorId: number) {
+        console.log(this.selectedProfessor);
         this.selectedProfessor =  _.filter(this.professors, function (item) {
             return item.id === selectedprofessorId;
         })[0];
