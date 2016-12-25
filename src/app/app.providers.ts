@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { StudguardService } from './services/studguard.service';
 import { ProfguardService } from './services/profguard.service';
 import { RestService } from './services/rest.service';
+import { CallService } from './services/call.service';
 import { PeerconnectionService } from './services/peerconnection.service';
 
 export const APP_PROVIDERS = [
@@ -11,5 +12,6 @@ export const APP_PROVIDERS = [
     StudguardService,
     ProfguardService,
     PeerconnectionService,
+    CallService,
     RestService
 ];

@@ -3,6 +3,7 @@ import { Router, CanActivate } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { RestService } from './rest.service';
 import { WampService } from './wamp.service';
+import { CallService } from './call.service';
 
 @Injectable()
 export class AuthService implements CanActivate {
@@ -15,7 +16,8 @@ export class AuthService implements CanActivate {
             private router: Router,
             private store: Store<any>,
             private restservice: RestService,
-            private wampservice: WampService) {
+            private wampservice: WampService,
+            private callservice: CallService) {
         const token = window.localStorage.getItem(this.JWT_KEY);
         // check if token already exists in localStorage
         // and execute setJWT
@@ -54,6 +56,9 @@ export class AuthService implements CanActivate {
             this.restservice.readProfessors();
             this.restservice.readSlots();
             let userid = localStorage.getItem('user_id');
+            if ( localStorage.getItem('user_role') === 'ROLE_STUDENT' ) {
+                this.callservice.subscribeCall();
+            }
             this.wampservice.initWamp(userid);
             this.store.dispatch({ type: 'SET_USER_LOGIN', payload: {
                 username: localStorage.getItem('user_username'),

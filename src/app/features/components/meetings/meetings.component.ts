@@ -5,6 +5,7 @@ import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog'
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
 import { Slot } from '../../../model/slot';
 import { UserLogin } from '../../../model/user-login';
+import { WampService } from '../../../services/wamp.service';
 
 @Component({
     selector: 'meetings-component',
@@ -19,7 +20,9 @@ export class MeetingsCompontent {
 
     constructor(
             private store: Store<any>,
-            public dialog: MdDialog) {
+            private dialog: MdDialog,
+            private wampservice: WampService
+            ) {
         this.slots = this.store.select(store => store.slots);
         this.user = this.store.select(store => store.user);
     };
@@ -40,6 +43,10 @@ export class MeetingsCompontent {
 
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {});
+    }
+
+    testCall(): void {
+        this.wampservice.sendWithSocket(206, { type: 'call'});
     }
 
 }

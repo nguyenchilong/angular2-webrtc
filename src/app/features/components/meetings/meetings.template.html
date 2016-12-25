@@ -12,4 +12,5 @@
                 <p>{{slot.date | transformdate}}</p>
             </md-card-content>
     </md-card>
+    <button md-button *ngIf="(user | async).role === 'prof'" (click)="testCall()">testcallto user with id: 206</button>
 </div>
