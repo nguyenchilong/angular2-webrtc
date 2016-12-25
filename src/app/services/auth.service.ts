@@ -55,10 +55,12 @@ export class AuthService implements CanActivate {
             this.restservice.readSlots();
             let userid = localStorage.getItem('user_id');
             this.wampservice.initWamp(userid);
-            this.store.dispatch({ type: 'SET_USERNAME', payload: localStorage.getItem('user_username') });
-            this.store.dispatch({ type: 'SET_ROLE', payload: localStorage.getItem('user_role') });
-            this.store.dispatch({ type: 'SET_FIRSTNAME', payload: localStorage.getItem('user_firstname') });
-            this.store.dispatch({ type: 'SET_LASTNAME', payload: localStorage.getItem('user_lastname') });
+            this.store.dispatch({ type: 'SET_USER_LOGIN', payload: {
+                username: localStorage.getItem('user_username'),
+                role: localStorage.getItem('user_role'),
+                firstname: localStorage.getItem('user_firstname'),
+                lastname: localStorage.getItem('user_lastname')
+            } });
         }
     }
 

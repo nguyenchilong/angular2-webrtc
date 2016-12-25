@@ -1,8 +1,8 @@
-<md-card *ngFor="let event of events" (click)="openDialog(event)">
-    <div class="type" [ngClass]="[event.status]"></div>
-    <md-card-subtitle>{{event.vorlesung}}</md-card-subtitle>
-    <md-card-title>{{event.prof}}</md-card-title>
+<md-card *ngFor="let slot of slots" (click)="openDialog(slot)">
+    <div class="type" [ngClass]="slot.status"></div>
+    <md-card-subtitle>{{slot.vorlesung}}</md-card-subtitle>
+    <md-card-title>{{slot.prof}}</md-card-title>
     <md-card-content>
-        <p>{{event.start | transformdate}}</p>
+        <p>{{slot.start | transformdate}}</p>
     </md-card-content>
 </md-card>

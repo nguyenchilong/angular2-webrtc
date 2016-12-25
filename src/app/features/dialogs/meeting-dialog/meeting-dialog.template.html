@@ -1,6 +1,6 @@
 <div *ngIf="slot">
-    <md-input placeholder="Status" class="meetinginput" value="{{slot.status}}" disabled></md-input>
-    <md-input placeholder="Title" value="{{slot.title}}" class="meetinginput" [formControl]="createform.controls['title']" disabled></md-input>
+    <md-input placeholder="Status" value="{{slot.status}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Titel" value="{{slot.name}}" class="meetinginput" [formControl]="createForm.controls['name']" disabled></md-input>
     <br>
     <br>
     <select (change)="setSelectedProfessor($event.target.value)" disabled>
@@ -8,10 +8,10 @@
         </select>
     <br>
     <br>
-    <md-input placeholder="Vorlesung" value="{{slot.vorlesung}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Titel" value="{{slot.name}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input placeholder="Start" value="{{slot.start}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Beginn" value="{{slot.date}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
     <select (change)="setSelectedProfessor($event.target.value)" disabled>
@@ -19,29 +19,28 @@
         </select>
     <br>
     <br>
-    <md-input placeholder="Info" value="{{slot.info}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Kommentar" value="{{slot.comment}}" class="meetinginput" disabled></md-input>
     <div *ngIf="((user | async).role === 'prof')">
-        <div *ngIf="slot.status ==='open'">
+        <div *ngIf="slot.status ==='OPEN'">
             <br>
             <md-input placeholder="Additional information for student"></md-input>
             <br>
             <button md-raised-button (click)="acceptSlot()">Accept</button>
             <button md-raised-button (click)="rejectSlot()" color="warn">Reject</button>
         </div>
-        <div *ngIf="slot.status ==='accepted'">
+        <div *ngIf="slot.status ==='ACCEPTED'">
             <button md-raised-button (click)="joinSlot()" color="warn">Join Meeting</button>
         </div>
-        <div *ngIf="slot.status ==='canceled'">
+        <div *ngIf="slot.status ==='CANCELED'">
             <button md-raised-button (click)="deleteSlot()" color="warn">Delete</button>
         </div>
     </div>
 </div>
-
 <div *ngIf="!slot">
     <h4>Create new requeset</h4>
     <br>
-    <form [formGroup]="createform" (ngSubmit)="save()">
-        <md-input placeholder="Title" class="meetinginput" [formControl]="createform.controls['title']"></md-input>
+    <form [formGroup]="createForm" (ngSubmit)="save()">
+        <md-input placeholder="Titel" class="meetinginput" [formControl]="createForm.controls['name']"></md-input>
         <br>
         <br>
         <select>
@@ -50,7 +49,7 @@
         <br>
         <br>
         <select>
-            <option *ngFor="let vorlesung of selectedProfessor.vorlesungen" [value]="vorlesung.id">{{vorlesung.title}}</option>
+            <option *ngFor="let studycourse of selectedProfessor.studycourses" [value]="studycourse.id">{{studycourse.name}}</option>
         </select>
         <br>
         <br>
@@ -62,7 +61,7 @@
         </select>
         <br>
         <br>
-        <md-input placeholder="Info" class="meetinginput" [formControl]="createform.controls['info']"></md-input>
+        <md-input placeholder="Kommentar" class="meetinginput" [formControl]="createForm.controls['comment']"></md-input>
         <br>
         <br>
         <input type="date">

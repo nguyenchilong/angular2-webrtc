@@ -14,43 +14,42 @@ import { UserLogin } from '../../../model/user-login';
 })
 export class MeetingDialog {
 
-    slot: Slot;
-    professors: Observable<Array<Professor>>;
-    profs: Array<Professor>;
+    createForm: FormGroup;
     durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
-    createform: FormGroup;
-    selectedProfessor: Professor;
     user: Observable<UserLogin>;
+    slot: Slot; // set externally by MeetingsComponent.openDialog() and MeetingsDialog.openDialog()
+    professors: Observable<Array<Professor>>;
+    selectedProfessor: Professor;
 
     constructor(
             public dialogRef: MdDialogRef<MeetingDialog>,
             public store: Store<any>,
             private formBuilder: FormBuilder) {
         this.professors = this.store.select(store => store.professors);
-        this.professors.subscribe((professors: Array<Professor>) => {
-            this.profs = professors;
+        this.professors.first().subscribe(firstProfessor => {
+            this.selectedProfessor = firstProfessor[0];
         });
-        this.professors.first().subscribe(data => {
-            this.selectedProfessor = data[0];
-        });
-        this.createform = this.formBuilder.group({
-            title: '',
-            info: ''
+        this.createForm = this.formBuilder.group({
+            name: '',
+            comment: ''
         });
         this.user = this.store.select(store => store.user);
     }
 
+    setSelectedProfessor(professorId: number) {
+        //TODO set this.selectedProfessor
+    }
+
     save(): void {
-        //
         /*let init: Slot = {
-            title: this.createform.get('title').value,
+            title: this.createform.get('name').value,
             color: {
                 primary: '#ad2121',
                 secondary: '#FAE3E3'
             },
             prof: this.selectedProfessor.name,
             vorlesung: 'Softwaremodellierung',
-            info: this.createform.get('info').value,
+            info: this.createform.get('comment').value,
             duration: 25,
             time: 'Fr 13:30 01.12.16',
             status: 'created'

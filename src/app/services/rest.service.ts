@@ -43,6 +43,7 @@ export class RestService {
                 }
         );
         this.printResponse('createUser', response);
+        // no response.subscribe() necessary
         return response;
     }
 
@@ -60,6 +61,7 @@ export class RestService {
                 }
         );
         this.printResponse('updateUserPassword', response);
+        // no response.subscribe() necessary
         return response;
     }
 
@@ -72,49 +74,47 @@ export class RestService {
         );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
-//this.store.dispatch({ type: 'CLEAR' });
-            this.store.dispatch({ type: 'ADD_PROFESSORS', payload: professors });
+
+//TODO remove dummy data:
+            professors = professors.concat([
+                {
+                    id: 1,
+                    username: '',
+                    firstname: '',
+                    lastname: 'Prof. Dr. Ralf Kramer',
+                    roles: ['ROLE_PROF'],
+                    studycourses: [
+                        {
+                            id: 5,
+                            name: 'Verteilte Systeme'
+                        },
+                        {
+                            id: 6,
+                            name: 'IT-Sicherheit'
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    username: '',
+                    firstname: '',
+                    lastname: 'Prof. Dr. Oliver Höß',
+                    roles: ['ROLE_PROF'],
+                    studycourses: [
+                        {
+                            id: 5,
+                            name: 'Verteilte Systeme'
+                        },
+                        {
+                            id: 6,
+                            name: 'IT-Sicherheit'
+                        }
+                    ]
+                },
+            ]);
+
+            this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
         });
-
-        // delete:
-        let professors: Array<Professor> = [
-            {
-                id: 1,
-                username: '',
-                firstname: '',
-                lastname: 'Prof. Dr. Ralf Kramer',
-                roles: ['ROLE_PROF'],
-                studycourses: [
-                    {
-                        id: 5,
-                        name: 'Verteilte Systeme'
-                    },
-                    {
-                        id: 6,
-                        name: 'IT-Sicherheit'
-                    }
-                ]
-            },
-            {
-                id: 2,
-                username: '',
-                firstname: '',
-                lastname: 'Prof. Dr. Oliver Höß',
-                roles: ['ROLE_PROF'],
-                studycourses: [
-                    {
-                        id: 5,
-                        name: 'Verteilte Systeme'
-                    },
-                    {
-                        id: 6,
-                        name: 'IT-Sicherheit'
-                    }
-                ]
-            },
-        ];
-        this.store.dispatch({ type: 'ADD_PROFESSORS', payload: professors });
-
         return response;
     }
 
@@ -137,6 +137,7 @@ export class RestService {
             );
         }
         this.printResponse('readMeetings', response);
+//TODO push to store...
         return response;
     }
 
@@ -148,6 +149,7 @@ export class RestService {
                 }
         );
         this.printResponse('createMeeting', response);
+//TODO push to store...
         return response;
     }
 
@@ -165,6 +167,7 @@ export class RestService {
                 }
         );
         this.printResponse('updateMeeting', response);
+        // no response.subscribe() necessary
         return response;
     }
 
@@ -178,68 +181,124 @@ export class RestService {
         );
         this.printResponse('readSlots', response);
         response.subscribe((slots: Array<Slot>) => {
-            this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
+
+//TODO remove dummy data:
+            let d1 = new Date();
+            let d2 = new Date();
+            let d3 = new Date();
+            d1.setDate(new Date().getDate());
+            d2.setDate(new Date().getDate() + 3);
+            d3.setDate(new Date().getDate() + 7);
+            slots = slots.concat([
+                {
+                    id: 1,
+                    name: 'Besprechung',
+                    duration: 15,
+                    date: d1,
+                    comment: 'Besprechen bzgl. 1 Abgabe',
+                    status: 'canceled',
+                    meeting: {
+                        id: 1,
+                        startDate: d1,
+                        endDate: d1,
+                        status: 'active',
+                        professor: {
+                            id: 0,
+                            username: 'dummy',
+                            roles: ['ROLE_PROF'],
+                            title: 'Prof. Dr.',
+                            firstname: 'Otto',
+                            lastname: 'Offline',
+                            studycourses: [
+                                {
+                                    id: 1,
+                                    name: 'Mathe 1/2'
+                                }
+                            ]
+                        }
+                    },
+                    student: {
+                        id: 0,
+                        username: 'dummy',
+                        roles: ['ROLE_STUDENT'],
+                        firstname: 'dummy',
+                        lastname: 'dummy'
+                    }
+                },
+                {
+                    id: 2,
+                    name: 'Bachelorarbeit',
+                    duration: 10,
+                    date: d2,
+                    comment: 'Besprechen bzgl. 1 Abgabe',
+                    status: 'open',
+                    meeting: {
+                        id: 2,
+                        startDate: d2,
+                        endDate: d2,
+                        status: 'active',
+                        professor: {
+                            id: 0,
+                            username: 'dummy',
+                            roles: ['ROLE_PROF'],
+                            title: 'Prof. Dr.',
+                            firstname: 'Ralf',
+                            lastname: 'Kramer',
+                            studycourses: [
+                                {
+                                    id: 2,
+                                    name: 'Datenbanksysteme'
+                                }
+                            ]
+                        }
+                    },
+                    student: {
+                        id: 0,
+                        username: 'dummy',
+                        roles: ['ROLE_STUDENT'],
+                        firstname: 'dummy',
+                        lastname: 'dummy'
+                    }
+                },
+                {
+                    id: 3,
+                    name: 'Frage zur Übung 05',
+                    duration: 20,
+                    date: d3,
+                    comment: 'Besprechen bzgl. 1 Abgabe',
+                    status: 'accepted',
+                    meeting: {
+                        id: 3,
+                        startDate: d3,
+                        endDate: d3,
+                        status: 'active',
+                        professor: {
+                            id: 0,
+                            username: 'dummy',
+                            roles: ['ROLE_PROF'],
+                            title: 'Prof. Dr.',
+                            firstname: 'Oliver',
+                            lastname: 'Höß',
+                            studycourses: [
+                                {
+                                    id: 3,
+                                    name: 'Softwaremodellierung'
+                                }
+                            ]
+                        }
+                    },
+                    student: {
+                        id: 0,
+                        username: 'dummy',
+                        roles: ['ROLE_STUDENT'],
+                        firstname: 'dummy',
+                        lastname: 'dummy'
+                    }
+                }
+            ]);
+
+            this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
         });
-
-        //delete:
-        let d1 = new Date();
-        let d2 = new Date();
-        let d3 = new Date();
-        d1.setDate(new Date().getDate());
-        d2.setDate(new Date().getDate() + 3);
-        d3.setDate(new Date().getDate() + 7);
-        let data = [
-            {
-                id: 1,
-                title: 'Besprechung',
-                start: d1,
-                end: d1,
-                color: {
-                    primary: '#ad2121',
-                    secondary: '#FAE3E3'
-                },
-                prof: 'Prof. Dr. Otto Offline',
-                vorlesung: 'Mathe 1/2',
-                info: 'Besprechen bzgl. 1 Abgabe',
-                duration: 5,
-                time: 'Mo 15:30 13.12.16',
-                status: 'canceled'
-            },
-            {
-                id: 2,
-                title: 'Bachelorarbeit',
-                start: d2,
-                end: d2,
-                color: {
-                    primary: '#ad2121',
-                    secondary: '#FAE3E3'
-                },
-                prof: 'Prof. Dr. Ralf Kramer',
-                vorlesung: 'Datenbanksysteme',
-                info: 'Besprechen bzgl. 1 Abgabe',
-                duration: 15,
-                time: 'Do 12:30 20.12.16',
-                status: 'open'
-            },
-            {
-                id: 3,
-                title: 'Frage zur Übung 05',
-                start: d3,
-                end: d3,
-                color: {
-                    primary: '#ad2121',
-                    secondary: '#FAE3E3'
-                },
-                prof: 'Prof. Dr. Oliver Höß',
-                vorlesung: 'Softwaremodellierung',
-                info: 'Besprechen bzgl. 1 Abgabe',
-                duration: 25,
-                time: 'Fr 13:30 01.12.16',
-                status: 'accepted'
-            }
-        ];
-        this.store.dispatch({ type: 'ADD_SLOTS', payload: data });
-
         return response;
     }
 
@@ -259,6 +318,9 @@ export class RestService {
                 }
         );
         this.printResponse('createSlot', response);
+        response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
+            this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
+        });
         return response;
     }
 
@@ -277,6 +339,7 @@ export class RestService {
                 }
         );
         this.printResponse('updateSlot', response);
+        // no response.subscribe() necessary
         return response;
     }
 
@@ -294,8 +357,8 @@ export class RestService {
     };
 
     private serializeAsUrlParams(o: Object): string {
-        var s = '';
-        for (var key in o) {
+        let s = '';
+        for (let key in o) {
             s += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(o[key]);
         }
         return s.slice(1);

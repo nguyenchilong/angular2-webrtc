@@ -17,40 +17,20 @@ export const userrx: ActionReducer<UserLogin> = (state: UserLogin = init, action
             );
         case 'LOGOUT_USER':
             return init;
-        case 'SET_USERNAME':
+        case 'SET_USER_LOGIN':
+            let role = { role: action.payload.role };
+            if (action.payload.role === 'ROLE_STUDENT') {
+                role.role = 'stud';
+            } else if (action.payload.role === 'ROLE_PROF') {
+                role.role = 'prof';
+            } else {
+                return state; // cancel
+            }
             return Object.assign(
                 {},
                 state,
-                { username: action.payload }
-            );
-        case 'SET_ROLE':
-            switch (action.payload) {
-                case 'ROLE_STUDENT':
-                    return Object.assign(
-                        {},
-                        state,
-                        { role: 'stud' }
-                    );
-                case 'ROLE_PROF':
-                    return Object.assign(
-                        {},
-                        state,
-                        { role: 'prof' }
-                    );
-                default:
-                    return state;
-            };
-        case 'SET_FIRSTNAME':
-            return Object.assign(
-                {},
-                state,
-                { firstname: action.payload}
-            );
-        case 'SET_LASTNAME':
-            return Object.assign(
-                {},
-                state,
-                { lastname: action.payload}
+                action.payload,
+                role
             );
         default:
             return state;
