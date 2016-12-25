@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angul
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
+import { RestService } from '../../../services/rest.service';
+
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { InfoDialog } from '../../dialogs/info-dialog/info-dialog.component';
 import { UserLogin } from '../../../model/user-login';
@@ -21,11 +23,14 @@ export class NavComponent {
     constructor(
             private store: Store<any>,
             private authservice: AuthService,
-            public dialog: MdDialog) {
+            private dialog: MdDialog,
+            private restservice: RestService
+            ) {
         this.user = this.store.select(store => store.user);
     }
 
     logoutUser(): void {
+        this.restservice.logoutUser();
         this.authservice.signout();
     }
 
