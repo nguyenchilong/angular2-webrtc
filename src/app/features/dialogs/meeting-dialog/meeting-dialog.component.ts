@@ -39,12 +39,15 @@ export class MeetingDialog {
         this.user = this.store.select(store => store.user);
     }
 
-    setSelectedProfessor(selectedprofessorId: number) {
+    setSelectedProfessor(selectedprofessorId: string) {
         console.log(this.selectedProfessor);
         _.forEach(this.professors, item => {
             console.log(typeof item.id);
         });
         console.log(typeof selectedprofessorId);
+        console.log(typeof parseInt(selectedprofessorId));
+        let xx = parseInt(selectedprofessorId)
+        console.log(xx);
     }
 
     save(): void {
