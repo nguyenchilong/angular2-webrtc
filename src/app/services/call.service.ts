@@ -25,6 +25,7 @@ export class CallService {
                 this.router.navigate(['caller']);
                 //TODO: start calling prof
             });
+            this.usertocallid = call.id;
         });
     }
 
