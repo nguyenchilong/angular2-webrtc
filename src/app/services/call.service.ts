@@ -17,7 +17,7 @@ export class CallService {
 
     subscribeCall(): void {
         this.callsubscription = this.wampservice.callObservable.subscribe(call => {
-            this.snackBar.openFromComponent(CallSnackbar);
+            this.snackBar.open("asd", "ad");
         });
     }
 
@@ -26,18 +26,5 @@ export class CallService {
             this.callsubscription.unsubscribe();
         }
     }
-
-}
-
-@Component({
-    selector: 'call-snackbar',
-    template: `
-        <h1>Prof is calling!</h1>
-        <button md-button>Join Call</button>
-    `,
-
-})
-
-export class CallSnackbar {
 
 }
