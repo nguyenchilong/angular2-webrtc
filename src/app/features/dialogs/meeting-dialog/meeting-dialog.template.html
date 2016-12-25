@@ -41,8 +41,8 @@
 <div *ngIf="!slot">
     <h4>Create new requeset</h4>
     <br>
-    <form [formGroup]="createForm" (ngSubmit)="save()">
-        <md-input placeholder="Titel" class="meetinginput" [formControl]="createForm.controls['name']"></md-input>
+    <form [formGroup]="createForm" (ngSubmit)="createRequest()">
+        <md-input placeholder="Titel" class="meetinginput" [formControl]="createForm.controls['name']" required></md-input>
         <br>
         <br>
         <select (change)="setSelectedProfessor($event.target.value)">
@@ -55,15 +55,14 @@
         </select>
         <br>
         <br>
-        <md-input placeholder="Start" class="meetinginput"></md-input>
-        <br>
-        <br>
         <select>
             <option *ngFor="let duration of durationOptions" [value]="duration">{{duration}}</option>
-        </select>
+        </select> minutes
         <br>
         <br>
-        <md-input placeholder="Additional information" class="meetinginput" [formControl]="createForm.controls['comment']"></md-input>
+        <md-input-container class="meetinginput">
+            <textarea md-input placeholder="Additional information" rows="4"></textarea>
+        </md-input-container>
         <br>
         <br>
         <input type="date">

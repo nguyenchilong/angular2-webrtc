@@ -58,7 +58,7 @@ export class MeetingDialog {
         });
     }
 
-    save(): void {
+    createRequest(): void {
         console.log(this.selectedProfessor);
         console.log(this.selectedStudiecourse);
         /*let init: Slot = {
