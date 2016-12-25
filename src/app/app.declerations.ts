@@ -21,6 +21,8 @@ import { MeetingsDialog } from './features/dialogs/meetings-dialog/meetings-dial
 import { MeetingDialog } from './features/dialogs/meeting-dialog/meeting-dialog.component';
 import { ForgotDialog } from './features/dialogs/forgot-dialog/forgot-dialog.component';
 
+import { CallSnackbar } from './services/call.service';
+
 import { NavComponent } from './features/components/nav/nav.component';
 
 // Pipes
@@ -58,6 +60,9 @@ export const APP_DECLERATIONS = [
 
   // Structure
   NavComponent,
+
+  // Snackbars
+  CallSnackbar,
 
   // Pipes
   TransformDatePipe

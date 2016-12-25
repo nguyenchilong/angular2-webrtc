@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { WampService } from './wamp.service';
 import { MdSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 
 export class CallService {
     callsubscription: Subscription = new Subscription();
+    usertocallid: number;
+
     constructor(
         private wampservice: WampService,
         public snackBar: MdSnackBar
@@ -15,9 +17,7 @@ export class CallService {
 
     subscribeCall(): void {
         this.callsubscription = this.wampservice.callObservable.subscribe(call => {
-            this.snackBar.open("asd", "asd", {
-                duration: 2000,
-            });
+            this.snackBar.openFromComponent(CallSnackbar);
         });
     }
 
@@ -27,5 +27,17 @@ export class CallService {
         }
     }
 
+}
+
+@Component({
+    selector: 'call-snackbar',
+    template: `
+        <h1>Prof is calling!</h1>
+        <button md-button>Join Call</button>
+    `,
+
+})
+
+export class CallSnackbar {
 
 }
