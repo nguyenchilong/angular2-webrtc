@@ -45,7 +45,7 @@
         <md-input placeholder="Titel" class="meetinginput" [formControl]="createForm.controls['name']"></md-input>
         <br>
         <br>
-        <select>
+        <select (change)="setSelectedProfessor($event.target.value)">
             <option *ngFor="let professor of professors" [value]="professor.id">{{professor.title}} {{professor.firstname}} {{professor.lastname}}</option>
         </select>
         <br>

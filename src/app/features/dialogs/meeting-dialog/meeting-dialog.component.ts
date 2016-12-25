@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Professor } from '../../../model/professor';
 import { Slot } from '../../../model/slot';
 import { UserLogin } from '../../../model/user-login';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'meeting-dialog',
@@ -38,8 +39,8 @@ export class MeetingDialog {
         this.user = this.store.select(store => store.user);
     }
 
-    setSelectedProfessor(professorId: number) {
-        //TODO set this.selectedProfessor
+    setSelectedProfessor(selectedprofessorId: number) {
+        this.selectedProfessor = _.find(this.professors, { id: selectedprofessorId});
     }
 
     save(): void {
