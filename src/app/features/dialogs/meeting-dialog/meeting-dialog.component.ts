@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Professor } from '../../../model/professor';
 import { Slot } from '../../../model/slot';
+import { StudyCourse } from '../../../model/study-course';
 import { UserLogin } from '../../../model/user-login';
 import * as _ from 'lodash';
 
@@ -21,6 +22,7 @@ export class MeetingDialog {
     slot: Slot; // set externally by MeetingsComponent.openDialog() and MeetingsDialog.openDialog()
     professors: Array<Professor>;
     selectedProfessor: Professor;
+    selectedStudiecourse: StudyCourse;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
@@ -43,13 +45,20 @@ export class MeetingDialog {
         this.selectedProfessor = _.find(this.professors, function (item) {
             return item.id === parseInt(selectedprofessorId);
         });
+        if (this.selectedProfessor.studycourses[0]) {
+            this.selectedStudiecourse = this.selectedProfessor.studycourses[0];
+        }
     }
 
-    setSelectedStudycourse(selectedstudycourse: string): void {
-        console.log(selectedstudycourse);
+    setSelectedStudycourse(selectedstudiecourseid: string): void {
+        this.selectedStudiecourse = _.find(this.selectedProfessor.studycourses, function (item) {
+            return item.id === parseInt(selectedstudiecourseid);
+        });
     }
 
     save(): void {
+        console.log(this.selectedProfessor);
+        console.log(this.selectedStudiecourse);
         /*let init: Slot = {
             title: this.createform.get('name').value,
             color: {
