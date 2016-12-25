@@ -1,4 +1,4 @@
-import { Injectable, Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { WampService } from './wamp.service';
 import { MdSnackBar } from '@angular/material';
 import { Subscription } from 'rxjs';
