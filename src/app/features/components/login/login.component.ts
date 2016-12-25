@@ -52,6 +52,7 @@ export class LoginComponent {
                 localStorage.setItem('user_username', user.username);
                 localStorage.setItem('user_firstname', user.firstname);
                 localStorage.setItem('user_lastname', user.lastname);
+                localStorage.setItem('user_title', user.title);
                 this.isloading = false;
                 this.changeDetectionRef.markForCheck();
                 this.authservice.setJWT('token is set in the http-only cookie');

@@ -17,7 +17,7 @@ export class CallService {
 
     subscribeCall(): void {
         this.callsubscription = this.wampservice.callObservable.subscribe(call => {
-            this.snackBar.open("asd", "ad");
+            this.snackBar.open(call.title + ' ' + call.lastname + ' ' +  'is now available', 'Start');
         });
     }
 

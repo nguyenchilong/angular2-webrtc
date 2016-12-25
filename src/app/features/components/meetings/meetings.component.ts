@@ -19,10 +19,10 @@ export class MeetingsCompontent {
     user: Observable<UserLogin>;
 
     constructor(
-            private store: Store<any>,
-            private dialog: MdDialog,
-            private wampservice: WampService
-            ) {
+        private store: Store<any>,
+        private dialog: MdDialog,
+        private wampservice: WampService
+    ) {
         this.slots = this.store.select(store => store.slots);
         this.user = this.store.select(store => store.user);
     };
@@ -42,13 +42,17 @@ export class MeetingsCompontent {
         this.dialogRef.componentInstance.slot = slot;
 
         // when closing dialog
-        this.dialogRef.afterClosed().subscribe(result => {});
+        this.dialogRef.afterClosed().subscribe(result => { });
     }
 
     testCall(): void {
-        this.wampservice.sendWithSocket(206, { type: 'call'}).subscribe(data => {
-            
-        });
+        this.wampservice.sendWithSocket(206, {
+            type: 'call',
+            id: localStorage.getItem('user_id'),
+            title: localStorage.getItem('user_title'),
+            lastname: localStorage.getItem('user_lastname')
+        })
+        .subscribe(data => {});
     }
 
 }
