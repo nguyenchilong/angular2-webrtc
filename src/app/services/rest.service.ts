@@ -156,6 +156,7 @@ export class RestService {
     updateMeetingSimple(meetingId: number, meeting: Meeting): Observable<void> {
         return this.updateMeeting(meetingId, meeting.status);
     }
+    
     updateMeeting(meetingId: number, newStatus: string): Observable<void> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams({
@@ -305,6 +306,7 @@ export class RestService {
     createSlotSimple(meetingId: number, slot: Slot): Observable<Array<Slot>> {
         return this.createSlot(meetingId, slot.name, slot.duration, slot.comment);
     }
+
     createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Array<Slot>> {
         let requestBody = this.serializeAsUrlParams({
             'app_slot_create[name]': name,
@@ -327,6 +329,7 @@ export class RestService {
     updateSlotSimple(meetingId: number, slot: Slot): Observable<void> {
         return this.updateSlot(meetingId, slot.id, slot.duration, slot.comment, slot.status);
     }
+
     updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): Observable<void> {
         let requestBody = this.serializeAsUrlParams({
             'app_slot_edit[duration]': duration,
