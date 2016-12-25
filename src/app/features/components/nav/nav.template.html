@@ -13,17 +13,17 @@
 	<!-- show when user is logged out -->
 	<span *ngIf="!(user | async).loggedin">
         <button md-icon-button (click)="openDialog()">
-			<md-icon>help_outline</md-icon>
+			<md-icon >help_outline</md-icon>
 		</button>
     </span>
 	<!-- show when user is logged out -->
 
 	<!-- show when user is logged in -->
 	<span *ngIf="(user | async).loggedin">
-		<button *ngIf="(user | async).role === 'stud'" [routerLink]="'studprofil'" md-icon-button md-tooltip="account" tooltip-position="below">
+		<button *ngIf="(user | async).role === 'stud'" [routerLink]="'studprofil'" md-icon-button>
 			<md-icon>account_box</md-icon>
 		</button>
-		<button *ngIf="(user | async).role === 'prof'" [routerLink]="'profprofil'" md-icon-button md-tooltip="account" tooltip-position="below">
+		<button *ngIf="(user | async).role === 'prof'" [routerLink]="'profprofil'" md-icon-button>
 			<md-icon>account_box</md-icon>
 		</button>
 	</span>
