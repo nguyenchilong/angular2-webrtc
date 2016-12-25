@@ -23,9 +23,9 @@ export class MeetingDialog {
     selectedProfessor: Professor;
 
     constructor(
-            public dialogRef: MdDialogRef<MeetingDialog>,
-            public store: Store<any>,
-            private formBuilder: FormBuilder) {
+        public dialogRef: MdDialogRef<MeetingDialog>,
+        public store: Store<any>,
+        private formBuilder: FormBuilder) {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
@@ -40,10 +40,12 @@ export class MeetingDialog {
     }
 
     setSelectedProfessor(selectedprofessorId: number) {
-        console.log(selectedprofessorId);
-        // this.selectedProfessor = this.professors.filter(o => o.id === selectedprofessorId)[0];
         console.log(this.selectedProfessor);
-        console.log(this.professors);
+        console.log(selectedprofessorId);
+        this.selectedProfessor = this.professors.filter(function (el) {
+            return el.id === selectedprofessorId;
+        })[0];
+        console.log(this.selectedProfessor);
     }
 
     save(): void {
