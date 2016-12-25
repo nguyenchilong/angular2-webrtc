@@ -26,7 +26,6 @@ import { NavComponent } from './features/components/nav/nav.component';
 // Pipes
 import { TransformDatePipe } from './app.pipes';
 
-
 export const APP_DECLERATIONS = [
 
   // Not found
