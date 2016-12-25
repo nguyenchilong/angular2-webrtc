@@ -28,6 +28,9 @@ export class MeetingDialog {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
+        this.store.select(store => store.professors).first().subscribe(first => {
+            this.selectedProfessor = first[0];
+        });
         this.createForm = this.formBuilder.group({
             name: '',
             comment: ''
