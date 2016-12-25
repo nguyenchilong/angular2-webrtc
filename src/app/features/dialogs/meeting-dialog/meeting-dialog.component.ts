@@ -40,8 +40,9 @@ export class MeetingDialog {
     }
 
     setSelectedProfessor(selectedprofessorId: string) {
-        this.selectedProfessor = _.find(this.professors, item => { item.id === parseInt(selectedprofessorId) });
-        console.log(this.selectedProfessor);
+        this.selectedProfessor = _.find(this.professors, function (item) {
+            return item.id === parseInt(selectedprofessorId);
+        });
     }
 
     save(): void {
