@@ -58,9 +58,6 @@ export const APP_DECLERATIONS = [
   // Structure
   NavComponent,
 
-  // Snackbars
-  CallSnackbar,
-
   // Pipes
   TransformDatePipe
 ];
