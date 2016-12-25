@@ -36,7 +36,7 @@ export class RestService {
     }
 
     logoutUser(): void {
-        this.http.delete(REST + '/tokens').subscribe(data => { });
+        this.http.delete(REST + '/tokens', { withCredentials: true }).subscribe(data => { });
     }
 
     createUser(user: User): Observable<User> {
