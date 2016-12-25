@@ -18,16 +18,15 @@ export class MeetingDialog {
     durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     user: Observable<UserLogin>;
     slot: Slot; // set externally by MeetingsComponent.openDialog() and MeetingsDialog.openDialog()
-    professors: Observable<Array<Professor>>;
+    professors: Array<Professor>;
     selectedProfessor: Professor;
 
     constructor(
             public dialogRef: MdDialogRef<MeetingDialog>,
             public store: Store<any>,
             private formBuilder: FormBuilder) {
-        this.professors = this.store.select(store => store.professors);
-        this.professors.first().subscribe(firstProfessor => {
-            this.selectedProfessor = firstProfessor[0];
+        this.store.select(store => store.professors).subscribe(prof => {
+            this.professors = prof;
         });
         this.createForm = this.formBuilder.group({
             name: '',
