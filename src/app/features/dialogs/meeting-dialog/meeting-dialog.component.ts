@@ -40,14 +40,8 @@ export class MeetingDialog {
     }
 
     setSelectedProfessor(selectedprofessorId: string) {
+        this.selectedProfessor = _.find(this.professors, item => { item.id === parseInt(selectedprofessorId) });
         console.log(this.selectedProfessor);
-        _.forEach(this.professors, item => {
-            console.log(typeof item.id);
-        });
-        console.log(typeof selectedprofessorId);
-        console.log(typeof parseInt(selectedprofessorId));
-        let xx = parseInt(selectedprofessorId)
-        console.log(xx);
     }
 
     save(): void {
