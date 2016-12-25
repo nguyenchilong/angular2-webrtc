@@ -10,7 +10,7 @@ import { Slot } from '../../../model/slot';
 })
 export class MeetingsDialog {
 
-    events: any[];
+    slots: Array<Slot>; // set externally by CalendarComponent.openDialog()
     dialogRef2: MdDialogRef<MeetingDialog>;
 
     constructor(
@@ -23,8 +23,7 @@ export class MeetingsDialog {
         this.dialogRef2 = this.dialog.open(MeetingDialog, config);
         this.dialogRef2.componentInstance.slot = slot;
         // when closing dialog
-        this.dialogRef2.afterClosed().subscribe(result => {
-        });
+        this.dialogRef2.afterClosed().subscribe(result => {});
         this.dialogRef.close();
     }
 

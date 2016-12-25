@@ -5,7 +5,7 @@ let init: Array<Professor> = [];
 
 export const professorsrx: ActionReducer<Array<Professor>> = (state: Array<Professor> = init, action: Action) => {
     switch (action.type) {
-        case 'ADD_PROFESSORS':
+        case 'SET_PROFESSORS':
             return [
                 ...action.payload
             ];

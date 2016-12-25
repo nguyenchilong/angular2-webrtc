@@ -39,8 +39,7 @@ export class MeetingsCompontent {
         this.dialogRef.componentInstance.slot = slot;
 
         // when closing dialog
-        this.dialogRef.afterClosed().subscribe(result => {
-        });
+        this.dialogRef.afterClosed().subscribe(result => {});
     }
 
 }
