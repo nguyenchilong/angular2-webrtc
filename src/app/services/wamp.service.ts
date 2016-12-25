@@ -10,9 +10,11 @@ export class WampService {
     offerSubject: Subject<any> = new Subject();
     answerSubject: Subject<any> = new Subject();
     icecandidateSubject: Subject<any> = new Subject();
+    callSubject: Subject<any> = new Subject();
     offerObservable: Observable<any> = this.offerSubject.asObservable();
     answerObservable: Observable<any> = this.answerSubject.asObservable();
     icecandidateObservable: Observable<any> = this.icecandidateSubject.asObservable();
+    callObservable: Observable<any> = this.callSubject.asObservable();
 
     constructor(private http: Http) {
     }
@@ -33,6 +35,8 @@ export class WampService {
                             this.offerSubject.next(cert);
                         } else if (cert.type === 'answer') {
                             this.answerSubject.next(cert);
+                        } else if (cert.type === 'call') {
+                            this.callSubject.next(cert);
                         } else {
                             this.icecandidateSubject.next(cert);
                         }
