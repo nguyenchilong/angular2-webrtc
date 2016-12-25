@@ -41,7 +41,7 @@ export class MeetingDialog {
 
     setSelectedProfessor(selectedprofessorId: number) {
         console.log(selectedprofessorId);
-        this.selectedProfessor = _.find(this.professors, { id: selectedprofessorId});
+        this.selectedProfessor = _.find(this.professors, o => o.id = selectedprofessorId);
         console.log(this.selectedProfessor);
     }
 
