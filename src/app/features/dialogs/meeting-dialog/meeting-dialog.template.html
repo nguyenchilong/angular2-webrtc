@@ -8,7 +8,7 @@
         </select>
     <br>
     <br>
-    <md-input placeholder="Titel" value="{{slot.name}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Title" value="{{slot.name}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
     <md-input placeholder="Beginn" value="{{slot.date}}" class="meetinginput" disabled></md-input>
@@ -42,7 +42,7 @@
     <h4>Create new requeset</h4>
     <br>
     <form [formGroup]="createForm" (ngSubmit)="createRequest()">
-        <md-input placeholder="Titel" class="meetinginput" [formControl]="createForm.controls['name']" required></md-input>
+        <md-input placeholder="Title" class="meetinginput" [formControl]="createForm.controls['name']" required></md-input>
         <br>
         <br>
         <select (change)="setSelectedProfessor($event.target.value)">
@@ -55,7 +55,7 @@
         </select>
         <br>
         <br>
-        <select>
+        <select (change)="setSelectedDuration($event.target.value)">
             <option *ngFor="let duration of durationOptions" [value]="duration">{{duration}}</option>
         </select> minutes
         <br>

@@ -23,6 +23,7 @@ export class MeetingDialog {
     professors: Array<Professor>;
     selectedProfessor: Professor;
     selectedStudiecourse: StudyCourse;
+    selectedDuration: number;
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
@@ -58,9 +59,19 @@ export class MeetingDialog {
         });
     }
 
+    setSelectedDuration(selectedduration: string): void {
+        this.selectedDuration = parseInt(selectedduration);
+    }
+
     createRequest(): void {
+        console.log('Ausgefählte Werte:');
         console.log(this.selectedProfessor);
         console.log(this.selectedStudiecourse);
+        console.log(this.createForm.controls['name'].value);
+        console.log(this.createForm.controls['comment'].value);
+        console.log(this.selectedDuration);
+        this.dialogRef.close();
+
         /*let init: Slot = {
             title: this.createform.get('name').value,
             color: {
