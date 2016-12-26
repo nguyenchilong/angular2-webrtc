@@ -1,5 +1,5 @@
 <md-card *ngFor="let slot of slots" (click)="openDialog(slot)">
-    <div class="type" [ngClass]="slot.status | lowercase"></div>
+    <div class="type" [ngClass]="{{slot.status | lowercase}}"></div>
     <md-card-subtitle>{{slot.vorlesung}}</md-card-subtitle>
     <md-card-title>{{slot.prof}}</md-card-title>
     <md-card-content>
