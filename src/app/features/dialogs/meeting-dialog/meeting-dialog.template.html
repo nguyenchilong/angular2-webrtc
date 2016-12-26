@@ -60,7 +60,7 @@
         </select> minutes
         <br>
         <br>
-        <md-input-container class="meetinginput">
+        <md-input-container class="meetinginput" [formControl]="createForm.controls['comment']">
             <textarea md-input placeholder="Additional information" rows="2"></textarea>
         </md-input-container>
         <br>
