@@ -41,6 +41,7 @@ export class MeetingDialog {
             name: '',
             comment: ''
         });
+        this.selectedDuration = this.durationOptions[0];
         this.user = this.store.select(store => store.user);
     }
 
