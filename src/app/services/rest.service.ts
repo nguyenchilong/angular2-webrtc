@@ -201,7 +201,7 @@ export class RestService {
                     duration: 15,
                     date: d1,
                     comment: 'Besprechen bzgl. 1 Abgabe',
-                    status: 'canceled',
+                    status: 'CANCELED',
                     meeting: {
                         id: 1,
                         startDate: d1,
@@ -236,7 +236,7 @@ export class RestService {
                     duration: 10,
                     date: d2,
                     comment: 'Besprechen bzgl. 1 Abgabe',
-                    status: 'open',
+                    status: 'OPEN',
                     meeting: {
                         id: 2,
                         startDate: d2,
@@ -271,7 +271,7 @@ export class RestService {
                     duration: 20,
                     date: d3,
                     comment: 'Besprechen bzgl. 1 Abgabe',
-                    status: 'accepted',
+                    status: 'ACCEPTED',
                     meeting: {
                         id: 3,
                         startDate: d3,

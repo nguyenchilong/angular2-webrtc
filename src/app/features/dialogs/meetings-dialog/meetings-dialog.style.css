@@ -14,11 +14,11 @@ md-card:hover {
   left: 0px;
   top: 0px; }
 
-.canceled {
+.CANCELED {
   background-color: #f44336; }
 
-.open {
+.OPEN {
   background-color: grey; }
 
-.accepted {
+.ACCEPTED {
   background-color: #5cb85c; }
