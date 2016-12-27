@@ -65,8 +65,8 @@ export class MeetingsCompontent {
         d2.setDate(new Date().getDate() + 3);
         let meeting: MeetingProfessor = {
             slots: [],
-            startDate: d1,
-            endDate: d2,
+            startDate: d1.toString(),
+            endDate: d2.toString(),
             status: 'active'
         };
         this.restservice.createMeeting(meeting);
