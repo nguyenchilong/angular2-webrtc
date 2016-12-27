@@ -13,5 +13,5 @@
             </md-card-content>
     </md-card>
     <button md-button *ngIf="(user | async).role === 'prof'" (click)="testCall()">testcallto user with id: 206</button>
-    <button md-raised-button (click)="createMeeting()">Create Meeting</button>
+    <button md-raised-button *ngIf="(user | async).role === 'prof'" (click)="createMeeting()">Create Meeting</button>
 </div>
