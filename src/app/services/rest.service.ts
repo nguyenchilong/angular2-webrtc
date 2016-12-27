@@ -148,7 +148,7 @@ export class RestService {
     createMeeting(meeting: MeetingProfessor): Observable<void> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams(meeting);
-        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true })
+        let response: Observable<void> = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
