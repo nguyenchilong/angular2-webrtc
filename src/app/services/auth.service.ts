@@ -52,14 +52,26 @@ export class AuthService implements CanActivate {
         this.store.dispatch({ type: 'LOGIN_USER' });
 
         if (this.isAuthorized()) {
-            console.log('Started initial loading of data');
-            this.restservice.readProfessors();
-            this.restservice.readSlots();
             let userid = localStorage.getItem('user_id');
+            console.log('Started initial loading of data');
+            // LOAD DATA FOR STUDENT
+            if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
+                this.restservice.readProfessors();
+                this.restservice.readSlots();
+            }
+            // LOAD DATA FOR PROF
+            if (localStorage.getItem('user_role') === 'ROLE_PROF') {
+                
+            }
+            // LOAD DATA FOR STUDENT AND PROF
+            this.restservice.readMeetings(parseInt(userid));
+            // SUBSCRIBE TO CALL (PROF IS READY FOR SLOT)
             if ( localStorage.getItem('user_role') === 'ROLE_STUDENT' ) {
                 this.callservice.subscribeCall();
             }
+            // CONNECT TO WEBSOCKET
             this.wampservice.initWamp(userid);
+            // PUSH USER TO STORE
             this.store.dispatch({ type: 'SET_USER_LOGIN', payload: {
                 username: localStorage.getItem('user_username'),
                 role: localStorage.getItem('user_role'),
