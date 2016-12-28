@@ -97,6 +97,7 @@ export class CalendarComponent implements OnInit {
                 }
             }]);
         }
+        console.log(result);
         return result;
     }
 
@@ -105,6 +106,7 @@ export class CalendarComponent implements OnInit {
         for (let slot of slots) {
             result = result.concat([slot.slot]);
         }
+        console.log(result);
         return result;
     }
 

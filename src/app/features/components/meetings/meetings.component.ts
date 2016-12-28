@@ -48,7 +48,7 @@ export class MeetingsCompontent {
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => { });
     }
-    
+
     //  SOME TEST:
     testCall(): void {
         this.wampservice.sendWithSocket(
@@ -73,6 +73,8 @@ export class MeetingsCompontent {
             endDate: this.restservice.transformDate(d2.toString()),
             status: 'active'
         };
+        console.log(d1);
+        console.log(this.restservice.transformDate('Wed Dec 28 2016 08:06:40 GMT+0100 (CET)'));
         this.restservice.createMeeting(meeting);
     }
 
