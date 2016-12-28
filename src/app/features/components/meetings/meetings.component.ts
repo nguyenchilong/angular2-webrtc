@@ -48,25 +48,29 @@ export class MeetingsCompontent {
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => { });
     }
+    
     //  SOME TEST:
     testCall(): void {
-        this.wampservice.sendWithSocket(206, {
-            type: 'call',
-            id: localStorage.getItem('user_id'),
-            title: localStorage.getItem('user_title'),
-            lastname: localStorage.getItem('user_lastname')
-        })
-            .subscribe(data => { });
+        this.wampservice.sendWithSocket(
+            206,
+            {
+                type: 'call',
+                id: localStorage.getItem('user_id'),
+                title: localStorage.getItem('user_title'),
+                lastname: localStorage.getItem('user_lastname')
+            }
+        ).subscribe(data => { });
     }
+
     createMeeting(): void {
         let d1 = new Date();
         let d2 = new Date();
         d1.setDate(new Date().getDate());
-        d2.setDate(new Date().getDate() + 3);
+        d2.setDate(new Date().getDate() + 10);
         let meeting: MeetingProfessor = {
             slots: [],
-            startDate: d1.toISOString().toString(),
-            endDate: d2.toISOString().toString(),
+            startDate: this.restservice.transformDate(d2.toString()),
+            endDate: this.restservice.transformDate(d2.toString()),
             status: 'active'
         };
         this.restservice.createMeeting(meeting);

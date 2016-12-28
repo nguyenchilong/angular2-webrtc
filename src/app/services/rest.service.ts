@@ -11,6 +11,7 @@ import { MeetingStudent } from '../model/meeting-student';
 import { MeetingProfessor } from '../model/meeting-professor';
 import { Slot } from '../model/slot';
 import { Error } from '../model/error';
+import * as moment from 'moment';
 
 @Injectable()
 export class RestService {
@@ -255,5 +256,9 @@ export class RestService {
         }
         return s.slice(1);
     };
+
+    transformDate(value: string): string {
+        return moment(value).locale('de').format('DD.MM.Y HH:mm');
+    }
 
 }
