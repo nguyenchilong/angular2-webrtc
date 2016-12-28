@@ -6,6 +6,7 @@ import { MeetingsDialog } from '../../dialogs/meetings-dialog/meetings-dialog.co
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
 import { RestService } from '../../../services/rest.service';
 import { Slot } from '../../../model/slot';
+import * as moment from 'moment';
 
 class SlotCalendar {
     slot: Slot;
@@ -33,9 +34,9 @@ export class CalendarComponent implements OnInit {
     view: string = 'month';
 
     constructor(
-            public dialog: MdDialog,
-            public store: Store<any>,
-            public restservice: RestService) {
+        public dialog: MdDialog,
+        public store: Store<any>,
+        public restservice: RestService) {
         this.store.select(store => store.slots).subscribe((slots: Array<Slot>) => {
             this.slots = this.convertSlotsToCalendar(slots);
         });
@@ -60,6 +61,22 @@ export class CalendarComponent implements OnInit {
         this.openDialog(e);
     }
 
+    incrementMonth(): void {
+        this.viewDate = moment(this.viewDate).add(1, 'months').toDate();
+    }
+
+    decrementMonth(): void {
+        this.viewDate = moment(this.viewDate).subtract(1, 'months').toDate();
+    }
+
+    incrementDay(): void {
+        this.viewDate = moment(this.viewDate).subtract(1, 'days').toDate();
+    }
+
+    decrementDay(): void {
+        this.viewDate = moment(this.viewDate).add(1, 'days').toDate();
+    }
+
     openDialog(e) {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(MeetingsDialog, config);
@@ -76,12 +93,12 @@ export class CalendarComponent implements OnInit {
                 let userRole = localStorage.getItem('user_role');
                 if (userRole === 'ROLE_STUDENT') {
                     this.dialogRef2 = this.dialog.open(MeetingDialog, config);
-                    this.dialogRef2.afterClosed().subscribe(result => {});
+                    this.dialogRef2.afterClosed().subscribe(result => { });
                 }
             }
         }
         // when closing dialog
-        this.dialogRef.afterClosed().subscribe(result => {});
+        this.dialogRef.afterClosed().subscribe(result => { });
     }
 
     private convertSlotsToCalendar(slots: Array<Slot>): Array<SlotCalendar> {
