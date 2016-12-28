@@ -1,8 +1,21 @@
 .calendar {
   width: 610px; }
 
+.innercalendar {
+  width: 605px; }
+
 .wrapper {
   padding: 7px 7px 7px 7px; }
 
 .nav-buttons {
   margin-top: 5px; }
+
+.view-buttons {
+  overflow: hidden; }
+
+.left {
+  float: left; }
+
+.right p {
+  float: right;
+  font-size: 32px !important; }

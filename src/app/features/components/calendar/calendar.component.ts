@@ -32,6 +32,7 @@ export class CalendarComponent implements OnInit {
     dialogRef2: MdDialogRef<MeetingDialog>;
     viewDate: Date = new Date();
     view: string = 'month';
+    viewMonth: string = '';
 
     constructor(
         public dialog: MdDialog,
@@ -43,6 +44,7 @@ export class CalendarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.setViewMonth(this.viewDate);
     }
 
     switchToMonth(): void {
@@ -63,18 +65,26 @@ export class CalendarComponent implements OnInit {
 
     incrementMonth(): void {
         this.viewDate = moment(this.viewDate).add(1, 'months').toDate();
+        this.setViewMonth(this.viewDate);
     }
 
     decrementMonth(): void {
         this.viewDate = moment(this.viewDate).subtract(1, 'months').toDate();
+        this.setViewMonth(this.viewDate);
     }
 
     incrementDay(): void {
         this.viewDate = moment(this.viewDate).subtract(1, 'days').toDate();
+        this.setViewMonth(this.viewDate);
     }
 
     decrementDay(): void {
         this.viewDate = moment(this.viewDate).add(1, 'days').toDate();
+        this.setViewMonth(this.viewDate);
+    }
+
+    setViewMonth(date): void {
+        this.viewMonth = date.toLocaleString('en-us', { month: 'long' });
     }
 
     openDialog(e) {
