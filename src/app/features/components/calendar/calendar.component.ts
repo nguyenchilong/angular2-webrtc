@@ -85,10 +85,10 @@ export class CalendarComponent implements OnInit {
     }
 
     private convertSlotsToCalendar(slots: Array<Slot>): Array<SlotCalendar> {
-        let result: Array<SlotCalendar> = [];
+        let result: any[] = [];
         for (let slot of slots) {
             result = result.concat([{
-                slot: slot,
+                title: slot.name,
                 start: slot.date,
                 end: slot.date,
                 color: {
