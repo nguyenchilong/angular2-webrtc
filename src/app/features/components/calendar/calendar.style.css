@@ -16,6 +16,8 @@
 .left {
   float: left; }
 
+.right {
+  float: right; }
+
 .right p {
-  float: right;
   font-size: 32px !important; }

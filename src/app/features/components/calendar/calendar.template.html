@@ -1,6 +1,6 @@
 <div class="wrapper">
       <div class="innercalendar">
-            <div class="view-buttons">
+            <div [ngSwitch]="view" class="view-buttons">
                   <div class="left">
                         <button md-raised-button (click)="switchToMonth()" [disabled]="view==='month'">Month</button>
                         <!--
@@ -10,25 +10,24 @@
 -->
                         <button md-raised-button (click)="switchToDay()" [disabled]="view==='day'">Day</button>
                   </div>
-                  <div class="right">
-                        <p>{{viewMonth}}</p>
-                  </div>
+                  <div *ngSwitchCase="'day'" class="right"><p>{{viewDay}}. {{viewMonth}}</p></div>
+                  <div *ngSwitchCase="'month'" class="right"><p>{{viewMonth}}</p></div>
             </div>
 
             <div [ngSwitch]="view" class="nav-buttons">
                   <div *ngSwitchCase="'month'">
-                        <button md-button (click)="incrementMonth()">
+                        <button md-button (click)="decrementMonth()">
                         <md-icon>arrow_backward</md-icon>
                   </button>
-                        <button md-button (click)="decrementMonth()">
+                        <button md-button (click)="incrementMonth()">
                         <md-icon>arrow_forward</md-icon>
                   </button>
                   </div>
                   <div *ngSwitchCase="'day'">
-                        <button md-button (click)="incrementDay()">
+                        <button md-button (click)="decrementDay()">
                         <md-icon>arrow_backward</md-icon>
                   </button>
-                        <button md-button (click)="decrementcrementDay()">
+                        <button md-button (click)="incrementDay()">
                         <md-icon>arrow_forward</md-icon>
                   </button>
                   </div>
