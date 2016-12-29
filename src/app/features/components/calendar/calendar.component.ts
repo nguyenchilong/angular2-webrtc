@@ -45,8 +45,7 @@ export class CalendarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.setViewMonth(this.viewDate);
-        this.setViewDay(this.viewDate);
+        this.updateViewDay(this.viewDate);
     }
 
     switchToMonth(): void {
@@ -67,30 +66,27 @@ export class CalendarComponent implements OnInit {
 
     incrementMonth(): void {
         this.viewDate = moment(this.viewDate).add(1, 'months').toDate();
-        this.setViewMonth(this.viewDate);
+        this.updateViewDay(this.viewDate);
     }
 
     decrementMonth(): void {
         this.viewDate = moment(this.viewDate).subtract(1, 'months').toDate();
-        this.setViewMonth(this.viewDate);
+        this.updateViewDay(this.viewDate);
     }
 
     incrementDay(): void {
         this.viewDate = moment(this.viewDate).add(1, 'days').toDate();
-        this.setViewDay(this.viewDate);
+        this.updateViewDay(this.viewDate);
     }
 
     decrementDay(): void {
         this.viewDate = moment(this.viewDate).subtract(1, 'days').toDate();
-        this.setViewDay(this.viewDate);
+        this.updateViewDay(this.viewDate);
     }
 
-    setViewMonth(date): void {
+    updateViewDay(date): void {
         this.viewMonth = date.toLocaleString('en-us', { month: 'long' });
-    }
-
-    setViewDay(date): void {
-        this.viewDay = moment(date).get('day').toString();
+        this.viewDay = moment(date).get('date').toString();
     }
 
     openDialog(e) {
