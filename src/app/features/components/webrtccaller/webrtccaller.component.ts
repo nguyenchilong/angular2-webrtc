@@ -114,7 +114,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         );
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                setTimeout(this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { }), 200);
+                setTimeout(() => { this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { }); }, 200);
                 console.log('send icecandidate');
             }
         };
