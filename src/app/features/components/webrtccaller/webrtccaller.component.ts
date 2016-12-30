@@ -101,6 +101,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                         });
                         // push offer to signalingchannel
                         this.wamp.sendWithSocket(this.peerid, offer).subscribe(data => { });
+                        console.log('send offer');
                     },
                     () => {
                         this.stopCall();
@@ -114,6 +115,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
+                console.log('send icecandidate');
             }
         };
     }
