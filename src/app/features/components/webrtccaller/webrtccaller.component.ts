@@ -25,9 +25,9 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     peerid: number = 104;
 
     constructor(
-            private peerconnectionservice: PeerconnectionService,
-            private store: Store<any>,
-            private wamp: WampService) {
+        private peerconnectionservice: PeerconnectionService,
+        private store: Store<any>,
+        private wamp: WampService) {
         this.storecon = this.store.select(store => store.peerconn);
     }
 
@@ -68,6 +68,11 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     startCall(): void {
+        console.log('subscribe icecandidateStream');
+        this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(data => {
+            console.log('new icecandidate:');
+            this.peerconnectionservice.pc.addIceCandidate(data);
+        });
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
@@ -100,11 +105,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                     this.stopCall();
                                 }
                             );
-                            console.log('subscribe icecandidateStream');
-                            this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(data => {
-                                console.log('new icecandidate:');
-                                this.peerconnectionservice.pc.addIceCandidate(data);
-                            });
                         });
                     },
                     () => {
