@@ -68,11 +68,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     startCall(): void {
-        this.peerconnectionservice.pc.onicecandidate = (evt) => {
-            if (evt.candidate) {
-                this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
-            }
-        };
         // add remote stream to otherVideo after stream from other peer arrives
         this.peerconnectionservice.pc.onaddstream = (mediastreamevent: RTCMediaStreamEvent) => {
             this.video.otherVideo.nativeElement.src = URL.createObjectURL(mediastreamevent.stream);
@@ -116,6 +111,11 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                 this.stopCall();
             }
         );
+        this.peerconnectionservice.pc.onicecandidate = (evt) => {
+            if (evt.candidate) {
+                this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
+            }
+        };
     }
 
     stopCall(): void {
