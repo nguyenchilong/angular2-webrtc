@@ -27,7 +27,6 @@ export class WampService {
             () => {
                 this.con.subscribe('signaling/' + id, (topic, data) => {
                     if (typeof data === typeof new Object()) {
-                        console.log(data);
                     } else {
                         let seri = JSON.parse(data);
                         let cert = JSON.parse(atob(seri.certificate));
@@ -41,6 +40,7 @@ export class WampService {
                             this.icecandidateSubject.next(cert);
                         }
                     }
+                    console.log(data);
                 });
             },
             // on err
