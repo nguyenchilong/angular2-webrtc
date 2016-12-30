@@ -10,8 +10,8 @@
 -->
                         <button md-raised-button (click)="switchToDay()" [disabled]="view==='day'">Day</button>
                   </div>
-                  <div *ngSwitchCase="'day'" class="right"><p>{{viewDay}}. {{viewMonth}}</p></div>
-                  <div *ngSwitchCase="'month'" class="right"><p>{{viewMonth}}</p></div>
+                  <div *ngSwitchCase="'day'" class="right"><p>{{viewDay}}. {{viewMonth}} {{viewYear}}</p></div>
+                  <div *ngSwitchCase="'month'" class="right"><p>{{viewMonth}} {{viewYear}}</p></div>
             </div>
 
             <div [ngSwitch]="view" class="nav-buttons">

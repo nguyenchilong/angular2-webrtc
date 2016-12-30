@@ -34,6 +34,7 @@ export class CalendarComponent implements OnInit {
     view: string = 'month';
     viewMonth: string = '';
     viewDay: string = '';
+    viewYear: string = '';
 
     constructor(
         public dialog: MdDialog,
@@ -87,6 +88,7 @@ export class CalendarComponent implements OnInit {
     updateViewDay(date): void {
         this.viewMonth = date.toLocaleString('en-us', { month: 'long' });
         this.viewDay = moment(date).get('date').toString();
+        this.viewYear = moment(date).get('year').toString();
     }
 
     openDialog(e) {
