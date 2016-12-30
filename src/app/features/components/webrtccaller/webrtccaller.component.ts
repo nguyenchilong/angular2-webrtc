@@ -22,6 +22,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     video;
     answerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
+    peerid: number = 104;
 
     constructor(
             private peerconnectionservice: PeerconnectionService,
@@ -69,7 +70,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     startCall(): void {
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                this.wamp.sendWithSocket(1, evt.candidate).subscribe(data => { });
+                this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
             }
         };
         // add remote stream to otherVideo after stream from other peer arrives
@@ -85,7 +86,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                     new RTCSessionDescription(offer),
                     () => {
                         // push offer to signalingchannel
-                        this.wamp.sendWithSocket(1, offer).subscribe(data => { });
+                        this.wamp.sendWithSocket(this.peerid, offer).subscribe(data => { });
                         console.log('subscribe answerStream');
                         this.answerStream = this.wamp.answerObservable.subscribe(data => {
                             console.log('new answer');

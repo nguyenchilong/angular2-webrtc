@@ -23,6 +23,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     offerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
     storeconStream: Subscription = new Subscription();
+    peerid: number = 2;
 
     constructor(
             private peerconnectionservice: PeerconnectionService,
@@ -79,7 +80,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                             new RTCSessionDescription(answer),
                             () => {
                                 // push answer to signalingchannel
-                                this.wamp.sendWithSocket(4, answer).subscribe(data => { });
+                                this.wamp.sendWithSocket(this.peerid, answer).subscribe(data => { });
                                 console.log('subscribe icecandiatestream');
                                 this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(ice => {
                                     console.log('new icecandidate:');
@@ -116,7 +117,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         // push ice candidates from config to server
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                this.wamp.sendWithSocket(4, evt.candidate).subscribe(data => { });
+                this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
             }
         };
     }
