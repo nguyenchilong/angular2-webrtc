@@ -68,11 +68,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     }
 
     startCall(): void {
-        console.log('subscribe icecandidateStream');
-        this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(data => {
-            console.log('new icecandidate:');
-            this.peerconnectionservice.pc.addIceCandidate(data);
-        });
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
                 this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { });
@@ -90,8 +85,6 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                 this.peerconnectionservice.pc.setLocalDescription(
                     new RTCSessionDescription(offer),
                     () => {
-                        // push offer to signalingchannel
-                        this.wamp.sendWithSocket(this.peerid, offer).subscribe(data => { });
                         console.log('subscribe answerStream');
                         this.answerStream = this.wamp.answerObservable.subscribe(data => {
                             console.log('new answer');
@@ -106,6 +99,13 @@ export class WebrtcCaller implements OnInit, OnDestroy {
                                 }
                             );
                         });
+                        console.log('subscribe icecandidateStream');
+                        this.icecandidateStream = this.wamp.icecandidateObservable.subscribe(data => {
+                            console.log('new icecandidate:');
+                            this.peerconnectionservice.pc.addIceCandidate(data);
+                        });
+                        // push offer to signalingchannel
+                        this.wamp.sendWithSocket(this.peerid, offer).subscribe(data => { });
                     },
                     () => {
                         this.stopCall();
