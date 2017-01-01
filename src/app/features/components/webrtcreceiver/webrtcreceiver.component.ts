@@ -17,8 +17,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         audio: true
     };
     stream: MediaStream;
-    @ViewChild('Video')
-    video;
+    @ViewChild('Video') video;
     storecon: Observable<any>;
     offerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();

@@ -18,8 +18,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     };
     stream: MediaStream;
     storecon: Observable<any>;
-    @ViewChild('Video')
-    video;
+    @ViewChild('Video') video;
     answerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
     peerid: number = 104;
