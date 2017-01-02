@@ -34,6 +34,11 @@ export class MeetingDialog {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
+        if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
+            this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname
+        } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
+            this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname
+        }
         this.store.select(store => store.professors).first().subscribe(first => {
             // fill selectedProfessor and selectedStudiecourse
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
