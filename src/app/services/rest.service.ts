@@ -79,45 +79,7 @@ export class RestService {
             );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
-
-            //TODO remove dummy data:
-            professors = professors.concat([
-                {
-                    id: 1,
-                    username: '',
-                    firstname: '',
-                    lastname: 'Prof. Dr. Ralf Kramer',
-                    roles: ['ROLE_PROF'],
-                    studycourses: [
-                        {
-                            id: 5,
-                            name: 'Verteilte Systeme'
-                        },
-                        {
-                            id: 6,
-                            name: 'IT-Sicherheit'
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    username: '',
-                    firstname: '',
-                    lastname: 'Prof. Dr. Oliver Höß',
-                    roles: ['ROLE_PROF'],
-                    studycourses: [
-                        {
-                            id: 5,
-                            name: 'Verteilte Systeme'
-                        },
-                        {
-                            id: 6,
-                            name: 'IT-Sicherheit'
-                        }
-                    ]
-                },
-            ]);
-
+            // TODO remove dummy data:
             this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
         });
         return response;
@@ -148,7 +110,7 @@ export class RestService {
                     slot.professor = meeting.professor;
                 }
                 if (meeting.slots) {
-                    this.store.dispatch({type: 'SET_SLOTS', payload: meeting.slots});
+                    this.store.dispatch({ type: 'SET_SLOTS', payload: meeting.slots });
                 }
             }
         });
