@@ -5,12 +5,13 @@
         </button>
     </div>
     <md-card *ngFor="let slot of (slots | async)" (click)="openDialog(slot)">
-            <div class="type" [ngClass]="slot.status"></div>
-            <md-card-subtitle>{{slot.name}}</md-card-subtitle>
-            <md-card-title>{{slot.professor.title}} {{slot.professor.firstname}} {{slot.professor.lastname}}</md-card-title>
-            <md-card-content>
-                <p>{{slot.date | transformdate}}</p>
-            </md-card-content>
+        <div class="type" [ngClass]="slot.status"></div>
+        <md-card-subtitle>{{slot.name}}</md-card-subtitle>
+        <md-card-title *ngIf="(user | async).role === 'stud'">{{slot.meeting.professor.title}} {{slot.meeting.professor.firstname}} {{slot.meeting.professor.lastname}}</md-card-title>
+        <md-card-title *ngIf="(user | async).role === 'prof'">{{slot.professor.title}} {{slot.professor.firstname}} {{slot.professor.lastname}}</md-card-title>
+        <md-card-content>
+            <p>{{slot.date | transformdate}}</p>
+        </md-card-content>
     </md-card>
     <button md-button *ngIf="(user | async).role === 'prof'" (click)="testCall()">testcallto user with id: 206</button>
     <button md-raised-button *ngIf="(user | async).role === 'prof'" (click)="createMeeting()">Create Meeting</button>
