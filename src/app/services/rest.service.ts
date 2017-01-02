@@ -149,8 +149,6 @@ export class RestService {
                 }
                 if (meeting.slots) {
                     this.store.dispatch({type: 'SET_SLOTS', payload: meeting.slots});
-                    console.log('Meeting of Professor:');
-                    console.log(meeting.professor);
                 }
             }
         });

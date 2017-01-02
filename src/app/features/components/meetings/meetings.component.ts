@@ -28,6 +28,11 @@ export class MeetingsCompontent {
         private restservice: RestService
     ) {
         this.slots = this.store.select(store => store.slots);
+        this.slots.subscribe((x) => {
+            console.log('slot in store:');
+            console.log(x);
+
+        });
         this.user = this.store.select(store => store.user);
     };
 
