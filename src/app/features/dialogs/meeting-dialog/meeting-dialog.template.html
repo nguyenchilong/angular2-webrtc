@@ -2,14 +2,14 @@
     <md-input placeholder="Status" value="{{slot.status}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input *ngIf="((user | async).role === 'prof')" placeholder="Student" value="studname"></md-input>
-    <md-input *ngIf="((user | async).role === 'stud')" placeholder="Professor" value="profname"></md-input>
+    <md-input *ngIf="((user | async).role === 'prof')" placeholder="Student" value="{{studname}}"></md-input>
+    <md-input *ngIf="((user | async).role === 'stud')" placeholder="Professor" value="{{profname}}"></md-input>
     <br>
     <br>
     <md-input placeholder="Title" value="{{slot.name}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input placeholder="Beginn" value="{{slot.date}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Start" value="{{slot.date}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
     <select (change)="setSelectedProfessor($event.target.value)" disabled>
@@ -17,7 +17,7 @@
         </select>
     <br>
     <br>
-    <md-input placeholder="Kommentar" value="{{slot.comment}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Info" value="{{slot.comment}}" class="meetinginput" disabled></md-input>
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status ==='OPEN'">
             <br>
