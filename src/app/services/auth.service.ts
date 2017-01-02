@@ -13,11 +13,11 @@ export class AuthService implements CanActivate {
     JWT: string;
 
     constructor(
-            private router: Router,
-            private store: Store<any>,
-            private restservice: RestService,
-            private wampservice: WampService,
-            private callservice: CallService) {
+        private router: Router,
+        private store: Store<any>,
+        private restservice: RestService,
+        private wampservice: WampService,
+        private callservice: CallService) {
         const token = window.localStorage.getItem(this.JWT_KEY);
         // check if token already exists in localStorage
         // and execute setJWT
@@ -57,27 +57,29 @@ export class AuthService implements CanActivate {
             // LOAD DATA FOR STUDENT
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
                 this.restservice.readSlots();
+                this.restservice.readProfessors();
             }
             // LOAD DATA FOR PROF
             if (localStorage.getItem('user_role') === 'ROLE_PROF') {
-                
+
             }
             // LOAD DATA FOR STUDENT AND PROF
             this.restservice.readMeetings(parseInt(userid));
-            this.restservice.readProfessors();
             // SUBSCRIBE TO CALL (PROF IS READY FOR SLOT)
-            if ( localStorage.getItem('user_role') === 'ROLE_STUDENT' ) {
+            if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
                 this.callservice.subscribeCall();
             }
             // CONNECT TO WEBSOCKET
             this.wampservice.initWamp(userid);
             // PUSH USER TO STORE
-            this.store.dispatch({ type: 'SET_USER_LOGIN', payload: {
-                username: localStorage.getItem('user_username'),
-                role: localStorage.getItem('user_role'),
-                firstname: localStorage.getItem('user_firstname'),
-                lastname: localStorage.getItem('user_lastname')
-            } });
+            this.store.dispatch({
+                type: 'SET_USER_LOGIN', payload: {
+                    username: localStorage.getItem('user_username'),
+                    role: localStorage.getItem('user_role'),
+                    firstname: localStorage.getItem('user_firstname'),
+                    lastname: localStorage.getItem('user_lastname')
+                }
+            });
         }
     }
 
