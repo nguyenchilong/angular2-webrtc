@@ -70,12 +70,14 @@ export class MeetingDialog implements OnInit {
 
     ngOnInit() {
         // change this:
-        if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
-            this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname
-        } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
-            this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname;
+        if (this.slot) {
+            if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
+                this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname
+            } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
+                this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname;
+            }
+            // -----
         }
-        // -----
     }
 
     setSelectedProfessor(selectedprofessorId: string): void {
