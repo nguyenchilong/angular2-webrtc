@@ -7,7 +7,7 @@
     <md-input *ngIf="((user | async).role === 'stud')" placeholder="Professor" value="profname"></md-input>
     <br>
     <br>
-    <md-input placeholder="Title" value="{{slot.name}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Title" value="slot.name" class="meetinginput" disabled></md-input>
     <br>
     <br>
     <md-input placeholder="Beginn" value="{{slot.date}}" class="meetinginput" disabled></md-input>
