@@ -56,7 +56,6 @@ export class AuthService implements CanActivate {
             console.log('Started initial loading of data');
             // LOAD DATA FOR STUDENT
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
-                this.restservice.readProfessors();
                 this.restservice.readSlots();
             }
             // LOAD DATA FOR PROF
@@ -65,6 +64,7 @@ export class AuthService implements CanActivate {
             }
             // LOAD DATA FOR STUDENT AND PROF
             this.restservice.readMeetings(parseInt(userid));
+            this.restservice.readProfessors();
             // SUBSCRIBE TO CALL (PROF IS READY FOR SLOT)
             if ( localStorage.getItem('user_role') === 'ROLE_STUDENT' ) {
                 this.callservice.subscribeCall();
