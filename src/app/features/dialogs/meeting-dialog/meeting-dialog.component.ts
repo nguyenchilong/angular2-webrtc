@@ -34,7 +34,7 @@ export class MeetingDialog {
         });
         this.store.select(store => store.professors).first().subscribe(first => {
             // fill selectedProfessor and selectedStudiecourse
-            if (first !== []) {
+            if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
                 console.log('LOOOOOG');
                 console.log(first);
                 this.selectedProfessor = first[0];
