@@ -79,7 +79,6 @@ export class RestService {
             );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
-            // TODO remove dummy data:
             this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
         });
         return response;
