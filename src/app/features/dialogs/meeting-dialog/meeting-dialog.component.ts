@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -14,7 +14,7 @@ import * as _ from 'lodash';
     templateUrl: './meeting-dialog.template.html',
     styleUrls: ['./meeting-dialog.style.css']
 })
-export class MeetingDialog {
+export class MeetingDialog implements OnInit {
 
     createForm: FormGroup;
     durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
@@ -34,11 +34,6 @@ export class MeetingDialog {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
-        if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
-            this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname
-        } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
-            this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname
-        }
         this.store.select(store => store.professors).first().subscribe(first => {
             // fill selectedProfessor and selectedStudiecourse
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
@@ -71,6 +66,16 @@ export class MeetingDialog {
         });
         this.selectedDuration = this.durationOptions[0];
         this.user = this.store.select(store => store.user);
+    }
+
+    ngOnInit() {
+        // change this:
+        if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
+            this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname
+        } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
+            this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname;
+        }
+        // -----
     }
 
     setSelectedProfessor(selectedprofessorId: string): void {
