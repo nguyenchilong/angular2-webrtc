@@ -30,6 +30,7 @@ export class MeetingDialog {
         public store: Store<any>,
         private formBuilder: FormBuilder) {
         this.store.select(store => store.professors).subscribe(prof => {
+            console.log('><><>Professors<><><');
             this.professors = prof;
         });
         this.store.select(store => store.professors).first().subscribe(first => {
