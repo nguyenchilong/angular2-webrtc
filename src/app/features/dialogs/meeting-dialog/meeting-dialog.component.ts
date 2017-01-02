@@ -36,6 +36,7 @@ export class MeetingDialog {
             // fill selectedProfessor and selectedStudiecourse
             if (first !== []) {
                 console.log('LOOOOOG');
+                console.log(first);
                 this.selectedProfessor = first[0];
                 this.selectedStudiecourse = this.selectedProfessor.studycourses[0];
             } else {
