@@ -37,6 +37,19 @@ export class MeetingDialog {
             if (first !== []) {
                 this.selectedProfessor = first[0];
                 this.selectedStudiecourse = this.selectedProfessor.studycourses[0];
+            } else {
+                // put data from gettet slot
+                this.selectedProfessor = {
+                    studycourses: [],
+                    username: '',
+                    roles: [],
+                    firstname: '',
+                    lastname: ''
+                };
+                this.selectedStudiecourse = {
+                    id: 2,
+                    name: ''
+                };
             }
         });
         this.createForm = this.formBuilder.group({
