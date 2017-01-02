@@ -35,6 +35,8 @@ export class MeetingDialog {
         this.store.select(store => store.professors).first().subscribe(first => {
             // fill selectedProfessor and selectedStudiecourse
             if (first !== []) {
+                console.log('log if there is a prod');
+                console.log(first);
                 this.selectedProfessor = first[0];
                 this.selectedStudiecourse = this.selectedProfessor.studycourses[0];
             } else {
