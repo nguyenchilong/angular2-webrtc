@@ -6,6 +6,6 @@ export class Meeting {
     startDate: string;
     endDate: string;
     slots?: Slot[];
-    professor: Professor;
+    professor?: Professor;
     status: string; // 'active' or 'canceled'
 }
