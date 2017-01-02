@@ -31,6 +31,7 @@ export class MeetingDialog {
         private formBuilder: FormBuilder) {
         this.store.select(store => store.professors).subscribe(prof => {
             console.log('><><>Professors<><><');
+            console.log(prof);
             this.professors = prof;
         });
         this.store.select(store => store.professors).first().subscribe(first => {
