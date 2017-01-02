@@ -144,12 +144,16 @@ export class RestService {
         this.printResponse('readMeetings', response);
         response.subscribe((res) => {
             for (let meeting of res) {
+                for (let slot of meeting.slots) {
+                    slot.professor = meeting.professor;
+                }
                 if (meeting.slots) {
                     this.store.dispatch({type: 'SET_SLOTS', payload: meeting.slots});
+                    console.log('Meeting of Professor:');
+                    console.log(meeting.professor);
                 }
             }
         });
-        //TODO push to store...
         return response;
     }
 
