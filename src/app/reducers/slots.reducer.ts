@@ -8,6 +8,8 @@ export const slotsrx: ActionReducer<Array<Slot>> = (state: Array<Slot> = init, a
     switch (action.type) {
         case 'SET_SLOTS':
             return [
+                ... init,
+                ... state,
                 ...action.payload
             ];
         case 'ADD_SLOT':
