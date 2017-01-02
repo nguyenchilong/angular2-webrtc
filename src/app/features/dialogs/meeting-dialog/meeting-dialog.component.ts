@@ -24,6 +24,8 @@ export class MeetingDialog {
     selectedProfessor: Professor;
     selectedStudiecourse: StudyCourse;
     selectedDuration: number;
+    profname: string = '';
+    studname: string = '';
 
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
