@@ -30,8 +30,6 @@ export class MeetingDialog {
         public store: Store<any>,
         private formBuilder: FormBuilder) {
         this.store.select(store => store.professors).subscribe(prof => {
-            console.log('><><>Professors<><><');
-            console.log(prof);
             this.professors = prof;
         });
         this.store.select(store => store.professors).first().subscribe(first => {
@@ -58,6 +56,7 @@ export class MeetingDialog {
                     name: ''
                 };
             }
+            this.professors = first;
         });
         this.createForm = this.formBuilder.group({
             name: '',
