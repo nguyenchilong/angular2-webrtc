@@ -142,6 +142,13 @@ export class RestService {
                 );
         }
         this.printResponse('readMeetings', response);
+        response.subscribe((res) => {
+            for (let meeting of res) {
+                if (meeting.slots) {
+                    this.store.dispatch({type: 'SET_SLOTS', payload: meeting.slots});
+                }
+            }
+        });
         //TODO push to store...
         return response;
     }
