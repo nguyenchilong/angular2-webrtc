@@ -3,9 +3,8 @@
     <md-input placeholder="Titel" value="{{slot.name}}" class="meetinginput" [formControl]="createForm.controls['name']" disabled></md-input>
     <br>
     <br>
-    <select (change)="setSelectedProfessor($event.target.value)" disabled>
-            <option *ngFor="let professor of professors" [value]="professor.id">{{professor.lastname}}</option>
-        </select>
+    <md-input *ngIf="((user | async).role === 'student')" placeholder="Student" value="slot.student.firstname +' '+slot.student.lastname"></md-input>
+    <md-input *ngIf="((user | async).role === 'prof')" placeholder="Professor" value="slot.meeting.professor.title +' '+ slot.meeting.professor.firstname +' '+slot.meeting.professor.lastname"></md-input>
     <br>
     <br>
     <md-input placeholder="Title" value="{{slot.name}}" class="meetinginput" disabled></md-input>
