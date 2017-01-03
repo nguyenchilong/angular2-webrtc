@@ -120,8 +120,8 @@ export class CalendarComponent implements OnInit {
         for (let slot of slots) {
             result = result.concat([{
                 title: slot.name,
-                start: slot.date,
-                end: slot.date,
+                start: new Date(),
+                end: new Date(),
                 color: {
                     primary: '#ad2121',
                     secondary: '#FAE3E3'
