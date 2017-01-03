@@ -137,9 +137,11 @@ export class MeetingDialog implements OnInit {
                 title: localStorage.getItem('user_title'),
                 lastname: localStorage.getItem('user_lastname')
             }
-        ).subscribe(data => { });
-        this.router.navigate(['receiver']);
-        this.dialogRef.close();
+        ).subscribe(data => {
+            this.router.navigate(['receiver']);
+            this.dialogRef.close();
+        });
+
     }
 
     acceptSlot(): void {
