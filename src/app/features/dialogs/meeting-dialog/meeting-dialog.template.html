@@ -12,6 +12,9 @@
     <md-input placeholder="Start" value="{{slot.date | transformdate}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
+    <md-input placeholder="Duration" value="{{slot.duration}}"disabled></md-input> Minutes
+    <br>
+    <br>
     <md-input placeholder="Info" value="{{slot.comment}}" class="meetinginput" disabled></md-input>
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status ==='OPEN'">
