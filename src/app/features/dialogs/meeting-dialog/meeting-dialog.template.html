@@ -12,10 +12,12 @@
     <md-input placeholder="Start" value="{{slot.date | transformdate}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input placeholder="Duration" value="{{slot.duration}}"disabled></md-input> Minutes
+    <md-input placeholder="Duration" value="{{slot.duration}} Minutes" disabled class="meetinginput"></md-input>
     <br>
     <br>
-    <md-input placeholder="Info" value="{{slot.comment}}" class="meetinginput" disabled></md-input>
+    <md-input-container class="meetinginput">
+        <textarea md-input placeholder="Additional information" rows="4" value="{{slot.comment}}" disabled></textarea>
+    </md-input-container>
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status ==='OPEN'">
             <br>
@@ -57,7 +59,7 @@
         <br>
         <br>
         <md-input-container class="meetinginput">
-            <textarea md-input placeholder="Additional information" rows="2" [formControl]="createForm.controls['comment']"></textarea>
+            <textarea md-input placeholder="Additional information" rows="4" [formControl]="createForm.controls['comment']"></textarea>
         </md-input-container>
         <br>
         <br>
