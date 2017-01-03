@@ -27,7 +27,7 @@ class Color {
 })
 export class CalendarComponent implements OnInit {
 
-    slots: any = [];
+    slots: Observable<any>;
     dialogRef: MdDialogRef<MeetingsDialog>;
     dialogRef2: MdDialogRef<MeetingDialog>;
     viewDate: Date = new Date();
