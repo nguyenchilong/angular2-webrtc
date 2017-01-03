@@ -131,7 +131,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.startVideostream();
         this.peerconnectionservice.createConnection();
         this.peerid = this.callservice.usertocallid;
-        this.startCall();
+        setTimeout(() => { this.startCall(); }, 1000);
     }
 
     ngOnDestroy() {
