@@ -27,7 +27,7 @@ class Color {
 })
 export class CalendarComponent implements OnInit {
 
-    slots: Array<SlotCalendar> = [];
+    slots: any = [];
     dialogRef: MdDialogRef<MeetingsDialog>;
     dialogRef2: MdDialogRef<MeetingDialog>;
     viewDate: Date = new Date();
@@ -40,8 +40,8 @@ export class CalendarComponent implements OnInit {
         public dialog: MdDialog,
         public store: Store<any>,
         public restservice: RestService) {
-        this.store.select(store => store.slots).subscribe((slots: Array<Slot>) => {
-            this.convertAndAddSlotsToCalendar(slots);
+        this.slots = this.store.select(store => store.slots).map((slots) => {
+            return this.convertSlotsToCalendar(slots);
         });
     }
 
@@ -115,7 +115,7 @@ export class CalendarComponent implements OnInit {
         this.dialogRef.afterClosed().subscribe(result => { });
     }
 
-    private convertAndAddSlotsToCalendar(slots: Array<Slot>): void {
+    private convertSlotsToCalendar(slots: Array<Slot>) {
         let result: any[] = [];
         for (let slot of slots) {
             result = result.concat([{
@@ -128,10 +128,7 @@ export class CalendarComponent implements OnInit {
                 }
             }]);
         }
-        this.slots = [
-            ...this.slots,
-            ...result
-        ];
+        return result;
     }
 
     private convertSlotsFromCalendar(slots: Array<SlotCalendar>): Array<Slot> {
