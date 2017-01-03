@@ -6,7 +6,6 @@ import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.compo
 import { Slot } from '../../../model/slot';
 import { UserLogin } from '../../../model/user-login';
 // Test imports, remove when done
-import { WampService } from '../../../services/wamp.service';
 import { RestService } from '../../../services/rest.service';
 import { MeetingProfessor } from '../../../model/meeting-professor';
 
@@ -24,7 +23,6 @@ export class MeetingsCompontent {
     constructor(
         private store: Store<any>,
         private dialog: MdDialog,
-        private wampservice: WampService,
         private restservice: RestService
     ) {
         this.slots = this.store.select(store => store.slots);
@@ -47,19 +45,6 @@ export class MeetingsCompontent {
 
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => { });
-    }
-
-    //  SOME TEST:
-    testCall(): void {
-        this.wampservice.sendWithSocket(
-            206,
-            {
-                type: 'call',
-                id: localStorage.getItem('user_id'),
-                title: localStorage.getItem('user_title'),
-                lastname: localStorage.getItem('user_lastname')
-            }
-        ).subscribe(data => { });
     }
 
     createMeeting(): void {

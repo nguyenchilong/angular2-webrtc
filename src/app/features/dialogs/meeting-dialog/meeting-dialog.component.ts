@@ -8,6 +8,7 @@ import { Slot } from '../../../model/slot';
 import { StudyCourse } from '../../../model/study-course';
 import { UserLogin } from '../../../model/user-login';
 import * as _ from 'lodash';
+import { WampService } from '../../../services/wamp.service';
 
 @Component({
     selector: 'meeting-dialog',
@@ -30,7 +31,8 @@ export class MeetingDialog implements OnInit {
     constructor(
         public dialogRef: MdDialogRef<MeetingDialog>,
         public store: Store<any>,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder,
+        private wampservice: WampService) {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
@@ -125,7 +127,15 @@ export class MeetingDialog implements OnInit {
     }
 
     joinSlot(): void {
-
+        this.wampservice.sendWithSocket(
+            this.slot.student.id,
+            {
+                type: 'call',
+                id: localStorage.getItem('user_id'),
+                title: localStorage.getItem('user_title'),
+                lastname: localStorage.getItem('user_lastname')
+            }
+        ).subscribe(data => { });
     }
 
     acceptSlot(): void {
