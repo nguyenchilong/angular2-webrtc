@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { WampService } from '../../../services/wamp.service';
+import { CallService } from '../../../services/call.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
@@ -21,12 +22,13 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     @ViewChild('Video') video;
     answerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
-    peerid: number = 104;
+    peerid: number;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
-        private wamp: WampService) {
+        private wamp: WampService,
+        private callservice: CallService) {
         this.storecon = this.store.select(store => store.peerconn);
     }
 
@@ -128,6 +130,8 @@ export class WebrtcCaller implements OnInit, OnDestroy {
     ngOnInit() {
         this.startVideostream();
         this.peerconnectionservice.createConnection();
+        this.peerid = this.callservice.usertocallid;
+        this.startCall();
     }
 
     ngOnDestroy() {
