@@ -22,10 +22,9 @@ export class CallService {
         this.callsubscription = this.wampservice.callObservable.subscribe(call => {
             this.snackbarref = this.snackBar.open(call.title + ' ' + call.lastname + ' ' + 'is now available', 'Start');
             this.snackbarref.onAction().subscribe(() => {
+                this.usertocallid = call.id;
                 this.router.navigate(['caller']);
-                //TODO: start calling prof
             });
-            this.usertocallid = call.id;
         });
     }
 
