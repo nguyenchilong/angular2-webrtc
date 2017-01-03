@@ -139,6 +139,7 @@ export class MeetingDialog implements OnInit {
             }
         ).subscribe(data => { });
         this.router.navigate(['receiver']);
+        this.dialogRef.close();
     }
 
     acceptSlot(): void {
