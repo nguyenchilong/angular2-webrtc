@@ -41,7 +41,7 @@ export class CalendarComponent implements OnInit {
         public store: Store<any>,
         public restservice: RestService) {
         this.store.select(store => store.slots).subscribe((slots: Array<Slot>) => {
-            this.slots = this.convertSlotsToCalendar(slots);
+            this.convertAndAddSlotsToCalendar(slots);
         });
     }
 
@@ -115,7 +115,7 @@ export class CalendarComponent implements OnInit {
         this.dialogRef.afterClosed().subscribe(result => { });
     }
 
-    private convertSlotsToCalendar(slots: Array<Slot>): Array<SlotCalendar> {
+    private convertAndAddSlotsToCalendar(slots: Array<Slot>): void {
         let result: any[] = [];
         for (let slot of slots) {
             result = result.concat([{
@@ -128,8 +128,10 @@ export class CalendarComponent implements OnInit {
                 }
             }]);
         }
-        console.log(result);
-        return result;
+        this.slots = [
+            ...this.slots,
+            ...result
+        ];
     }
 
     private convertSlotsFromCalendar(slots: Array<SlotCalendar>): Array<Slot> {
