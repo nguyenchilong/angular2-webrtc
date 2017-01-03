@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MdDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -32,7 +33,8 @@ export class MeetingDialog implements OnInit {
         public dialogRef: MdDialogRef<MeetingDialog>,
         public store: Store<any>,
         private formBuilder: FormBuilder,
-        private wampservice: WampService) {
+        private wampservice: WampService,
+        private router: Router) {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
@@ -136,6 +138,7 @@ export class MeetingDialog implements OnInit {
                 lastname: localStorage.getItem('user_lastname')
             }
         ).subscribe(data => { });
+        this.router.navigate(['receiver']);
     }
 
     acceptSlot(): void {
