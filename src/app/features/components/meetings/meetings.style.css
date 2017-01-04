@@ -22,13 +22,13 @@ md-card {
   margin-bottom: 5px;
   text-align: right; }
 
-.canceled {
+.CANCELED {
   background-color: #f44336; }
 
-.open {
+.OPEN {
   background-color: grey; }
 
-.accepted {
+.ACCEPTED {
   background-color: #5cb85c; }
 
 .type {
