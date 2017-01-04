@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { RestService } from '../../../services/rest.service';
+import { Router } from '@angular/router';
 
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { InfoDialog } from '../../dialogs/info-dialog/info-dialog.component';
@@ -19,14 +20,17 @@ export class NavComponent {
     user: Observable<UserLogin>;
     @Output()
     toggleoutput = new EventEmitter();
+    routerPath: Observable<any>;
 
     constructor(
-            private store: Store<any>,
-            private authservice: AuthService,
-            private dialog: MdDialog,
-            private restservice: RestService
-            ) {
+        private store: Store<any>,
+        private authservice: AuthService,
+        private dialog: MdDialog,
+        private restservice: RestService,
+        private router: Router
+    ) {
         this.user = this.store.select(store => store.user);
+        this.routerPath = this.store.select(store => store.router);
     }
 
     logoutUser(): void {
@@ -45,6 +49,10 @@ export class NavComponent {
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => {
         });
+    }
+
+    back(): void {
+        this.router.navigate(['']);
     }
 
 }

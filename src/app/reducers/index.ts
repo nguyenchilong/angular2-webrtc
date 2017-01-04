@@ -16,7 +16,7 @@ export interface AppState {
 }
 
 export const reducers = {
-    // router: routerReducer,
+    router: routerReducer,
     user: userrx,
     peerconn: peerconnrx,
     chat: chatrx,
