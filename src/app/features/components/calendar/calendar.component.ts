@@ -97,10 +97,10 @@ export class CalendarComponent implements OnInit {
 
         // if single event from weekview
         if (e.event) {
-            this.dialogRef.componentInstance.slots = this.convertSlotsFromCalendar([e.event]);
+            this.dialogRef.componentInstance.slots = [e.event];
         } else {
             // if events is empty
-            this.dialogRef.componentInstance.slots = this.convertSlotsFromCalendar(e.events);
+            this.dialogRef.componentInstance.slots = e.events;
             if (e.events.length !== 0) {
             } else {
                 this.dialogRef.close();
@@ -137,15 +137,6 @@ export class CalendarComponent implements OnInit {
                 id: slot.id
             }]);
         }
-        return result;
-    }
-
-    private convertSlotsFromCalendar(slots: Array<SlotCalendar>): Array<Slot> {
-        let result: Array<Slot> = [];
-        for (let slot of slots) {
-            result = result.concat([slot.slot]);
-        }
-        console.log(result);
         return result;
     }
 
