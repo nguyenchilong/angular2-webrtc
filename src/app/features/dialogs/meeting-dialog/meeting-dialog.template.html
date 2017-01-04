@@ -15,8 +15,8 @@
     <md-input placeholder="Duration" value="{{slot.duration}} Minutes" disabled class="meetinginput"></md-input>
     <br>
     <br>
-    <md-input-container class="meetinginput" disabled>
-        <textarea md-input placeholder="Additional information" rows="4" >{{slot.comment}}</textarea>
+    <md-input-container class="meetinginput">
+        <textarea md-input placeholder="Additional information" rows="4" disabled value="{{slot.comment}}"></textarea>
     </md-input-container>
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status ==='OPEN'">
