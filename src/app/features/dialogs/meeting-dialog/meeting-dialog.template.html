@@ -21,8 +21,6 @@
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status ==='OPEN'">
             <br>
-            <md-input placeholder="Additional information for student"></md-input>
-            <br>
             <button md-raised-button (click)="acceptSlot()">Accept</button>
             <button md-raised-button (click)="rejectSlot()" color="warn">Reject</button>
         </div>

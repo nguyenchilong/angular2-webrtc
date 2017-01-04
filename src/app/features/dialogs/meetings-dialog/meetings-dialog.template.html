@@ -1,8 +1,9 @@
 <md-card *ngFor="let slot of slots" (click)="openDialog(slot)">
     <div class="type" [ngClass]="slot.status"></div>
-    <md-card-subtitle>{{slot.vorlesung}}</md-card-subtitle>
-    <md-card-title>{{slot.prof}}</md-card-title>
+    <md-card-subtitle>{{slot.name}}</md-card-subtitle>
+    <md-card-title *ngIf="(user | async).role === 'stud'">{{slot.meeting.professor.title}} {{slot.meeting.professor.lastname}}</md-card-title>
+    <md-card-title *ngIf="(user | async).role === 'prof'">{{slot.student.firstname}} {{slot.student.lastname}}</md-card-title>
     <md-card-content>
-        <p>{{slot.start | transformdate}}</p>
+        <p>{{slot.date | transformdate}}</p>
     </md-card-content>
 </md-card>
