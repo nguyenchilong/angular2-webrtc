@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RestService } from '../../../services/rest.service';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { ForgotDialog } from '../../dialogs/forgot-dialog/forgot-dialog.component';
+import { RegisterDialog } from '../../dialogs/register-dialog/register-dialog.component'
 import { Store } from '@ngrx/store';
 import { User } from '../../../model/user';
 
@@ -19,6 +20,7 @@ export class LoginComponent {
     loginform: FormGroup;
     isloading: boolean = false;
     dialogRef: MdDialogRef<ForgotDialog>;
+    dialogRef2: MdDialogRef<RegisterDialog>;
 
     constructor(
             private authservice: AuthService,
@@ -75,7 +77,11 @@ export class LoginComponent {
     }
 
     openRegisterDialog(): void {
-        // HIER BITTE DEN REGISTERDIALOG ÖFFNEN
+        let config: MdDialogConfig = { disableClose: false };
+        this.dialogRef = this.dialog.open(RegisterDialog, config);
+        // when closing dialog
+        this.dialogRef.afterClosed().subscribe(result => {
+        });
     }
 
 }
