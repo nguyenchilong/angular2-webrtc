@@ -16,6 +16,8 @@ import * as moment from 'moment';
 @Injectable()
 export class RestService {
 
+    private static readonly test: boolean = true;
+
     constructor(
         private http: Http,
         private store: Store<any>) {
@@ -30,7 +32,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printResponse('authorizeUser', response);
         // response.subscribe() is done in LoginComponent.login()
         return response;
@@ -46,7 +48,8 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
+        this.printRequestBody('createUser', user);
         this.printResponse('createUser', response);
         // no response.subscribe() necessary
         return response;
@@ -64,7 +67,8 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
+        this.printRequestBody('updateUserPassword', requestBody);
         this.printResponse('updateUserPassword', response);
         // no response.subscribe() necessary
         return response;
@@ -76,7 +80,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
             this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
@@ -93,14 +97,14 @@ export class RestService {
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-                );
+            );
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + professorId + '/meetings/student', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<MeetingStudent>)
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-                );
+            );
         }
         this.printResponse('readMeetings', response);
         response.subscribe((res) => {
@@ -123,7 +127,8 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
+        this.printRequestBody('createMeeting', requestBody);
         this.printResponse('createMeeting', response);
         //TODO push to store...
         return response;
@@ -142,7 +147,8 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
+        this.printRequestBody('updateMeeting', requestBody);
         this.printResponse('updateMeeting', response);
         // no response.subscribe() necessary
         return response;
@@ -155,7 +161,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printResponse('readSlots', response);
         response.subscribe((slots: Array<Slot>) => {
             this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
@@ -178,7 +184,8 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
+        this.printRequestBody('createSlot', requestBody);
         this.printResponse('createSlot', response);
         response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
             this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
@@ -200,23 +207,34 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
+        this.printRequestBody('updateSlot', requestBody);
         this.printResponse('updateSlot', response);
         // no response.subscribe() necessary
         return response;
     }
 
-    private printResponse(functionName: string, response: Observable<any>) {
-        response.subscribe(data => {
-            console.log(functionName + '() = ' + JSON.stringify(data, null, 2));
-        }, err => {
-            if (typeof err === typeof Error) {
-                console.log(functionName + '() error = ' + JSON.stringify(err, null, 2));
-            } else {
-                console.log(functionName + '() unknown error = ' + JSON.stringify(err, null, 2));
-            }
+    private printRequestBody(functionName: string, requestBody: any) {
+        if (RestService.test) {
+            console.log(functionName + '() <= ' + JSON.stringify(requestBody, null, 2));
         }
-        );
+    };
+
+    private printResponse(functionName: string, response: Observable<any>) {
+        if (RestService.test) {
+            response.subscribe(
+                data => {
+                    console.log(functionName + '() => ' + JSON.stringify(data, null, 2));
+                },
+                err => {
+                    if (typeof err === typeof Error) {
+                        console.log(functionName + '() error => ' + JSON.stringify(err, null, 2));
+                    } else {
+                        console.log(functionName + '() unknown error => ' + JSON.stringify(err, null, 2));
+                    }
+                }
+            );
+        }
     };
 
     private serializeAsUrlParams(o: Object): string {
@@ -227,7 +245,7 @@ export class RestService {
         return s.slice(1);
     };
 
-    transformDate(value: string): string {
+    public transformDate(value: string): string {
         return moment(value).locale('de').format('DD.MM.Y HH:mm');
     }
 

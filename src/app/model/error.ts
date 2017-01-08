@@ -1,6 +1,6 @@
 export class Error {
-    code: number;
-    message: string;
+    status: number;
+    title: string;
+    detail: string;
     type: string;
-    fields: string;
 }
