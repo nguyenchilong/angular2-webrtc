@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
+
 
 @Component({
     selector: 'passwordchange-component',
@@ -13,12 +15,13 @@ export class PasswordChangeComponent {
 
     passwordGroup: FormGroup;
     samePasswords: boolean = false;
+    snackbarref: MdSnackBarRef<any>;
 
     constructor(private store: Store<any>,
         private rest: RestService,
         private formBuilder: FormBuilder,
         private changeDetectionRef: ChangeDetectorRef,
-
+        private snackBar: MdSnackBar,
     ) {
         this.passwordGroup = this.formBuilder.group({
             oldPassword: '',
@@ -26,16 +29,16 @@ export class PasswordChangeComponent {
             newPassword2: ''
         });
         this.passwordGroup.controls['newPassword1'].valueChanges.subscribe(value => {
-            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value 
-            && this.passwordGroup.controls['newPassword1'].value !== '') {
+            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value
+                && this.passwordGroup.controls['newPassword1'].value !== '') {
                 this.samePasswords = true;
             } else {
                 this.samePasswords = false;
             }
         });
         this.passwordGroup.controls['newPassword2'].valueChanges.subscribe(value => {
-            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value 
-            && this.passwordGroup.controls['newPassword1'].value !== '') {
+            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value
+                && this.passwordGroup.controls['newPassword1'].value !== '') {
                 this.samePasswords = true;
             } else {
                 this.samePasswords = false;
@@ -49,10 +52,16 @@ export class PasswordChangeComponent {
                 success => {
                     console.log('ok updatePassword()');
                     this.clearInputs();
+                    this.snackBar.open('Password successfully changed', '', {
+                        duration: 3000
+                    });
                 },
                 err => {
                     console.log('err updatePassword()');
                     this.clearInputs();
+                    this.snackBar.open('Password was not changed', '', {
+                        duration: 3000
+                    });
                 }
             );
         }
