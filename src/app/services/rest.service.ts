@@ -65,8 +65,8 @@ export class RestService {
         });
         */
         let requestBody = 'app_password[currentPassword]=' + oldPassword +
-                        '&app_password[newPassword][first]' + newPassword +
-                        '&app_password[newPassword][second]' + newPassword;
+                        '&app_password[newPassword][first]=' + newPassword +
+                        '&app_password[newPassword][second]=' + newPassword;
         let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
             .map((res: Response) => res.json() as User)
             .catch((err: any) => {
