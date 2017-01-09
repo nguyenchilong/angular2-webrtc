@@ -25,7 +25,7 @@ export class PasswordChangeComponent {
         });
     }
 
-    changePassword(oldPw: string = '', newPw1: string = '', newPw2: string = ''): void {
+    changePassword(): void {
         if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value) {
             this.rest.updateUserPassword(this.passwordGroup.controls['oldPassword'].value, this.passwordGroup.controls['newPassword1'].value).subscribe(
                 success => {
