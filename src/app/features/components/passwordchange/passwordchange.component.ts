@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class PasswordChangeComponent {
 
     passwordGroup: FormGroup;
+    samePasswords: boolean = false;
 
     constructor(private store: Store<any>,
         private rest: RestService,
@@ -22,6 +23,22 @@ export class PasswordChangeComponent {
             oldPassword: '',
             newPassword1: '',
             newPassword2: ''
+        });
+        this.passwordGroup.controls['newPassword1'].valueChanges.subscribe(value => {
+            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value 
+            && this.passwordGroup.controls['newPassword1'].value !== '') {
+                this.samePasswords = true;
+            } else {
+                this.samePasswords = false;
+            }
+        });
+        this.passwordGroup.controls['newPassword2'].valueChanges.subscribe(value => {
+            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value 
+            && this.passwordGroup.controls['newPassword1'].value !== '') {
+                this.samePasswords = true;
+            } else {
+                this.samePasswords = false;
+            }
         });
     }
 
@@ -41,9 +58,9 @@ export class PasswordChangeComponent {
     }
 
     clearInputs(): void {
-        this.passwordGroup.controls['oldPassword'].value = '';
-        this.passwordGroup.controls['newPassword1'].value = '';
-        this.passwordGroup.controls['newPassword2'].value = '';
+        this.passwordGroup.controls['oldPassword'].setValue('');
+        this.passwordGroup.controls['newPassword1'].setValue('');
+        this.passwordGroup.controls['newPassword2'].setValue('');
     }
 
 }
