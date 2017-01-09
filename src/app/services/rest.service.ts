@@ -55,7 +55,7 @@ export class RestService {
         return response;
     }
 
-    updateUserPassword(oldPassword: string, newPassword: string): Observable<User> {
+    updateUserPassword(oldPassword: string, newPassword: string): any {
         let userId = localStorage.getItem('user_id');
         /*
         let requestBody = this.serializeAsUrlParams({
