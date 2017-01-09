@@ -28,22 +28,6 @@ export class PasswordChangeComponent {
             newPassword1: '',
             newPassword2: ''
         });
-        this.passwordGroup.controls['newPassword1'].valueChanges.subscribe(value => {
-            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value
-                && this.passwordGroup.controls['newPassword1'].value !== '') {
-                this.samePasswords = true;
-            } else {
-                this.samePasswords = false;
-            }
-        });
-        this.passwordGroup.controls['newPassword2'].valueChanges.subscribe(value => {
-            if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value
-                && this.passwordGroup.controls['newPassword1'].value !== '') {
-                this.samePasswords = true;
-            } else {
-                this.samePasswords = false;
-            }
-        });
     }
 
     changePassword(): void {
