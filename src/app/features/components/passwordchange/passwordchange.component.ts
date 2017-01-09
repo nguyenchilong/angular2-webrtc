@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
@@ -16,7 +16,8 @@ export class PasswordChangeComponent {
 
     constructor(private store: Store<any>,
         private rest: RestService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private changeDetectionRef: ChangeDetectorRef,
 
     ) {
         this.passwordGroup = this.formBuilder.group({
@@ -61,6 +62,7 @@ export class PasswordChangeComponent {
         this.passwordGroup.controls['oldPassword'].setValue('');
         this.passwordGroup.controls['newPassword1'].setValue('');
         this.passwordGroup.controls['newPassword2'].setValue('');
+        this.changeDetectionRef.markForCheck();
     }
 
 }
