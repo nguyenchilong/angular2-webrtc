@@ -51,6 +51,7 @@ export class PasswordChangeComponent {
             this.rest.updateUserPassword(this.passwordGroup.controls['oldPassword'].value, this.passwordGroup.controls['newPassword1'].value).subscribe(
                 success => {
                     console.log('ok updatePassword()');
+                    console.log(success);
                     this.clearInputs();
                     this.snackBar.open('Password successfully changed', '', {
                         duration: 3000
