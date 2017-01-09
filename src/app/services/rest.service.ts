@@ -32,7 +32,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printResponse('authorizeUser', response);
         // response.subscribe() is done in LoginComponent.login()
         return response;
@@ -48,7 +48,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('createUser', user);
         this.printResponse('createUser', response);
         // no response.subscribe() necessary
@@ -64,15 +64,17 @@ export class RestService {
             'app_password[newPassword][second]': newPassword
         });
         */
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
         let requestBody = 'app_password[currentPassword]=' + oldPassword +
-                        '&app_password[newPassword][first]=' + newPassword +
-                        '&app_password[newPassword][second]=' + newPassword;
-        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true })
+            '&app_password[newPassword][first]=' + newPassword +
+            '&app_password[newPassword][second]=' + newPassword;
+        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true, headers: headers })
             .map((res: Response) => res.json() as User)
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('updateUserPassword', requestBody);
         this.printResponse('updateUserPassword', response);
         // no response.subscribe() necessary
@@ -85,7 +87,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
             this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
@@ -102,14 +104,14 @@ export class RestService {
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-            );
+                );
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + professorId + '/meetings/student', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<MeetingStudent>)
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-            );
+                );
         }
         this.printResponse('readMeetings', response);
         response.subscribe((res) => {
@@ -132,7 +134,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('createMeeting', requestBody);
         this.printResponse('createMeeting', response);
         //TODO push to store...
@@ -152,7 +154,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('updateMeeting', requestBody);
         this.printResponse('updateMeeting', response);
         // no response.subscribe() necessary
@@ -166,7 +168,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printResponse('readSlots', response);
         response.subscribe((slots: Array<Slot>) => {
             this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
@@ -189,7 +191,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('createSlot', requestBody);
         this.printResponse('createSlot', response);
         response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
@@ -212,7 +214,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('updateSlot', requestBody);
         this.printResponse('updateSlot', response);
         // no response.subscribe() necessary
