@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'passwordchange-component',
@@ -10,16 +11,23 @@ import { RestService } from '../../../services/rest.service';
 })
 export class PasswordChangeComponent {
 
+    passwordGroup: FormGroup;
+
     constructor(private store: Store<any>,
-            private rest: RestService) {
+        private rest: RestService,
+        private formBuilder: FormBuilder
+
+    ) {
+        this.passwordGroup = this.formBuilder.group({
+            oldPassword: '',
+            newPassword1: '',
+            newPassword2: ''
+        });
     }
 
     changePassword(oldPw: string = '', newPw1: string = '', newPw2: string = ''): void {
-        console.log('#old=' + oldPw);
-        console.log('#new1=' + newPw1);
-        console.log('#new2=' + newPw2);
-        if (newPw1 === newPw2) {
-            this.rest.updateUserPassword(oldPw, newPw1).subscribe(
+        if (this.passwordGroup.controls['newPassword1'].value === this.passwordGroup.controls['newPassword2'].value) {
+            this.rest.updateUserPassword(this.passwordGroup.controls['oldPassword'].value, this.passwordGroup.controls['newPassword1'].value).subscribe(
                 success => {
                     console.log('ok updatePassword()');
                 },
@@ -28,6 +36,9 @@ export class PasswordChangeComponent {
                 }
             );
         }
+        this.passwordGroup.controls['oldPassword'].value = '';
+        this.passwordGroup.controls['newPassword1'].value = '';
+        this.passwordGroup.controls['newPassword2'].value = '';
     }
 
 }
