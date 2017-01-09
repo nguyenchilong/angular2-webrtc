@@ -30,12 +30,17 @@ export class PasswordChangeComponent {
             this.rest.updateUserPassword(this.passwordGroup.controls['oldPassword'].value, this.passwordGroup.controls['newPassword1'].value).subscribe(
                 success => {
                     console.log('ok updatePassword()');
+                    this.clearInputs();
                 },
                 err => {
                     console.log('err updatePassword()');
+                    this.clearInputs();
                 }
             );
         }
+    }
+
+    clearInputs(): void {
         this.passwordGroup.controls['oldPassword'].value = '';
         this.passwordGroup.controls['newPassword1'].value = '';
         this.passwordGroup.controls['newPassword2'].value = '';
