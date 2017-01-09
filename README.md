@@ -1,3 +1,8 @@
+# Info
+This website is part of a project work and not meant to be used for commercial purposes.
+
+It uses the WebRTC API, Angular2, Node.js, Symfony and Apache to create a virtual consultation hour.
+
 # WinfProjekt2-Webrtc
 
 This project uses Webrtc, RTCPeerconnection and Angular2
