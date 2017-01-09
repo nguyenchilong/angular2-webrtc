@@ -28,7 +28,6 @@ export class PasswordChangeComponent {
                 }
             );
         }
-        this.rest.createSlot(2, 'my first slot', 50, 'my comment of my first slot');
     }
 
 }
