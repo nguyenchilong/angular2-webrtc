@@ -14,6 +14,9 @@
             <p *ngIf="(user | async).title"><b>Titel:</b> {{(user | async).title}}</p>
             <p><b>Vorname:</b> {{(user | async).firstname}}</p>
             <p><b>Nachname:</b> {{(user | async).lastname}}</p>
+            <div *ngFor="let studycourse of (user | async).user.studycourses">
+                <p><b>Studiengang:</b> {{studycourse.name}}</p>
+            </div>
         </md-card-content>
         <md-divider></md-divider>
         <br>
