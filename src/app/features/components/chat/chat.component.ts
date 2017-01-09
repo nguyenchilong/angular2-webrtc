@@ -1,5 +1,7 @@
-import { Component, ViewChild, ChangeDetectionStrategy,
-     ViewEncapsulation, AfterViewChecked } from '@angular/core';
+import {
+    Component, ViewChild, ChangeDetectionStrategy,
+    ViewEncapsulation, AfterViewChecked, ChangeDetectorRef
+} from '@angular/core';
 
 import { PeerconnectionService } from '../../../services/peerconnection.service';
 import { Store } from '@ngrx/store';
@@ -27,10 +29,15 @@ export class ChatComponent implements AfterViewChecked {
     chatform: FormGroup;
 
     constructor(
-            private peerconnectionservice: PeerconnectionService,
-            private store: Store<any>,
-            private formBuilder: FormBuilder) {
+        private peerconnectionservice: PeerconnectionService,
+        private store: Store<any>,
+        private formBuilder: FormBuilder,
+        private changeDetectionRef: ChangeDetectorRef
+    ) {
         this.chat = this.store.select(store => store.chat);
+        this.chat.subscribe(() => {
+            this.changeDetectionRef.markForCheck();
+        });
         this.storecon = this.store.select(store => store.peerconn);
         this.storecon.subscribe((con) => {
             if (con.connectionexists === true && con.callactive === true) {
