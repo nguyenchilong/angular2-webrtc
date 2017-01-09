@@ -1,7 +1,10 @@
+import { User } from './user';
+
 export class UserLogin {
     loggedin: boolean;
-    username: string;
     role: string; // 'prof' or 'stud'
+    username: string;
     firstname?: string;
     lastname?: string;
+    user?: User;
 }

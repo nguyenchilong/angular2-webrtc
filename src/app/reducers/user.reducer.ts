@@ -4,7 +4,8 @@ import { UserLogin } from '../model/user-login';
 let init: UserLogin = {
     loggedin: false,
     username: '',
-    role: ''
+    role: '',
+    user: null
 };
 
 export const userrx: ActionReducer<UserLogin> = (state: UserLogin = init, action: Action) => {

@@ -34,7 +34,6 @@ export class RegisterDialog {
             roles: '',
             pass: '',
             passConfirm: '',
-
         });
         this.regform.get('pass').valueChanges.subscribe(value => {
             if (this.regform.get('pass').value === this.regform.get('passConfirm').value && this.regform.get('pass').value !== '') {

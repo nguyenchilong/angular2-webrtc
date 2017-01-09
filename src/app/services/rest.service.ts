@@ -58,7 +58,7 @@ export class RestService {
     updateUserPassword(oldPassword: string, newPassword: string): Observable<User> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams({
-            'app_password[oldPassword]': oldPassword,
+            'app_password[currentPassword]': oldPassword,
             'app_password[newPassword][first]': newPassword,
             'app_password[newPassword][second]': newPassword
         });
@@ -240,7 +240,8 @@ export class RestService {
     private serializeAsUrlParams(o: Object): string {
         let s = '';
         for (let key in o) {
-            s += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(o[key]);
+            //s += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(o[key]);
+            s += '&' + key + '=' + encodeURIComponent(o[key]); // don't escape key because the server needs it that way
         }
         return s.slice(1);
     };

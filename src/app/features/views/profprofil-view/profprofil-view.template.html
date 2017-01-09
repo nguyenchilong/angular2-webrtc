@@ -5,11 +5,18 @@
 	</button>
         <br>
         <br>
-        <md-card-title>Your profil</md-card-title>
+        <md-card-title>Your profile</md-card-title>
         <md-card-content>
-            <p><b>Name:</b> {{(user | async).firstname}} {{(user | async).lastname}}</p>
-            <p><b>Studiengang:</b> statischer Dummie</p>
-            <p><b>Fakultät:</b> statischer Dummie</p>
+            <p *ngIf="(user | async).role==='stud'"><b>Rolle:</b> Studierender</p>
+            <p *ngIf="(user | async).role==='prof'"><b>Rolle:</b> Professor</p>
+            <p><b>User-ID:</b> {{(user | async).user.id}}</p>
+            <p><b>E-Mail:</b> {{(user | async).username}}</p>
+            <p *ngIf="(user | async).user.title"><b>Titel:</b> {{(user | async).user.title}}</p>
+            <p><b>Vorname:</b> {{(user | async).firstname}}</p>
+            <p><b>Nachname:</b> {{(user | async).lastname}}</p>
+            <div *ngFor="let studycourse of (user | async).user.studycourses">
+                <p><b>Studiengang:</b> {{studycourse.name}}</p>
+            </div>
         </md-card-content>
         <md-divider></md-divider>
         <br>

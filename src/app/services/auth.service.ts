@@ -77,7 +77,8 @@ export class AuthService implements CanActivate {
                     username: localStorage.getItem('user_username'),
                     role: localStorage.getItem('user_role'),
                     firstname: localStorage.getItem('user_firstname'),
-                    lastname: localStorage.getItem('user_lastname')
+                    lastname: localStorage.getItem('user_lastname'),
+                    user: JSON.parse(localStorage.getItem('user'))
                 }
             });
         }
