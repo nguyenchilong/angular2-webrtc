@@ -2,6 +2,8 @@
 	<video-component #Video (toggleAudio)="toggleAudio()" (toggleVideo)="toggleVideo()"></video-component>
 	<br>
 	<div>
+		<span *ngIf="(storecon |async).callactive">Your are in an active call! </span>
+		<span *ngIf="!(storecon |async).callactive">Your are in an inactive call! </span>
 		<button md-raised-button [disabled]="!(storecon |async).callactive" (click)="stopCall()">Stop Call</button>
 	</div>
 </div>
