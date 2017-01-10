@@ -13,5 +13,4 @@
             <p>{{slot.date | transformdate}}</p>
         </md-card-content>
     </md-card>
-    <button md-raised-button *ngIf="(user | async).role === 'prof'" (click)="createMeeting()">Create Meeting</button>
 </div>
