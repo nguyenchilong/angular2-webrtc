@@ -34,7 +34,7 @@
 
 <!-- this is the template for creating a new request -->
 <div *ngIf="!slot">
-    <h4>Create new requeset</h4>
+    <h4>Create new request</h4>
     <br>
     <form [formGroup]="createForm" (ngSubmit)="createRequest()">
         <md-input placeholder="Title" class="meetinginput" [formControl]="createForm.controls['name']" required></md-input>

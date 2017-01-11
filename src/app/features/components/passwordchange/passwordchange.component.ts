@@ -55,6 +55,11 @@ export class PasswordChangeComponent {
                     });
                 }
             );
+        } else {
+            this.snackBar.open('New Passwords do not match', '', {
+                duration: 3000
+            });
+            this.clearInputs();
         }
     }
 
