@@ -21,6 +21,7 @@ export class RegisterDialog {
         roles: [], // 'ROLE_PROF' or 'ROLE_STUDENT'
         firstname: '',
         lastname: '',
+        title: ''
     };
 
     constructor(public dialogRef: MdDialogRef<RegisterDialog>,
@@ -30,6 +31,7 @@ export class RegisterDialog {
         this.regform = this.formBuilder.group({
             firstName: '',
             lastName: '',
+            title: '',
             email: '',
             roles: '',
             pass: '',
@@ -56,6 +58,7 @@ export class RegisterDialog {
         this.user.lastname = this.regform.get('lastName').value;
         this.user.username = this.regform.get('email').value;
         this.user.password = this.regform.get('pass').value;
+        this.user.title = this.regform.get('title').value;
 
         //TODO read selected role-value
         if (this.regform.get('roles').value === 'stud') {

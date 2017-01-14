@@ -17,10 +17,13 @@ import * as moment from 'moment';
 export class RestService {
 
     private static readonly test: boolean = true;
+    private html_form_content_type: Headers;
 
     constructor(
-        private http: Http,
-        private store: Store<any>) {
+            private http: Http,
+            private store: Store<any>) {
+        this.html_form_content_type = new Headers();
+        this.html_form_content_type.append('Content-Type', 'application/x-www-form-urlencoded');
     }
 
     authorizeUser(username: string, password: string): Observable<User> {
@@ -32,7 +35,7 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printResponse('authorizeUser', response);
         // response.subscribe() is done in LoginComponent.login()
         return response;
@@ -43,13 +46,26 @@ export class RestService {
     }
 
     createUser(user: User): Observable<User> {
-        let response: Observable<User> = this.http.post(REST + '/users', user, { withCredentials: true })
+        let requestBodyObject = {
+            'app_user_create[username]': user.username,
+            'app_user_create[firstname]': user.firstname,
+            'app_user_create[lastname]': user.lastname,
+            //'app_user_create[title]': user.title ? user.title : '',
+            'app_user_create[newPassword][first]': user.password,
+            'app_user_create[newPassword][second]': user.password
+        };
+        if (user.title) {
+            requestBodyObject['app_user_create[title]'] = user.title;
+        }
+        let requestBody = this.serializeAsUrlParams(requestBodyObject);
+        let response: Observable<User> = this.http.post(REST + '/users', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .map((res: Response) => res.json() as User)
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
-        this.printRequestBody('createUser', user);
+        );
+        console.log(requestBody);
+        this.printRequestBody('createUser', requestBody);
         this.printResponse('createUser', response);
         // no response.subscribe() necessary
         return response;
@@ -57,24 +73,17 @@ export class RestService {
 
     updateUserPassword(oldPassword: string, newPassword: string): any {
         let userId = localStorage.getItem('user_id');
-        /*
         let requestBody = this.serializeAsUrlParams({
             'app_password[currentPassword]': oldPassword,
             'app_password[newPassword][first]': newPassword,
             'app_password[newPassword][second]': newPassword
         });
-        */
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        let requestBody = 'app_password[currentPassword]=' + oldPassword +
-            '&app_password[newPassword][first]=' + newPassword +
-            '&app_password[newPassword][second]=' + newPassword;
-        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true, headers: headers })
+        let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .map((res: Response) => res.json() as User)
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printRequestBody('updateUserPassword', requestBody);
         this.printResponse('updateUserPassword', response);
         // no response.subscribe() necessary
@@ -87,40 +96,50 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printResponse('readProfessors', response);
         response.subscribe((professors: Array<Professor>) => {
             this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
+
+            /* Immediately (pre-)load all meetings too */
+            for (let prof of professors) {
+                this.readMeetings(prof);
+            }
+
         });
         return response;
     }
 
-    readMeetings(professorId: number): Observable<Array<Meeting>> {
+    readMeetings(professor: Professor): Observable<Array<Meeting>> {
         let userRole = localStorage.getItem('user_role');
         let response: Observable<Array<Meeting>>;
         if (userRole === 'ROLE_PROF') {
-            response = this.http.get(REST + '/users/' + professorId + '/meetings/professor', { withCredentials: true })
+            response = this.http.get(REST + '/users/' + professor.id + '/meetings/professor', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<MeetingProfessor>)
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-                );
+            );
         } else { // if userRole === 'ROLE_STUDENT'
-            response = this.http.get(REST + '/users/' + professorId + '/meetings/student', { withCredentials: true })
+            response = this.http.get(REST + '/users/' + professor.id + '/meetings/student', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<MeetingStudent>)
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-                );
+            );
         }
         this.printResponse('readMeetings', response);
-        response.subscribe((res) => {
-            for (let meeting of res) {
-                for (let slot of meeting.slots) {
-                    slot.professor = meeting.professor;
-                }
+        response.subscribe((meetings: Array<Meeting>) => {
+            this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professor, meetings} });
+            for (let meeting of meetings) {
                 if (meeting.slots) {
-                    this.store.dispatch({ type: 'SET_SLOTS', payload: meeting.slots });
+                    for (let slot of meeting.slots) {
+                        this.store.dispatch({ type: 'SET_SLOT_PROFESSOR', payload: {slot, professor: meeting.professor} });
+                        this.store.dispatch({ type: 'SET_SLOT_MEETING', payload: {slot, meeting} });
+                    }
+                }
+                if (meeting.slots) { // = if ROLE_PROF => MeetingProfessor
+                    this.store.dispatch({ type: 'ADD_SLOTS', payload: meeting.slots });
                 }
             }
         });
@@ -130,11 +149,11 @@ export class RestService {
     createMeeting(meeting: MeetingProfessor): Observable<void> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams(meeting);
-        let response: Observable<void> = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true })
+        let response: Observable<void> = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printRequestBody('createMeeting', requestBody);
         this.printResponse('createMeeting', response);
         //TODO push to store...
@@ -150,11 +169,11 @@ export class RestService {
         let requestBody = this.serializeAsUrlParams({
             'app_meeting_edit[status]': newStatus
         });
-        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true })
+        let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printRequestBody('updateMeeting', requestBody);
         this.printResponse('updateMeeting', response);
         // no response.subscribe() necessary
@@ -168,10 +187,10 @@ export class RestService {
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printResponse('readSlots', response);
         response.subscribe((slots: Array<Slot>) => {
-            this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
+            this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
         });
         return response;
     }
@@ -186,22 +205,18 @@ export class RestService {
             'app_slot_create[duration]': duration,
             'app_slot_create[comment]': comment
         });
-        let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true })
+        let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .map((res: Response) => res.json() as Array<Slot>)
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printRequestBody('createSlot', requestBody);
         this.printResponse('createSlot', response);
         response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
-            this.store.dispatch({ type: 'SET_SLOTS', payload: slots });
+            this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
         });
         return response;
-    }
-
-    updateSlotSimple(meetingId: number, slot: Slot): Observable<void> {
-        return this.updateSlot(meetingId, slot.id, slot.duration, slot.comment, slot.status);
     }
 
     updateSlot(meetingId: number, slotId: number, duration: number, comment: string, status: string): Observable<void> {
@@ -210,11 +225,11 @@ export class RestService {
             'app_slot_edit[comment]': comment,
             'app_slot_edit[status]': status
         });
-        let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true })
+        let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-            );
+        );
         this.printRequestBody('updateSlot', requestBody);
         this.printResponse('updateSlot', response);
         // no response.subscribe() necessary

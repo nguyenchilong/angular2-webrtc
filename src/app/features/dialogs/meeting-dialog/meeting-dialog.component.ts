@@ -8,6 +8,7 @@ import { Professor } from '../../../model/professor';
 import { Slot } from '../../../model/slot';
 import { StudyCourse } from '../../../model/study-course';
 import { UserLogin } from '../../../model/user-login';
+import { RestService } from '../../../services/rest.service';
 import * as _ from 'lodash';
 import { WampService } from '../../../services/wamp.service';
 
@@ -30,11 +31,12 @@ export class MeetingDialog implements OnInit {
     studname: string = '';
 
     constructor(
-        public dialogRef: MdDialogRef<MeetingDialog>,
-        public store: Store<any>,
-        private formBuilder: FormBuilder,
-        private wampservice: WampService,
-        private router: Router) {
+            public dialogRef: MdDialogRef<MeetingDialog>,
+            public store: Store<any>,
+            private formBuilder: FormBuilder,
+            private wampservice: WampService,
+            private router: Router,
+            private rest: RestService) {
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
@@ -141,19 +143,39 @@ export class MeetingDialog implements OnInit {
             this.router.navigate(['receiver']);
             this.dialogRef.close();
         });
-
     }
 
     acceptSlot(): void {
-
+        let oldStatus = this.slot.status;
+        this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'ACCEPTED'} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'ACCEPTED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
+            success => {},
+            err => {
+                this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: oldStatus} });
+            }
+        );
     }
 
     rejectSlot(): void {
-
+        let oldStatus = this.slot.status;
+        this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'DECLINED'} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'DECLINED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
+            success => {},
+            err => {
+                this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: oldStatus} });
+            }
+        );
     }
 
     deleteSlot(): void {
-
+        let oldStatus = this.slot.status;
+        this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'CANCELED'} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'CANCELED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
+            success => {},
+            err => {
+                this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: oldStatus} });
+            }
+        );
     }
 
 }

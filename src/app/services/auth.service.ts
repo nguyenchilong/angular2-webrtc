@@ -52,6 +52,7 @@ export class AuthService implements CanActivate {
         this.store.dispatch({ type: 'LOGIN_USER' });
 
         if (this.isAuthorized()) {
+            let user = JSON.parse(localStorage.getItem('user'));
             let userid = localStorage.getItem('user_id');
             console.log('Started initial loading of data');
             // LOAD DATA FOR STUDENT
@@ -61,10 +62,8 @@ export class AuthService implements CanActivate {
             }
             // LOAD DATA FOR PROF
             if (localStorage.getItem('user_role') === 'ROLE_PROF') {
-
+                this.restservice.readMeetings(user);
             }
-            // LOAD DATA FOR STUDENT AND PROF
-            this.restservice.readMeetings(parseInt(userid));
             // SUBSCRIBE TO CALL (PROF IS READY FOR SLOT)
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
                 this.callservice.subscribeCall();
@@ -78,7 +77,7 @@ export class AuthService implements CanActivate {
                     role: localStorage.getItem('user_role'),
                     firstname: localStorage.getItem('user_firstname'),
                     lastname: localStorage.getItem('user_lastname'),
-                    user: JSON.parse(localStorage.getItem('user'))
+                    user: user
                 }
             });
         }

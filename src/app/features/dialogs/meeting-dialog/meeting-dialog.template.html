@@ -12,10 +12,24 @@
     <md-input placeholder="Start" value="{{slot.date | transformdate}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input placeholder="Duration" value="{{slot.duration}} Minutes" disabled class="meetinginput"></md-input>
+    <div *ngIf="(user | async).role !== 'prof' || slot.status !== 'OPEN'">
+        <md-input placeholder="Duration" value="{{slot.duration}} Minutes" disabled class="meetinginput"></md-input>
+    </div>
+    <div *ngIf="(user | async).role === 'prof' && slot.status === 'OPEN'">
+        <select (change)="setSelectedDuration($event.target.value)">
+            <option *ngFor="let duration of durationOptions" [value]="duration">{{duration}}</option>
+        </select> minutes
+    </div>
     <br>
     <br>
-    <md-textarea value="{{slot.comment}}" placeholder="Additional information" rows="4" class="meetinginput" disabled></md-textarea>
+    <div *ngIf="(user | async).role !== 'prof' || slot.status !== 'OPEN'">
+        <md-textarea value="{{slot.comment}}" placeholder="Additional information" rows="4" class="meetinginput" disabled></md-textarea>
+    </div>
+    <div *ngIf="(user | async).role === 'prof' && slot.status === 'OPEN'">
+        <md-input-container class="meetinginput">
+            <textarea md-input placeholder="Additional information" rows="4" [formControl]="createForm.controls['comment']"></textarea>
+        </md-input-container>
+    </div>
 
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status ==='OPEN'">
