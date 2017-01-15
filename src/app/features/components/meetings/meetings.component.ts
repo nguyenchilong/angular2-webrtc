@@ -21,10 +21,9 @@ export class MeetingsCompontent {
     user: Observable<UserLogin>;
 
     constructor(
-        private store: Store<any>,
-        private dialog: MdDialog,
-        private restservice: RestService
-    ) {
+            private store: Store<any>,
+            private dialog: MdDialog,
+            private restservice: RestService) {
         this.slots = this.store.select(store => store.slots);
         this.user = this.store.select(store => store.user);
     };
@@ -40,9 +39,7 @@ export class MeetingsCompontent {
     openDialog(slot: Slot) {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef = this.dialog.open(MeetingDialog, config);
-
         this.dialogRef.componentInstance.setSlot(slot);
-
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => { });
     }

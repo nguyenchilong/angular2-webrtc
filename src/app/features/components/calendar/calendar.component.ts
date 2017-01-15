@@ -97,10 +97,10 @@ export class CalendarComponent implements OnInit {
 
         // if single event from weekview
         if (e.event) {
-            this.dialogRef.componentInstance.slots = [e.event];
+            this.dialogRef.componentInstance.setSlots([e.event]);
         } else {
             // if events is empty
-            this.dialogRef.componentInstance.slots = e.events;
+            this.dialogRef.componentInstance.setSlots(e.events);
             if (e.events.length !== 0) {
             } else {
                 this.dialogRef.close();

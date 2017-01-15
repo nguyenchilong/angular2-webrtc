@@ -4,10 +4,15 @@ import * as _ from 'lodash';
 
 let init: Array<Slot> = [];
 
-let copy = function(slot: Slot): Slot {
+let copy = function(slots: Array<Slot>, slotId: number): Slot {
     let copy = new Object();
-    for (let key in slot) {
-        copy[key] = slot[key];
+    for (let slot of slots) {
+        if (slot.id === slotId) {
+            for (let key in slot) {
+                copy[key] = slot[key];
+            }
+            break;
+        }
     }
     return <Slot>copy;
 };
@@ -56,25 +61,27 @@ export const slotsrx: ActionReducer<Array<Slot>> = (state: Array<Slot> = init, a
                     action.payload
                 )
             ];
+        case 'ADD_SLOT':
+            return [
+                ...union(
+                    state,
+                    [action.payload]
+                )
+            ];
         case 'SET_SLOT_PROFESSOR':
-            let slot = copy(action.payload.slot);
+            let slot = copy(state, action.payload.slotId); // copy from original slot in state to always work with the newest version of it
             slot.professor = action.payload.professor;
             return replace(state, slot);
         case 'SET_SLOT_MEETING':
-            slot = copy(action.payload.slot);
+            slot = copy(state, action.payload.slotId);
             slot.meeting = action.payload.meeting;
             return replace(state, slot);
         case 'UPDATE_SLOT_STATUS_COMMENT_DURATION':
-            slot = copy(action.payload.slot);
+            slot = copy(state, action.payload.slotId);
             slot.status = action.payload.status;
             slot.comment = action.payload.comment;
             slot.duration = action.payload.duration;
             return replace(state, slot);
-        case 'ADD_SLOT':
-            return [
-                ...state,
-                action.payload
-            ];
         case 'REMOVE_SLOT':
             return [
                 ..._.reject(state, { 'id': action.payload.id })

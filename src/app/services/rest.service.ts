@@ -50,7 +50,6 @@ export class RestService {
             'app_user_create[username]': user.username,
             'app_user_create[firstname]': user.firstname,
             'app_user_create[lastname]': user.lastname,
-            //'app_user_create[title]': user.title ? user.title : '',
             'app_user_create[newPassword][first]': user.password,
             'app_user_create[newPassword][second]': user.password
         };
@@ -120,6 +119,16 @@ export class RestService {
                     return Observable.throw(err.json());
                 }
             );
+            response.subscribe((meetings: Array<MeetingProfessor>) => {
+                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professorId: professor.id, meetings: meetings} }); // not necessary for professor-mode of the GUI but ok...
+                for (let meeting of meetings) {
+                    this.store.dispatch({ type: 'ADD_SLOTS', payload: meeting.slots });
+                    for (let slot of meeting.slots) {
+                        this.store.dispatch({ type: 'SET_SLOT_MEETING', payload: {slotId: slot.id, meeting: meeting} });
+                        this.store.dispatch({ type: 'SET_SLOT_PROFESSOR', payload: {slotId: slot.id, professor: professor} });
+                    }
+                }
+            });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + professor.id + '/meetings/student', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<MeetingStudent>)
@@ -127,22 +136,11 @@ export class RestService {
                     return Observable.throw(err.json());
                 }
             );
+            response.subscribe((meetings: Array<MeetingStudent>) => {
+                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professorId: professor.id, meetings: meetings} });
+            });
         }
         this.printResponse('readMeetings', response);
-        response.subscribe((meetings: Array<Meeting>) => {
-            this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professor, meetings} });
-            for (let meeting of meetings) {
-                if (meeting.slots) {
-                    for (let slot of meeting.slots) {
-                        this.store.dispatch({ type: 'SET_SLOT_PROFESSOR', payload: {slot, professor: meeting.professor} });
-                        this.store.dispatch({ type: 'SET_SLOT_MEETING', payload: {slot, meeting} });
-                    }
-                }
-                if (meeting.slots) { // = if ROLE_PROF => MeetingProfessor
-                    this.store.dispatch({ type: 'ADD_SLOTS', payload: meeting.slots });
-                }
-            }
-        });
         return response;
     }
 
@@ -163,7 +161,6 @@ export class RestService {
     updateMeetingSimple(meetingId: number, meeting: Meeting): Observable<void> {
         return this.updateMeeting(meetingId, meeting.status);
     }
-
     updateMeeting(meetingId: number, newStatus: string): Observable<void> {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams({
@@ -195,10 +192,9 @@ export class RestService {
         return response;
     }
 
-    createSlotSimple(meetingId: number, slot: Slot): Observable<Array<Slot>> {
-        return this.createSlot(meetingId, slot.name, slot.duration, slot.comment);
+    createSlotSimple(slot: Slot): Observable<Array<Slot>> {
+        return this.createSlot(slot.meeting.id, slot.name, slot.duration, slot.comment);
     }
-
     createSlot(meetingId: number, name: string, duration: number, comment: string): Observable<Array<Slot>> {
         let requestBody = this.serializeAsUrlParams({
             'app_slot_create[name]': name,
@@ -215,6 +211,8 @@ export class RestService {
         this.printResponse('createSlot', response);
         response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
             this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
+console.log('added new slots:');
+console.log(slots);
         });
         return response;
     }

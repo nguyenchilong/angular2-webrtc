@@ -9,7 +9,7 @@
     <md-input placeholder="Title" value="{{slot.name}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
-    <md-input placeholder="Start" value="{{slot.date | transformdate}}" class="meetinginput" disabled></md-input>
+    <md-input placeholder="Start" value="{{slot.meeting.startDate | transformdate}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
     <!-- by default: show duration in readonly-mode -->
@@ -48,27 +48,30 @@
     </div>
 </div>
 
-<!-- this is the template for creating a new request -->
+<!-- this is the template for creating a new slot -->
 <div *ngIf="!slot">
-    <h4>Create new request</h4>
+    <h4>Request a new slot</h4>
     <br>
-    <form [formGroup]="createForm" (ngSubmit)="createRequest()">
-        <md-input placeholder="Title" class="meetinginput" [formControl]="createForm.controls['name']" required></md-input>
-        <br>
-        <br>
+    <form [formGroup]="createForm" (ngSubmit)="createSlot()">
+        Professor:<br>
         <select (change)="setSelectedProfessor($event.target.value)">
             <option *ngFor="let professor of professors" [value]="professor.id">{{professor.title}} {{professor.firstname}} {{professor.lastname}}</option>
         </select>
         <br>
         <br>
-        <select (change)="setSelectedStudycourse($event.target.value)">
-            <option *ngFor="let studycourse of selectedProfessor.studycourses" [value]="studycourse.id">{{studycourse.name}}</option>
+        Time:<br>
+        <select (change)="setSelectedMeeting($event.target.value)">
+            <option *ngFor="let meeting of selectedProfessor.meetings" [value]="meeting.id">{{meeting.startDate}} - {{meeting.endDate}}</option>
         </select>
         <br>
         <br>
+        Duration:<br>
         <select (change)="setSelectedDuration($event.target.value)">
             <option *ngFor="let duration of durationOptions" [value]="duration">{{duration}}</option>
         </select> minutes
+        <br>
+        <br>
+        <md-input placeholder="Title" class="meetinginput" [formControl]="createForm.controls['name']" required></md-input>
         <br>
         <br>
         <md-input-container class="meetinginput">
@@ -76,9 +79,6 @@
         </md-input-container>
         <br>
         <br>
-        <input type="date">
-        <br>
-        <br>
-        <button md-raised-button color="warn" type="submit">Create request</button>
+        <button md-raised-button color="warn" type="submit">Send request</button>
     </form>
 </div>

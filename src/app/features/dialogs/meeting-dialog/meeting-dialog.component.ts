@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Professor } from '../../../model/professor';
 import { Slot } from '../../../model/slot';
-import { StudyCourse } from '../../../model/study-course';
+import { Meeting } from '../../../model/meeting';
 import { UserLogin } from '../../../model/user-login';
 import { RestService } from '../../../services/rest.service';
 import * as _ from 'lodash';
@@ -26,7 +26,7 @@ export class MeetingDialog implements OnInit {
     slot: Slot;
     professors: Array<Professor>;
     selectedProfessor: Professor;
-    selectedStudiecourse: StudyCourse;
+    selectedMeeting: Meeting;
     selectedDuration: number;
     profname: string = '';
     studname: string = '';
@@ -48,19 +48,19 @@ export class MeetingDialog implements OnInit {
         }).subscribe((slot: Slot) => {
             this.slot = slot;
         });
-        this.store.select(store => store.professors).subscribe(prof => {
-            this.professors = prof;
+        this.store.select(store => store.professors).subscribe(professors => {
+            this.professors = professors;
         });
         this.store.select(store => store.professors).first().subscribe(first => {
-            // fill selectedProfessor and selectedStudiecourse
+            // fill selectedProfessor and selectedMeeting
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
-                console.log('LOOOOOG');
-                console.log(first);
+//TODO
                 this.selectedProfessor = first[0];
-                this.selectedStudiecourse = this.selectedProfessor.studycourses[0];
+                this.selectedMeeting = this.selectedProfessor.meetings[0];
             } else {
-                // put data from gettet slot
-                this.selectedProfessor = {
+                // put data from getted slot
+//TODO
+                /*this.selectedProfessor = {
                     studycourses: [{
                         id: 1,
                         name: ''
@@ -69,11 +69,13 @@ export class MeetingDialog implements OnInit {
                     roles: [],
                     firstname: '',
                     lastname: ''
-                };
-                this.selectedStudiecourse = {
+                };*/
+                this.selectedProfessor = null;
+                /*this.selectedMeeting = {
                     id: 2,
                     name: ''
-                };
+                };*/
+                this.selectedMeeting = null;
             }
             this.professors = first;
         });
@@ -98,7 +100,7 @@ export class MeetingDialog implements OnInit {
             } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
                 this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname;
             }
-            // -----
+//TODO
         }
     }
 
@@ -106,14 +108,14 @@ export class MeetingDialog implements OnInit {
         this.selectedProfessor = _.find(this.professors, function (item) {
             return item.id === parseInt(selectedprofessorId);
         });
-        if (this.selectedProfessor.studycourses[0]) {
-            this.selectedStudiecourse = this.selectedProfessor.studycourses[0];
+        if (this.selectedProfessor.meetings[0]) {
+            this.selectedMeeting = this.selectedProfessor.meetings[0];
         }
     }
 
-    setSelectedStudycourse(selectedstudiecourseid: string): void {
-        this.selectedStudiecourse = _.find(this.selectedProfessor.studycourses, function (item) {
-            return item.id === parseInt(selectedstudiecourseid);
+    setSelectedMeeting(selectedMeetingId: string): void {
+        this.selectedMeeting = _.find(this.selectedProfessor.meetings, function (item) {
+            return item.id === parseInt(selectedMeetingId);
         });
     }
 
@@ -121,29 +123,70 @@ export class MeetingDialog implements OnInit {
         this.selectedDuration = parseInt(selectedduration);
     }
 
-    createRequest(): void {
-        console.log('Ausgefählte Werte:');
-        console.log(this.selectedProfessor);
-        console.log(this.selectedStudiecourse);
-        console.log(this.createForm.controls['name'].value);
-        console.log(this.createForm.controls['comment'].value);
-        console.log(this.selectedDuration);
-        this.dialogRef.close();
-
-        /*let init: Slot = {
-            title: this.createform.get('name').value,
-            color: {
-                primary: '#ad2121',
-                secondary: '#FAE3E3'
-            },
-            prof: this.selectedProfessor.name,
-            vorlesung: 'Softwaremodellierung',
-            info: this.createform.get('comment').value,
-            duration: 25,
-            time: 'Fr 13:30 01.12.16',
-            status: 'created'
+    createSlot(): void {
+        let slot: Slot = {
+            name: this.createForm.controls['name'].value,
+            duration: this.selectedDuration,
+            comment: this.createForm.controls['comment'].value,
+            status: 'OPEN', // not necessary for creating - gets set by serverside
+            meeting: this.selectedMeeting,
+            student: JSON.parse(localStorage.getItem('user')), // not necessary for creating - logged-in user automatically gets used in RestService
+            professor: this.selectedProfessor // not necessary for creating - redundant as this is also fixed by setting the meeting
         };
-        this.store.dispatch({ type: 'ADD_SLOT', payload: init });*/
+        this.rest.createSlotSimple(slot);
+        this.dialogRef.close();
+    }
+
+    acceptSlot(): void {
+        let oldStatus = this.slot.status;
+        let newStatus = 'ACCEPTED';
+        let oldDuration = this.slot.duration;
+        let newDuration = this.selectedDuration;
+        let oldComment = this.slot.comment;
+        let newComment = this.createForm.controls['comment'].value;
+        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slotId: this.slot.id, status: newStatus, comment: newComment, duration: newDuration} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, newDuration, newComment, newStatus).subscribe(
+            success => {
+                this.dialogRef.close(); // as the dialog-data does not get updated/reloaded after updating on the server was done (we need to reopen this dialog), automatically close this dialog
+            },
+            err => {
+                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slotId: this.slot.id, status: oldStatus, comment: oldComment, duration: oldDuration} });
+            }
+        );
+    }
+
+    declineSlot(): void {
+        let oldStatus = this.slot.status;
+        let newStatus = 'DECLINED';
+        let oldDuration = this.slot.duration;
+        let newDuration = this.selectedDuration;
+        let oldComment = this.slot.comment;
+        let newComment = this.createForm.controls['comment'].value;
+        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slotId: this.slot.id, status: newStatus, comment: newComment, duration: newDuration} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, newDuration, newComment, newStatus).subscribe(
+            success => {
+                this.dialogRef.close(); // as the dialog-data does not get updated/reloaded after updating on the server was done (we need to reopen this dialog), automatically close this dialog
+            },
+            err => {
+                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slotId: this.slot.id, status: oldStatus, comment: oldComment, duration: oldDuration} });
+            }
+        );
+    }
+
+    cancelSlot(): void {
+        let oldStatus = this.slot.status;
+        let newStatus = 'CANCELED';
+        let oldDuration = this.slot.duration;
+        let oldComment = this.slot.comment;
+        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slotId: this.slot.id, status: newStatus, comment: oldComment, duration: oldDuration} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, oldDuration, oldComment, newStatus).subscribe(
+            success => {
+                this.dialogRef.close(); // as the dialog-data does not get updated/reloaded after updating on the server was done (we need to reopen this dialog), automatically close this dialog
+            },
+            err => {
+                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slotId: this.slot.id, status: oldStatus, comment: oldComment, duration: oldDuration} });
+            }
+        );
     }
 
     joinSlot(): void {
@@ -159,52 +202,6 @@ export class MeetingDialog implements OnInit {
             this.router.navigate(['receiver']);
             this.dialogRef.close();
         });
-    }
-
-    acceptSlot(): void {
-        let oldStatus = this.slot.status;
-        let newStatus = 'ACCEPTED';
-        let oldDuration = this.slot.duration;
-        let newDuration = this.selectedDuration;
-        let oldComment = this.slot.comment;
-        let newComment = this.createForm.controls['comment'].value;
-        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: newStatus, comment: newComment, duration: newDuration} });
-        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, newDuration, newComment, newStatus).subscribe(
-            success => {},
-            err => {
-                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: oldStatus, comment: oldComment, duration: oldDuration} });
-            }
-        );
-    }
-
-    declineSlot(): void {
-        let oldStatus = this.slot.status;
-        let newStatus = 'DECLINED';
-        let oldDuration = this.slot.duration;
-        let newDuration = this.selectedDuration;
-        let oldComment = this.slot.comment;
-        let newComment = this.createForm.controls['comment'].value;
-        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: newStatus, comment: newComment, duration: newDuration} });
-        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, newDuration, newComment, newStatus).subscribe(
-            success => {},
-            err => {
-                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: oldStatus, comment: oldComment, duration: oldDuration} });
-            }
-        );
-    }
-
-    cancelSlot(): void {
-        let oldStatus = this.slot.status;
-        let newStatus = 'CANCELED';
-        let oldDuration = this.slot.duration;
-        let oldComment = this.slot.comment;
-        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: newStatus, comment: oldComment, duration: oldDuration} });
-        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, oldDuration, oldComment, newStatus).subscribe(
-            success => {},
-            err => {
-                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: oldStatus, comment: oldComment, duration: oldDuration} });
-            }
-        );
     }
 
 }

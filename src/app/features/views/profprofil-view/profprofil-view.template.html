@@ -9,7 +9,7 @@
         <md-card-content>
             <p *ngIf="(user | async).role==='stud'"><b>Rolle:</b> Student</p>
             <p *ngIf="(user | async).role==='prof'"><b>Rolle:</b> Professor</p>
-            <p><b>User-ID:</b> {{(user | async).id}}</p>
+            <p><b>User-ID:</b> {{(user | async).user.id}}</p>
             <p><b>E-Mail:</b> {{(user | async).username}}</p>
             <p *ngIf="(user | async).title"><b>Titel:</b> {{(user | async).title}}</p>
             <p><b>Firstname:</b> {{(user | async).firstname}}</p>

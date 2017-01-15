@@ -13,16 +13,20 @@ import { Store } from '@ngrx/store';
 })
 export class MeetingsDialog {
 
-    slots: Array<Slot>; // set externally by CalendarComponent.openDialog()
+    slots: Array<Slot>;
     dialogRef2: MdDialogRef<MeetingDialog>;
     user: Observable<UserLogin>;
 
-
     constructor(
-        public dialogRef: MdDialogRef<MeetingsDialog>,
-        public dialog: MdDialog,
-        private store: Store<any>) {
+            public dialogRef: MdDialogRef<MeetingsDialog>,
+            public dialog: MdDialog,
+            private store: Store<any>) {
         this.user = this.store.select(store => store.user);
+    }
+
+    setSlots(slots: Array<Slot>) { // set externally by CalendarComponent.openDialog()
+        this.slots = slots;
+        console.log('show slots dialog: ' + JSON.stringify(slots, null, 2));
     }
 
     openDialog(slot: Slot) {

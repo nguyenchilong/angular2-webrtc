@@ -3,10 +3,15 @@ import { Professor } from '../model/professor';
 
 let init: Array<Professor> = [];
 
-let copy = function(prof: Professor): Professor {
+let copy = function(professors: Array<Professor>, professorId: number): Professor {
     let copy = new Object();
-    for (let key in prof) {
-        copy[key] = prof[key];
+    for (let professor of professors) {
+        if (professor.id === professorId) {
+            for (let key in professor) {
+                copy[key] = professor[key];
+            }
+            break;
+        }
     }
     return <Professor>copy;
 };
@@ -31,7 +36,7 @@ export const professorsrx: ActionReducer<Array<Professor>> = (state: Array<Profe
                 ...action.payload
             ];
         case 'SET_PROFESSOR_MEETINGS':
-            let prof = copy(action.payload.professor);
+            let prof = copy(state, action.payload.professorId);
             prof.meetings = action.payload.meetings;
             return replace(state, prof);
         case 'CLEAR':
