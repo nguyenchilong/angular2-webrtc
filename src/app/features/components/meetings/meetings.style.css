@@ -25,7 +25,7 @@ md-card {
 .CANCELED {
   background-color: #f44336; }
 
-.OPEN {
+.DECLINED {
   background-color: grey; }
 
 .ACCEPTED {

@@ -28,7 +28,7 @@ export class MeetingsDialog {
     openDialog(slot: Slot) {
         let config: MdDialogConfig = { disableClose: false };
         this.dialogRef2 = this.dialog.open(MeetingDialog, config);
-        this.dialogRef2.componentInstance.slot = slot;
+        this.dialogRef2.componentInstance.setSlot(slot);
         // when closing dialog
         this.dialogRef2.afterClosed().subscribe(result => { });
         this.dialogRef.close();

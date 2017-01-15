@@ -1,6 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { Professor } from '../model/professor';
-import * as _ from 'lodash';
 
 let init: Array<Professor> = [];
 
@@ -10,7 +9,20 @@ let copy = function(prof: Professor): Professor {
         copy[key] = prof[key];
     }
     return <Professor>copy;
-}
+};
+let replace = function(profs: Array<Professor>, prof: Professor): Array<Professor> {
+    let result: Array<Professor> = new Array<Professor>();
+    let i = 0;
+    for (let p of profs) {
+        if (p.id === prof.id) {
+            result[i] = prof;
+        } else {
+            result[i] = p;
+        }
+        i++;
+    }
+    return result;
+};
 
 export const professorsrx: ActionReducer<Array<Professor>> = (state: Array<Professor> = init, action: Action) => {
     switch (action.type) {
@@ -21,10 +33,7 @@ export const professorsrx: ActionReducer<Array<Professor>> = (state: Array<Profe
         case 'SET_PROFESSOR_MEETINGS':
             let prof = copy(action.payload.professor);
             prof.meetings = action.payload.meetings;
-            return [
-                ..._.reject(state, {'id': prof.id}),
-                prof
-            ];
+            return replace(state, prof);
         case 'CLEAR':
             return init;
         default:

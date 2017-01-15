@@ -22,7 +22,8 @@ export class MeetingDialog implements OnInit {
     createForm: FormGroup;
     durationOptions: number[] = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
     user: Observable<UserLogin>;
-    slot: Slot; // set externally by MeetingsComponent.openDialog() and MeetingsDialog.openDialog()
+    slotId: number;
+    slot: Slot;
     professors: Array<Professor>;
     selectedProfessor: Professor;
     selectedStudiecourse: StudyCourse;
@@ -37,6 +38,16 @@ export class MeetingDialog implements OnInit {
             private wampservice: WampService,
             private router: Router,
             private rest: RestService) {
+        this.store.select((slots: Array<Slot>) => {
+            for (let slot of slots) {
+                if (slot.id === this.slotId) {
+                    return slot;
+                }
+            }
+            return null;
+        }).subscribe((slot: Slot) => {
+            this.slot = slot;
+        });
         this.store.select(store => store.professors).subscribe(prof => {
             this.professors = prof;
         });
@@ -74,11 +85,16 @@ export class MeetingDialog implements OnInit {
         this.user = this.store.select(store => store.user);
     }
 
+    public setSlot(slot: Slot) { // used externally by MeetingsComponent.openDialog() and MeetingsDialog.openDialog()
+        this.slotId = slot.id;
+        this.slot = slot;
+    }
+
     ngOnInit() {
         // change this:
         if (this.slot) {
             if (localStorage.getItem('user_role') === 'ROLE_STUDENT') {
-                this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname
+                this.profname = this.slot.meeting.professor.title + ' ' + this.slot.meeting.professor.firstname + ' ' + this.slot.meeting.professor.lastname;
             } else if (localStorage.getItem('user_role') === 'ROLE_PROF') {
                 this.studname = this.slot.student.firstname + ' ' + this.slot.student.lastname;
             }
@@ -156,7 +172,7 @@ export class MeetingDialog implements OnInit {
         );
     }
 
-    rejectSlot(): void {
+    declineSlot(): void {
         let oldStatus = this.slot.status;
         this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'DECLINED'} });
         this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'DECLINED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
@@ -167,7 +183,7 @@ export class MeetingDialog implements OnInit {
         );
     }
 
-    deleteSlot(): void {
+    cancelSlot(): void {
         let oldStatus = this.slot.status;
         this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'CANCELED'} });
         this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'CANCELED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)

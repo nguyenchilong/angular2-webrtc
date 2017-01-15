@@ -32,16 +32,14 @@
     </div>
 
     <div *ngIf="((user | async).role === 'prof')">
-        <div *ngIf="slot.status ==='OPEN'">
+        <div *ngIf="slot.status === 'OPEN'">
             <br>
-            <button md-raised-button (click)="acceptSlot()">Accept</button>
-            <button md-raised-button (click)="rejectSlot()" color="warn">Reject</button>
+            <button md-raised-button (click)="declineSlot()" color="warn">Decline</button>
+            <button md-raised-button (click)="acceptSlot()" color="primary">Accept</button>
         </div>
-        <div *ngIf="slot.status ==='ACCEPTED'">
-            <button md-raised-button (click)="joinSlot()" color="warn">Join Meeting</button>
-        </div>
-        <div *ngIf="slot.status ==='CANCELED'">
-            <button md-raised-button (click)="deleteSlot()" color="warn">Delete</button>
+        <div *ngIf="slot.status === 'ACCEPTED'">
+            <button md-raised-button (click)="cancelSlot()" color="warn">Cancel</button>
+            <button md-raised-button (click)="joinSlot()" color="primary">Join now</button>
         </div>
     </div>
 </div>
