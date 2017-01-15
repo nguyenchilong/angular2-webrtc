@@ -163,33 +163,46 @@ export class MeetingDialog implements OnInit {
 
     acceptSlot(): void {
         let oldStatus = this.slot.status;
-        this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'ACCEPTED'} });
-        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'ACCEPTED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
+        let newStatus = 'ACCEPTED';
+        let oldDuration = this.slot.duration;
+        let newDuration = this.selectedDuration;
+        let oldComment = this.slot.comment;
+        let newComment = this.createForm.controls['comment'].value;
+        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: newStatus, comment: newComment, duration: newDuration} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, newDuration, newComment, newStatus).subscribe(
             success => {},
             err => {
-                this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: oldStatus} });
+                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: oldStatus, comment: oldComment, duration: oldDuration} });
             }
         );
     }
 
     declineSlot(): void {
         let oldStatus = this.slot.status;
-        this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'DECLINED'} });
-        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'DECLINED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
+        let newStatus = 'DECLINED';
+        let oldDuration = this.slot.duration;
+        let newDuration = this.selectedDuration;
+        let oldComment = this.slot.comment;
+        let newComment = this.createForm.controls['comment'].value;
+        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: newStatus, comment: newComment, duration: newDuration} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, newDuration, newComment, newStatus).subscribe(
             success => {},
             err => {
-                this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: oldStatus} });
+                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: oldStatus, comment: oldComment, duration: oldDuration} });
             }
         );
     }
 
     cancelSlot(): void {
         let oldStatus = this.slot.status;
-        this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: 'CANCELED'} });
-        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, this.slot.duration, this.slot.comment, 'CANCELED').subscribe( // attention: this.slot.status is outdated (unmodified/old readonly copy from store)
+        let newStatus = 'CANCELED';
+        let oldDuration = this.slot.duration;
+        let oldComment = this.slot.comment;
+        this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: newStatus, comment: oldComment, duration: oldDuration} });
+        this.rest.updateSlot(this.slot.meeting.id, this.slot.id, oldDuration, oldComment, newStatus).subscribe(
             success => {},
             err => {
-                this.store.dispatch({ type: 'SET_SLOT_STATUS', payload: {slot: this.slot, status: oldStatus} });
+                this.store.dispatch({ type: 'UPDATE_SLOT_STATUS_COMMENT_DURATION', payload: {slot: this.slot, status: oldStatus, comment: oldComment, duration: oldDuration} });
             }
         );
     }

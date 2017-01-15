@@ -12,9 +12,11 @@
     <md-input placeholder="Start" value="{{slot.date | transformdate}}" class="meetinginput" disabled></md-input>
     <br>
     <br>
+    <!-- by default: show duration in readonly-mode -->
     <div *ngIf="(user | async).role !== 'prof' || slot.status !== 'OPEN'">
         <md-input placeholder="Duration" value="{{slot.duration}} Minutes" disabled class="meetinginput"></md-input>
     </div>
+    <!-- ...but if prof views a slot in opened-state: show duration in edit-mode -->
     <div *ngIf="(user | async).role === 'prof' && slot.status === 'OPEN'">
         <select (change)="setSelectedDuration($event.target.value)">
             <option *ngFor="let duration of durationOptions" [value]="duration">{{duration}}</option>
@@ -22,15 +24,17 @@
     </div>
     <br>
     <br>
+    <!-- by default: show comment in readonly-mode -->
     <div *ngIf="(user | async).role !== 'prof' || slot.status !== 'OPEN'">
         <md-textarea value="{{slot.comment}}" placeholder="Additional information" rows="4" class="meetinginput" disabled></md-textarea>
     </div>
+    <!-- ...but if prof views a slot in opened-state: show comment in edit-mode -->
     <div *ngIf="(user | async).role === 'prof' && slot.status === 'OPEN'">
         <md-input-container class="meetinginput">
             <textarea md-input placeholder="Additional information" rows="4" [formControl]="createForm.controls['comment']"></textarea>
         </md-input-container>
     </div>
-
+    <!-- if prof views a slot: show decline-/accept-/cancel-/join-slot depending on the slot's state -->
     <div *ngIf="((user | async).role === 'prof')">
         <div *ngIf="slot.status === 'OPEN'">
             <br>

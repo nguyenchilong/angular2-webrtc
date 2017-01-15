@@ -64,9 +64,11 @@ export const slotsrx: ActionReducer<Array<Slot>> = (state: Array<Slot> = init, a
             slot = copy(action.payload.slot);
             slot.meeting = action.payload.meeting;
             return replace(state, slot);
-        case 'SET_SLOT_STATUS':
+        case 'UPDATE_SLOT_STATUS_COMMENT_DURATION':
             slot = copy(action.payload.slot);
             slot.status = action.payload.status;
+            slot.comment = action.payload.comment;
+            slot.duration = action.payload.duration;
             return replace(state, slot);
         case 'ADD_SLOT':
             return [
@@ -78,10 +80,11 @@ export const slotsrx: ActionReducer<Array<Slot>> = (state: Array<Slot> = init, a
                 ..._.reject(state, { 'id': action.payload.id })
             ];
         case 'REPLACE_SLOT':
-            return [
+            return replace(state, action.payload);
+            /*return [
                 ..._.reject(state, { 'id': action.payload.id }),
                 action.payload
-            ];
+            ];*/
         case 'CLEAR':
             return init;
         default:
