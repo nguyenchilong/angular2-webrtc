@@ -115,7 +115,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         );
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                setTimeout(() => { this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { }); }, 200);
+                setTimeout(() => { this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { }); }, 2000);
                 console.log('send icecandidate');
             }
         };
@@ -131,7 +131,7 @@ export class WebrtcCaller implements OnInit, OnDestroy {
         this.startVideostream();
         this.peerconnectionservice.createConnection();
         this.peerid = this.callservice.usertocallid;
-        setTimeout(() => { this.startCall(); }, 1000);
+        setTimeout(() => { this.startCall(); }, 2000);
     }
 
     ngOnDestroy() {

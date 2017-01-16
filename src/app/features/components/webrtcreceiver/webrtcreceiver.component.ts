@@ -105,7 +105,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         // push ice candidates from config to server
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                setTimeout(() => { this.wamp.sendWithSocket(this.call.usertocallid, evt.candidate).subscribe(data => { }); }, 200);
+                setTimeout(() => { this.wamp.sendWithSocket(this.call.usertocallid, evt.candidate).subscribe(data => { }); }, 2000);
                 console.log('send icecandidate');
             }
         };
