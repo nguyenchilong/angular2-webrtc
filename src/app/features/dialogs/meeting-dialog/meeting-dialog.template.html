@@ -61,7 +61,9 @@
         <br>
         Time:<br>
         <select (change)="setSelectedMeeting($event.target.value)">
-            <option *ngFor="let meeting of selectedProfessor.meetings" *ngIf="(meeting | async).status === 'OPEN'" [value]="meeting.id">{{meeting.startDate | transformdate}} - {{meeting.endDate | transformdate}}</option>
+            <template *ngFor="let meeting of selectedProfessor.meetings">
+            <option *ngIf="meeting.status === 'OPEN'" [value]="meeting.id">{{meeting.startDate | transformdate}} - {{meeting.endDate | transformdate}}</option>
+            </template>
         </select>
         <br>
         <br>
