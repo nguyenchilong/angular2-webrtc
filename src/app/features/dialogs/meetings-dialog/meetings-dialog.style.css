@@ -18,7 +18,11 @@ md-card:hover {
   background-color: #f44336; }
 
 .DECLINED {
-  background-color: grey; }
+  background-color: darkorange }
 
 .ACCEPTED {
   background-color: #5cb85c; }
+
+.OPEN {
+  background-color: grey;
+}
