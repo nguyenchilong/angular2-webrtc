@@ -126,7 +126,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.startVideostream();
-        this.storeconStream = this.storecon.first().subscribe((con) => {
+        this.storeconStream = this.storecon.subscribe((con) => {
             if (con.connectionexists === true && con.callactive === false) {
                 this.configurateRTCPeerConnection();
                 console.log('config receiver');
