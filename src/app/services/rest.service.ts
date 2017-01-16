@@ -151,11 +151,8 @@ export class RestService {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams(meeting);
         let response: Observable<void> = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true, headers: this.html_form_content_type })
-            .map((res) => {
-                res.json();
-            })
             .do((res) => {
-                this.printResponse('createMeeting', res);
+                this.printResponse('createMeeting', res.json());
             })
             .catch((err: any) => {
                 return Observable.throw(err.json());
@@ -175,11 +172,8 @@ export class RestService {
             'app_meeting_edit[status]': newStatus
         });
         let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true, headers: this.html_form_content_type })
-            .map((res) => {
-                res.json();
-            })
             .do((res) => {
-                this.printResponse('updateMeeting', res);
+                this.printResponse('updateMeeting', res.json());
             })
             .catch((err: any) => {
                 return Observable.throw(err.json());
@@ -237,11 +231,8 @@ export class RestService {
             'app_slot_edit[status]': status
         });
         let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true, headers: this.html_form_content_type })
-            .map((res) => {
-                res.json();
-            })
             .do((res) => {
-                this.printResponse('updateSlot', res);
+                this.printResponse('updateSlot', res.json());
             })
             .catch((err: any) => {
                 return Observable.throw(err.json());
