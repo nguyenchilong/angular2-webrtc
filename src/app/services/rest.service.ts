@@ -120,14 +120,14 @@ export class RestService {
                 }
             );
             response.subscribe((meetings: Array<MeetingProfessor>) => {
-                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professorId: professor.id, meetings: meetings} }); // not necessary for professor-mode of the GUI but ok...
+                meetings = this.copy(meetings);
                 for (let meeting of meetings) {
-                    this.store.dispatch({ type: 'ADD_SLOTS', payload: meeting.slots });
                     for (let slot of meeting.slots) {
-                        this.store.dispatch({ type: 'SET_SLOT_MEETING', payload: {slotId: slot.id, meeting: meeting} });
-                        this.store.dispatch({ type: 'SET_SLOT_PROFESSOR', payload: {slotId: slot.id, professor: professor} });
+                        slot.meeting = meeting;
                     }
+                    this.store.dispatch({ type: 'ADD_SLOTS', payload: meeting.slots });
                 }
+                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professorId: professor.id, meetings: meetings} }); // not necessary for professor-mode of the GUI but ok...
             });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + professor.id + '/meetings/student', { withCredentials: true })
@@ -202,7 +202,7 @@ export class RestService {
             'app_slot_create[comment]': comment
         });
         let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true, headers: this.html_form_content_type })
-            .map((res: Response) => res.json() as Array<Slot>)
+            .map((res: Response) => res.json().slots as Array<Slot>)
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
@@ -211,8 +211,6 @@ export class RestService {
         this.printResponse('createSlot', response);
         response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
             this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
-console.log('added new slots:');
-console.log(slots);
         });
         return response;
     }
@@ -269,5 +267,17 @@ console.log(slots);
     public transformDate(value: string): string {
         return moment(value).locale('de').format('DD.MM.Y HH:mm');
     }
+
+    private copy(o: any): any {
+        let copy = typeof o === typeof [] ? new Array() : new Object();
+        for (let key in o) {
+            if (typeof o[key] === typeof Object) {
+                copy[key] = this.copy(o[key]);
+            } else {
+                copy[key] = o[key];
+            }
+        }
+        return copy;
+    };
 
 }

@@ -26,7 +26,6 @@ export class MeetingsDialog {
 
     setSlots(slots: Array<Slot>) { // set externally by CalendarComponent.openDialog()
         this.slots = slots;
-        console.log('show slots dialog: ' + JSON.stringify(slots, null, 2));
     }
 
     openDialog(slot: Slot) {

@@ -130,11 +130,13 @@ export class MeetingDialog implements OnInit {
             comment: this.createForm.controls['comment'].value,
             status: 'OPEN', // not necessary for creating - gets set by serverside
             meeting: this.selectedMeeting,
-            student: JSON.parse(localStorage.getItem('user')), // not necessary for creating - logged-in user automatically gets used in RestService
-            professor: this.selectedProfessor // not necessary for creating - redundant as this is also fixed by setting the meeting
+            student: JSON.parse(localStorage.getItem('user')) // not necessary for creating - logged-in user automatically gets used in RestService
         };
-        this.rest.createSlotSimple(slot);
-        this.dialogRef.close();
+        this.rest.createSlotSimple(slot).subscribe(
+            success => {
+                this.dialogRef.close();
+            }
+        );
     }
 
     acceptSlot(): void {

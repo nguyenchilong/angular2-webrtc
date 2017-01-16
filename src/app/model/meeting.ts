@@ -1,4 +1,3 @@
-import { Slot } from './slot';
 import { Professor } from './professor';
 
 export class Meeting {
@@ -6,4 +5,5 @@ export class Meeting {
     startDate: string;
     endDate: string;
     status: string; // 'active' or 'canceled'
+    professor?: Professor;
 }

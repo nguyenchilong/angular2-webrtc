@@ -17,7 +17,7 @@ md-card:hover {
 .CANCELED {
   background-color: #f44336; }
 
-.OPEN {
+.DECLINED {
   background-color: grey; }
 
 .ACCEPTED {

@@ -131,7 +131,7 @@ export class CalendarComponent implements OnInit {
                 status: slot.status,
                 date: slot.date,
                 name: slot.name,
-                professor: slot.professor,
+                professor: slot.meeting.professor,
                 student: slot.student,
                 meeting: slot.meeting,
                 id: slot.id

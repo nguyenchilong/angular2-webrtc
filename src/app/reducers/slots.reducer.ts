@@ -55,29 +55,17 @@ let union = function(slots1: Array<Slot>, slots2: Array<Slot>): Array<Slot> {
 export const slotsrx: ActionReducer<Array<Slot>> = (state: Array<Slot> = init, action: Action) => {
     switch (action.type) {
         case 'ADD_SLOTS':
-            return [
-                ...union(
-                    state,
-                    action.payload
-                )
-            ];
+            return union(
+                state,
+                action.payload
+            );
         case 'ADD_SLOT':
-            return [
-                ...union(
-                    state,
-                    [action.payload]
-                )
-            ];
-        case 'SET_SLOT_PROFESSOR':
-            let slot = copy(state, action.payload.slotId); // copy from original slot in state to always work with the newest version of it
-            slot.professor = action.payload.professor;
-            return replace(state, slot);
-        case 'SET_SLOT_MEETING':
-            slot = copy(state, action.payload.slotId);
-            slot.meeting = action.payload.meeting;
-            return replace(state, slot);
+            return union(
+                state,
+                [action.payload]
+            );
         case 'UPDATE_SLOT_STATUS_COMMENT_DURATION':
-            slot = copy(state, action.payload.slotId);
+            let slot = copy(state, action.payload.slotId); // copy from original slot in state-array to always work with the newest version of it
             slot.status = action.payload.status;
             slot.comment = action.payload.comment;
             slot.duration = action.payload.duration;
