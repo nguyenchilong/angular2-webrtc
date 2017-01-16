@@ -85,11 +85,23 @@ export class CalendarComponent implements OnInit {
         this.updateViewDay(this.viewDate);
     }
 
+    incrementWeek(): void {
+        this.viewDate = moment(this.viewDate).add(7, 'days').toDate();
+        this.updateViewDay(this.viewDate);
+    }
+
+    decrementWeek(): void {
+        this.viewDate = moment(this.viewDate).subtract(7, 'days').toDate();
+        this.updateViewDay(this.viewDate);
+    }
+
     updateViewDay(date): void {
         this.viewMonth = date.toLocaleString('en-us', { month: 'long' });
         this.viewDay = moment(date).get('date').toString();
         this.viewYear = moment(date).get('year').toString();
     }
+
+
 
     openDialog(e) {
         let config: MdDialogConfig = { disableClose: false };
