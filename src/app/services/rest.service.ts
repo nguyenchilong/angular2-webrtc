@@ -20,8 +20,8 @@ export class RestService {
     private html_form_content_type: Headers;
 
     constructor(
-            private http: Http,
-            private store: Store<any>) {
+        private http: Http,
+        private store: Store<any>) {
         this.html_form_content_type = new Headers();
         this.html_form_content_type.append('Content-Type', 'application/x-www-form-urlencoded');
     }
@@ -32,12 +32,13 @@ export class RestService {
         headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
         let response: Observable<User> = this.http.post(REST + '/tokens', {}, { headers: headers, withCredentials: true })
             .map((res: Response) => res.json().user as User)
+            .do((res) => {
+                this.printResponse('authorizeUser', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
-        this.printResponse('authorizeUser', response);
-        // response.subscribe() is done in LoginComponent.login()
+            );
         return response;
     }
 
@@ -59,14 +60,15 @@ export class RestService {
         let requestBody = this.serializeAsUrlParams(requestBodyObject);
         let response: Observable<User> = this.http.post(REST + '/users', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .map((res: Response) => res.json() as User)
+            .do((res) => {
+                this.printResponse('createUser', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         console.log(requestBody);
         this.printRequestBody('createUser', requestBody);
-        this.printResponse('createUser', response);
-        // no response.subscribe() necessary
         return response;
     }
 
@@ -79,12 +81,14 @@ export class RestService {
         });
         let response: Observable<User> = this.http.patch(REST + '/users/' + userId + '/change-password', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .map((res: Response) => res.json() as User)
+            .do((res) => {
+                this.printResponse('updateUserPassword', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('updateUserPassword', requestBody);
-        this.printResponse('updateUserPassword', response);
         // no response.subscribe() necessary
         return response;
     }
@@ -92,20 +96,19 @@ export class RestService {
     readProfessors(): Observable<Array<Professor>> {
         let response: Observable<Array<Professor>> = this.http.get(REST + '/users/professors', { withCredentials: true })
             .map((res: Response) => res.json() as Array<Professor>)
+            .do((res) => {
+                this.printResponse('readProfessors', res);
+                this.store.dispatch({ type: 'SET_PROFESSORS', payload: res });
+
+                /* Immediately (pre-)load all meetings too */
+                for (let prof of res) {
+                    this.readMeetings(prof);
+                }
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
-        this.printResponse('readProfessors', response);
-        response.subscribe((professors: Array<Professor>) => {
-            this.store.dispatch({ type: 'SET_PROFESSORS', payload: professors });
-
-            /* Immediately (pre-)load all meetings too */
-            for (let prof of professors) {
-                this.readMeetings(prof);
-            }
-
-        });
+            );
         return response;
     }
 
@@ -118,7 +121,7 @@ export class RestService {
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-            );
+                );
             response.subscribe((meetings: Array<MeetingProfessor>) => {
                 meetings = this.copy(meetings);
                 for (let meeting of meetings) {
@@ -127,20 +130,20 @@ export class RestService {
                     }
                     this.store.dispatch({ type: 'ADD_SLOTS', payload: meeting.slots });
                 }
-                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professorId: professor.id, meetings: meetings} }); // not necessary for professor-mode of the GUI but ok...
+                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: { professorId: professor.id, meetings: meetings } }); // not necessary for professor-mode of the GUI but ok...
             });
         } else { // if userRole === 'ROLE_STUDENT'
             response = this.http.get(REST + '/users/' + professor.id + '/meetings/student', { withCredentials: true })
                 .map((res: Response) => res.json() as Array<MeetingStudent>)
+                .do((res) => {
+                    this.printResponse('readMeetings', res);
+                    this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: { professorId: professor.id, meetings: res } });
+                })
                 .catch((err: any) => {
                     return Observable.throw(err.json());
                 }
-            );
-            response.subscribe((meetings: Array<MeetingStudent>) => {
-                this.store.dispatch({ type: 'SET_PROFESSOR_MEETINGS', payload: {professorId: professor.id, meetings: meetings} });
-            });
+                );
         }
-        this.printResponse('readMeetings', response);
         return response;
     }
 
@@ -148,12 +151,17 @@ export class RestService {
         let userId = localStorage.getItem('user_id');
         let requestBody = this.serializeAsUrlParams(meeting);
         let response: Observable<void> = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true, headers: this.html_form_content_type })
+            .map((res) => {
+                res.json();
+            })
+            .do((res) => {
+                this.printResponse('createMeeting', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('createMeeting', requestBody);
-        this.printResponse('createMeeting', response);
         //TODO push to store...
         return response;
     }
@@ -167,12 +175,17 @@ export class RestService {
             'app_meeting_edit[status]': newStatus
         });
         let response: Observable<void> = this.http.put(REST + '/users/' + userId + '/meetings/' + meetingId, requestBody, { withCredentials: true, headers: this.html_form_content_type })
+            .map((res) => {
+                res.json();
+            })
+            .do((res) => {
+                this.printResponse('updateMeeting', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('updateMeeting', requestBody);
-        this.printResponse('updateMeeting', response);
         // no response.subscribe() necessary
         return response;
     }
@@ -181,11 +194,13 @@ export class RestService {
         let userId = localStorage.getItem('user_id');
         let response: Observable<Array<Slot>> = this.http.get(REST + '/users/' + userId + '/slots', { withCredentials: true })
             .map((res: Response) => res.json() as Array<Slot>)
+            .do((res) => {
+                this.printResponse('readSlots', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
-        this.printResponse('readSlots', response);
+            );
         response.subscribe((slots: Array<Slot>) => {
             this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
         });
@@ -205,14 +220,13 @@ export class RestService {
             .map((res: Response) => res.json().slots as Array<Slot>)
             .do((res) => {
                 this.store.dispatch({ type: 'ADD_SLOTS', payload: res });
-                console.log('createSlot() was successful');
+                this.printResponse('createSlot', res);
             })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('createSlot', requestBody);
-        this.printResponse('createSlot', response);
         return response;
     }
 
@@ -223,37 +237,26 @@ export class RestService {
             'app_slot_edit[status]': status
         });
         let response: Observable<void> = this.http.patch(REST + '/meetings/' + meetingId + '/slots/' + slotId, requestBody, { withCredentials: true, headers: this.html_form_content_type })
+            .map((res) => {
+                res.json();
+            })
+            .do((res) => {
+                this.printResponse('updateSlot', res);
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
-        );
+            );
         this.printRequestBody('updateSlot', requestBody);
-        this.printResponse('updateSlot', response);
-        // no response.subscribe() necessary
         return response;
     }
 
     private printRequestBody(functionName: string, requestBody: any) {
-        if (RestService.test) {
-            console.log(functionName + '() <= ' + JSON.stringify(requestBody, null, 2));
-        }
+        console.log(functionName + '() <= ' + requestBody);
     };
 
-    private printResponse(functionName: string, response: Observable<any>) {
-        if (RestService.test) {
-            response.subscribe(
-                data => {
-                    console.log(functionName + '() => ' + JSON.stringify(data, null, 2));
-                },
-                err => {
-                    if (typeof err === typeof Error) {
-                        console.log(functionName + '() error => ' + JSON.stringify(err, null, 2));
-                    } else {
-                        console.log(functionName + '() unknown error => ' + JSON.stringify(err, null, 2));
-                    }
-                }
-            );
-        }
+    private printResponse(functionName: string, response: any) {
+        console.log(functionName + '() => ' + response);
     };
 
     private serializeAsUrlParams(o: Object): string {
