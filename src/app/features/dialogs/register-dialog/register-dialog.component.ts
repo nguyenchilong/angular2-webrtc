@@ -29,13 +29,13 @@ export class RegisterDialog {
             private formBuilder: FormBuilder,
             private RestService: RestService) {
         this.regform = this.formBuilder.group({
-            firstName: '',
-            lastName: '',
-            title: '',
-            email: '',
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            title: ['', Validators.required],
+            email: ['', Validators.required],
             roles: '',
-            pass: '',
-            passConfirm: '',
+            pass: ['', Validators.required],
+            passConfirm: ['', Validators.required]
         });
         this.regform.get('pass').valueChanges.subscribe(value => {
             if (this.regform.get('pass').value === this.regform.get('passConfirm').value && this.regform.get('pass').value !== '') {
