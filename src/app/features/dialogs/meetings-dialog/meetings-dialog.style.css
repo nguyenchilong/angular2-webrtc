@@ -18,11 +18,14 @@ md-card:hover {
   background-color: #f44336; }
 
 .DECLINED {
-  background-color: darkorange }
+  background-color: darkorange; }
 
 .ACCEPTED {
   background-color: #5cb85c; }
 
 .OPEN {
-  background-color: grey;
-}
+  background-color: grey; }
+
+.meetings {
+  width: 300px;
+  padding: 7px 7px 7px 7px; }

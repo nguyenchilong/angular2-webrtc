@@ -1,4 +1,4 @@
-<md-card *ngFor="let slot of slots" (click)="openDialog(slot)">
+<md-card class="meetings" *ngFor="let slot of slots" (click)="openDialog(slot)">
     <div class="type" [ngClass]="slot.status"></div>
     <md-card-subtitle>{{slot.name}}</md-card-subtitle>
     <md-card-title *ngIf="(user | async).role === 'stud'">{{slot.meeting.professor.title}} {{slot.meeting.professor.lastname}}</md-card-title>
