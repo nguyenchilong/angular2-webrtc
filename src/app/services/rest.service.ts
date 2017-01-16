@@ -203,6 +203,10 @@ export class RestService {
         });
         let response: Observable<Array<Slot>> = this.http.post(REST + '/meetings/' + meetingId + '/slots', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .map((res: Response) => res.json().slots as Array<Slot>)
+            .do((res) => {
+                this.store.dispatch({ type: 'ADD_SLOTS', payload: res });
+                console.log('createSlot() was successful');
+            })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
