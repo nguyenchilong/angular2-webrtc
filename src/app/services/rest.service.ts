@@ -209,9 +209,11 @@ export class RestService {
         );
         this.printRequestBody('createSlot', requestBody);
         this.printResponse('createSlot', response);
+        /*
         response.subscribe((slots: Array<Slot>) => { // returns ALL slots, also the old/existing ones
             this.store.dispatch({ type: 'ADD_SLOTS', payload: slots });
         });
+        */
         return response;
     }
 
