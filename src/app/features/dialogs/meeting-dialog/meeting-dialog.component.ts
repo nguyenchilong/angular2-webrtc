@@ -11,6 +11,7 @@ import { UserLogin } from '../../../model/user-login';
 import { RestService } from '../../../services/rest.service';
 import * as _ from 'lodash';
 import { WampService } from '../../../services/wamp.service';
+import { CallService } from '../../../services/call.service';
 
 @Component({
     selector: 'meeting-dialog',
@@ -37,7 +38,8 @@ export class MeetingDialog implements OnInit {
             private formBuilder: FormBuilder,
             private wampservice: WampService,
             private router: Router,
-            private rest: RestService) {
+            private rest: RestService,
+            private call: CallService) {
         this.store.select((slots: Array<Slot>) => {
             for (let slot of slots) {
                 if (slot.id === this.slotId) {
@@ -204,6 +206,7 @@ export class MeetingDialog implements OnInit {
             this.router.navigate(['receiver']);
             this.dialogRef.close();
         });
+        this.call.usertocallid = this.slot.student.id;
     }
 
 }
