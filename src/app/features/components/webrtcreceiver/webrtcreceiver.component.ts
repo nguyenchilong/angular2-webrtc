@@ -3,7 +3,7 @@ import { PeerconnectionService } from '../../../services/peerconnection.service'
 import { WampService } from '../../../services/wamp.service';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, Subscription } from 'rxjs';
-
+import { CallService } from '../../../services/call.service';
 @Component({
     selector: 'webrtcreceiver-component',
     styleUrls: ['./webrtcreceiver.style.css'],
@@ -22,12 +22,12 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
     offerStream: Subscription = new Subscription();
     icecandidateStream: Subscription = new Subscription();
     storeconStream: Subscription = new Subscription();
-    peerid: number = 2;
 
     constructor(
         private peerconnectionservice: PeerconnectionService,
         private store: Store<any>,
-        private wamp: WampService) {
+        private wamp: WampService,
+        private call: CallService) {
         this.storecon = this.store.select(store => store.peerconn);
     }
 
@@ -84,7 +84,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
                             new RTCSessionDescription(answer),
                             () => {
                                 // push answer to signalingchannel
-                                this.wamp.sendWithSocket(this.peerid, answer).subscribe(data => { });
+                                this.wamp.sendWithSocket(this.call.usertocallid, answer).subscribe(data => { });
                                 console.log('send answer');
                                 this.store.dispatch({ type: 'CALL_STARTED' });
                             },
@@ -105,7 +105,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         // push ice candidates from config to server
         this.peerconnectionservice.pc.onicecandidate = (evt) => {
             if (evt.candidate) {
-                setTimeout(() => { this.wamp.sendWithSocket(this.peerid, evt.candidate).subscribe(data => { }); }, 200);
+                setTimeout(() => { this.wamp.sendWithSocket(this.call.usertocallid, evt.candidate).subscribe(data => { }); }, 200);
                 console.log('send icecandidate');
             }
         };
@@ -141,6 +141,7 @@ export class WebrtcReceiver implements OnInit, OnDestroy {
         this.icecandidateStream.unsubscribe();
         this.offerStream.unsubscribe();
         this.peerconnectionservice.closeConnection();
+        this.call.usertocallid = 0;
     }
 
     stopCall(): void {
