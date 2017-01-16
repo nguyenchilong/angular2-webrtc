@@ -31,7 +31,7 @@
     <!-- ...but if prof views a slot in opened-state: show comment in edit-mode -->
     <div *ngIf="(user | async).role === 'prof' && slot.status === 'OPEN'">
         <md-input-container class="meetinginput">
-            <textarea md-input placeholder="Additional information" rows="4" [formControl]="createForm.controls['comment']" [value]="{{slot.comment}}"></textarea>
+            <textarea md-input placeholder="Additional information" rows="4" [formControl]="createForm.controls['comment']" value="{{slot.comment}}"></textarea>
         </md-input-container>
     </div>
     <!-- if prof views a slot: show decline-/accept-/cancel-/join-slot depending on the slot's state -->
