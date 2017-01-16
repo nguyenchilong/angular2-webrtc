@@ -61,7 +61,7 @@
         <br>
         Time:<br>
         <select (change)="setSelectedMeeting($event.target.value)">
-            <option *ngFor="let meeting of selectedProfessor.meetings" [value]="meeting.id">{{meeting.startDate | transformdate} }} - {{meeting.endDate | transformdate}}} {{meeting.status}}</option>
+            <option *ngFor="let meeting of selectedProfessor.meetings" [value]="meeting.id">{{meeting.startDate | transformdate} }} - {{meeting.endDate | transformdate}} {{meeting.status}}</option>
         </select>
         <br>
         <br>
