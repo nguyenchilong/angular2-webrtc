@@ -46,7 +46,7 @@
             <mwl-calendar-week-view
                   *ngSwitchCase="'week'"
                   [viewDate]="viewDate"
-                  [events]="slots"
+                  [events]="slots | async"
                   (eventClicked)="dayClicked($event)">
             </mwl-calendar-week-view>
                   <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="slots | async" (eventClicked)="dayClicked($event)">
