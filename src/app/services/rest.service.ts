@@ -45,7 +45,7 @@ export class RestService {
         this.http.delete(REST + '/tokens', { withCredentials: true }).subscribe(data => { });
     }
 
-    createUser(user: User): Observable<User> {
+    createUser(user: User): Observable<any> {
         let requestBodyObject = {
             'app_user_create[username]': user.username,
             'app_user_create[firstname]': user.firstname,

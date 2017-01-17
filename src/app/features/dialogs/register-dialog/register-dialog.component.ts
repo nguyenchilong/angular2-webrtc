@@ -75,11 +75,20 @@ export class RegisterDialog {
 
         if (this.user.firstname !== '' && this.user.lastname !== '' && this.user.username !== '' && this.user.roles !== [] && this.user.password !== '') {
             this.RestService.createUser(this.user).subscribe(data => {
-                console.log(data);
-                this.dialogRef.close();
-                this.snackBar.open('User successfully created', '', {
-                    duration: 3000
-                });
+                if (data.success) {
+                    this.dialogRef.close();
+                    this.snackBar.open('User successfully created', '', {
+                        duration: 3000
+                    });
+                } else {
+                    let errorString = '';
+                    for (let i of data.form_error.errors) {
+                        errorString += i + '\n';
+                    }
+                    this.snackbarref = this.snackBar.open('Something went wrong:\n' + errorString, 'Ok');
+
+                }
+
             });
         }
     }
