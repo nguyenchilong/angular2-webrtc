@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material/dialog';
 import { MeetingDialog } from '../../dialogs/meeting-dialog/meeting-dialog.component';
+import { CreateMeetingComponent } from '../../dialogs/createMeeting-dialog/createMeeting-dialog.component';
 import { Slot } from '../../../model/slot';
 import { UserLogin } from '../../../model/user-login';
 
@@ -16,6 +17,7 @@ export class MeetingsCompontent {
     slots: Observable<Array<Slot>>;
     dialogRef: MdDialogRef<MeetingDialog>;
     user: Observable<UserLogin>;
+    createMeetingDialogRef: MdDialogRef<CreateMeetingComponent>;
 
     constructor(
             private store: Store<any>,
@@ -38,6 +40,11 @@ export class MeetingsCompontent {
         this.dialogRef.componentInstance.setSlot(slot);
         // when closing dialog
         this.dialogRef.afterClosed().subscribe(result => { });
+    }
+
+    createMeeting(): void {
+        let config: MdDialogConfig = { disableClose: false };
+        this.createMeetingDialogRef = this.dialog.open(CreateMeetingComponent, config);
     }
 
 }

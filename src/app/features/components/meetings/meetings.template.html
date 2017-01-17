@@ -4,6 +4,11 @@
             <md-icon class="md-24">add</md-icon>
         </button>
     </div>
+    <div class="createbutton" *ngIf="(user | async).role === 'prof'">
+        <button md-mini-fab color="warn" (click)="createMeeting()">
+            <md-icon class="md-24">add</md-icon>
+        </button>
+    </div>
     <md-card *ngFor="let slot of (slots | async)" (click)="openDialog(slot)">
         <div class="type" [ngClass]="slot.status"></div>
         <md-card-subtitle>{{slot.name}}</md-card-subtitle>
