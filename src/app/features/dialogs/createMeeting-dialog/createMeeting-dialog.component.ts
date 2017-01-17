@@ -32,8 +32,8 @@ export class CreateMeetingComponent {
         let start = tagtrans + ' ' + this.meetingGroup.controls['start'].value;
         let end = tagtrans + ' ' + this.meetingGroup.controls['end'].value;
 
-        this.rest.createMeeting(start, end);
-
-        this.dialogRef.close();
+        this.rest.createMeeting(start, end).subscribe((date) => {
+            this.dialogRef.close();
+        });
     }
 }
