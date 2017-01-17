@@ -3,6 +3,7 @@ import { MeetingsDialog } from './features/dialogs/meetings-dialog/meetings-dial
 import { MeetingDialog } from './features/dialogs/meeting-dialog/meeting-dialog.component';
 import { ForgotDialog } from './features/dialogs/forgot-dialog/forgot-dialog.component';
 import { RegisterDialog } from './features/dialogs/register-dialog/register-dialog.component'
+import { CreateMeetingComponent } from './features/dialogs/createMeeting-dialog/createMeeting-dialog.component';
 
 
 export const APP_ENTRY = [
@@ -10,6 +11,7 @@ export const APP_ENTRY = [
     MeetingsDialog,
     MeetingDialog,
     ForgotDialog,
-    RegisterDialog
+    RegisterDialog,
+    CreateMeetingComponent
 ];
 
