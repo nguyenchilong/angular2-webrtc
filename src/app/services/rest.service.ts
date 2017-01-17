@@ -144,10 +144,10 @@ export class RestService {
         return response;
     }
 
-    createMeeting(start: string, end: string): Observable<void> {
+    createMeeting(start: string, end: string): Observable<any> {
         let userId = localStorage.getItem('user_id');
         let requestBody = 'app_meeting_create[startDate]=' + start + '&app_meeting_create[endDate]=' + end;
-        let response: Observable<void> = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true, headers: this.html_form_content_type })
+        let response = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true, headers: this.html_form_content_type })
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
