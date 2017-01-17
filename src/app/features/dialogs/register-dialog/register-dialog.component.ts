@@ -81,12 +81,7 @@ export class RegisterDialog {
                         duration: 3000
                     });
                 } else {
-                    let errorString = '';
-                    for (let i of data.form_error.errors) {
-                        errorString += i + '\n';
-                    }
-                    this.snackbarref = this.snackBar.open('Something went wrong:\n' + errorString, 'Ok');
-
+                    this.snackbarref = this.snackBar.open('Something went wrong:\n' + data.form_error.errors[0], 'Ok');
                 }
 
             });
