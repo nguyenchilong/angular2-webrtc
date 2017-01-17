@@ -2,21 +2,21 @@
 <br>
 <h4 class="meetinginput">Who are you?</h4>
 <form class="meetinginput" [formGroup]="regform" (ngSubmit)="register()">
+  <md-input class="meetinginput" placeholder="Username" name="email" [formControl]="regform.controls['email']" required></md-input>
+  <br>
   <md-input class="meetinginput" placeholder="First name" name="firstName" [formControl]="regform.controls['firstName']" required></md-input>
   <br>
   <md-input class="meetinginput" placeholder="Last name" name="lastName" [formControl]="regform.controls['lastName']" required></md-input>
   <br>
-  <md-input class="meetinginput" [hidden]="true" placeholder="Title" name="title" [formControl]="regform.controls['title']" required></md-input>
+  <md-input class="meetinginput" [hidden]="true" placeholder="Title" name="title" [formControl]="regform.controls['title']"
+    required></md-input>
   <br>
-  <md-input class="meetinginput" placeholder="Username" name="email" [formControl]="regform.controls['email']" required></md-input>
-  <br>
+
   <span [hidden]="true">Role</span>
   <select [hidden]="true" placeholder="Role" name="role">
     <option value="stud">Student</option>
     <option value="prof">Professor</option>
   </select>
-  <br>
-  <br>
   <h4>Password:</h4>
   <md-input class="meetinginput" placeholder="New password" type="password" [formControl]="regform.controls['pass']"></md-input>
   <br>

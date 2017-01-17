@@ -34,7 +34,7 @@ export class RegisterDialog {
         this.regform = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            title: ['', Validators.required],
+            title: '',
             email: ['', Validators.required],
             roles: '',
             pass: ['', Validators.required],
