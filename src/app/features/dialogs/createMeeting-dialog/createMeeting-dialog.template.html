@@ -1,6 +1,5 @@
-<h1>Create Meeting</h1>
-<button md-raised-button (click)="create()">Create Meeting</button>
-
+<h1>Create new Meeting</h1>
+<br>
 <form [formGroup]="meetingGroup">
     <md-input-container>
         <input md-input type="date" [formControl]="meetingGroup.controls['day']">
@@ -12,3 +11,5 @@
         <input md-input type="time" [formControl]="meetingGroup.controls['end']">
     </md-input-container>
 </form>
+<br>
+<button md-raised-button color="warn" (click)="create()">Create Meeting</button>
