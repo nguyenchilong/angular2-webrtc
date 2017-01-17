@@ -7,10 +7,9 @@
     <md-input-container>
         <input md-input placeholder="Start" type="time" [formControl]="meetingGroup.controls['start']">
     </md-input-container>
-    to
     <md-input-container>
         <input md-input placeholder="End" type="time" [formControl]="meetingGroup.controls['end']">
     </md-input-container>
+    <br>
+    <button md-raised-button color="warn" (click)="create()" [disabled]="!meetingGroup.valid">Create Meeting</button>
 </form>
-<br>
-<button md-raised-button color="warn" (click)="create()">Create Meeting</button>
