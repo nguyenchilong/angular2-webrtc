@@ -15,7 +15,7 @@ export class CreateMeetingComponent {
     constructor(
         public dialogRef: MdDialogRef<CreateMeetingComponent>,
         public formBuilder: FormBuilder) {
-            let today = moment(new Date()).format('YYYY-MM-DD');
+        let today = moment(new Date()).format('YYYY' + '-' + 'MM' + '-' + 'DD');
         this.meetingGroup = this.formBuilder.group({
             day: today,
             start: '10:00',
