@@ -2,13 +2,14 @@
 <br>
 <form [formGroup]="meetingGroup">
     <md-input-container>
-        <input md-input type="date" [formControl]="meetingGroup.controls['day']">
+        <input md-input type="date" placeholder="Date" [formControl]="meetingGroup.controls['day']">
     </md-input-container>
     <md-input-container>
-        <input md-input type="time" [formControl]="meetingGroup.controls['start']">
+        <input md-input placeholder="Start" type="time" [formControl]="meetingGroup.controls['start']">
     </md-input-container>
+    to
     <md-input-container>
-        <input md-input type="time" [formControl]="meetingGroup.controls['end']">
+        <input md-input placeholder="End" type="time" [formControl]="meetingGroup.controls['end']">
     </md-input-container>
 </form>
 <br>
