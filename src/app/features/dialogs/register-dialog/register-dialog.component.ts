@@ -34,9 +34,7 @@ export class RegisterDialog {
         this.regform = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            title: '',
             email: ['', Validators.required],
-            roles: '',
             pass: ['', Validators.required],
             passConfirm: ['', Validators.required]
         });
@@ -61,17 +59,8 @@ export class RegisterDialog {
         this.user.lastname = this.regform.get('lastName').value;
         this.user.username = this.regform.get('email').value;
         this.user.password = this.regform.get('pass').value;
-        this.user.title = this.regform.get('title').value;
-
-        //TODO read selected role-value
-        if (this.regform.get('roles').value === 'stud') {
-            this.user.roles = ['ROLE_STUDENT'];
-        } else if (this.regform.get('roles').value === 'prof') {
-            this.user.roles = ['ROLE_PROF'];
-        } else {
-            //TODO
-            this.user.roles = ['ROLE_STUDENT'];
-        }
+        this.user.title = '';
+        this.user.roles = ['ROLE_STUDENT'];
 
         if (this.user.firstname !== '' && this.user.lastname !== '' && this.user.username !== '' && this.user.roles !== [] && this.user.password !== '') {
             this.RestService.createUser(this.user).subscribe(data => {
