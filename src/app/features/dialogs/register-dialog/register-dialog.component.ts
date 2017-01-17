@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
 import { RestService } from '../../../services/rest.service';
 import { User } from '../../../model/user';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 
 @Component({
     selector: 'register-dialog',
@@ -14,6 +15,7 @@ import { User } from '../../../model/user';
 export class RegisterDialog {
     regform: FormGroup;
     isvalid: boolean = false;
+    snackbarref: MdSnackBarRef<any>;
 
     user: User = {
         username: '',
@@ -25,9 +27,10 @@ export class RegisterDialog {
     };
 
     constructor(public dialogRef: MdDialogRef<RegisterDialog>,
-            private store: Store<any>,
-            private formBuilder: FormBuilder,
-            private RestService: RestService) {
+        private store: Store<any>,
+        private formBuilder: FormBuilder,
+        private RestService: RestService,
+        private snackBar: MdSnackBar) {
         this.regform = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
@@ -73,6 +76,10 @@ export class RegisterDialog {
         if (this.user.firstname !== '' && this.user.lastname !== '' && this.user.username !== '' && this.user.roles !== [] && this.user.password !== '') {
             this.RestService.createUser(this.user).subscribe(data => {
                 console.log(data);
+                this.dialogRef.close();
+                this.snackBar.open('User successfully created', '', {
+                    duration: 3000
+                });
             });
         }
     }
