@@ -27,7 +27,7 @@ export class CreateMeetingComponent {
 
     create(): void {
         let tag = this.meetingGroup.controls['day'].value;
-        let tagtrans = tag.slice(8, 9) + '.' + tag.slice(5, 6) + '.' + tag.slice(0, 3);
+        let tagtrans = tag.slice(8, 10) + '.' + tag.slice(5, 7) + '.' + tag.slice(0, 4);
 
         let start = tagtrans + ' ' + this.meetingGroup.controls['start'].value;
         let end = tagtrans + ' ' + this.meetingGroup.controls['end'].value;
