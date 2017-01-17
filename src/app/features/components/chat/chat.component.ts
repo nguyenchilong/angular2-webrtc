@@ -36,7 +36,7 @@ export class ChatComponent implements AfterViewChecked {
     ) {
         this.chat = this.store.select(store => store.chat);
         this.chat.subscribe(() => {
-            this.changeDetectionRef.detectChanges();
+            this.changeDetectionRef.markForCheck();
         });
         this.storecon = this.store.select(store => store.peerconn);
         this.storecon.subscribe((con) => {
