@@ -6,12 +6,12 @@
   <br>
   <md-input class="meetinginput" placeholder="Last name" name="lastName" [formControl]="regform.controls['lastName']" required></md-input>
   <br>
-  <md-input class="meetinginput" placeholder="Title" name="title" [formControl]="regform.controls['title']" required></md-input>
+  <md-input class="meetinginput" [hidden]="true" placeholder="Title" name="title" [formControl]="regform.controls['title']" required></md-input>
   <br>
-  <md-input class="meetinginput" placeholder="E-Mail" name="email" [formControl]="regform.controls['email']" required></md-input>
+  <md-input class="meetinginput" placeholder="Username" name="email" [formControl]="regform.controls['email']" required></md-input>
   <br>
-  <span>Role</span>
-  <select placeholder="Role" name="role">
+  <span [hidden]="true">Role</span>
+  <select [hidden]="true" placeholder="Role" name="role">
     <option value="stud">Student</option>
     <option value="prof">Professor</option>
   </select>
