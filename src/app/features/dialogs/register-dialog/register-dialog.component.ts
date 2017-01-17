@@ -71,7 +71,9 @@ export class RegisterDialog {
         }
 
         if (this.user.firstname !== '' && this.user.lastname !== '' && this.user.username !== '' && this.user.roles !== [] && this.user.password !== '') {
-            this.RestService.createUser(this.user);
+            this.RestService.createUser(this.user).subscribe(data => {
+                console.log(data);
+            });
         }
     }
 
