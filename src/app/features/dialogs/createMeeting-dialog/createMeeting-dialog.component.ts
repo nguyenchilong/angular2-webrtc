@@ -3,6 +3,7 @@ import { MdDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { RestService } from '../../../services/rest.service';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 
 @Component({
     selector: 'createMeeting-component',
@@ -13,11 +14,13 @@ export class CreateMeetingComponent {
 
     meetingGroup: FormGroup;
     today = moment(new Date()).format('YYYY' + '-' + 'MM' + '-' + 'DD');
+    snackbarref: MdSnackBarRef<any>;
 
     constructor(
         public dialogRef: MdDialogRef<CreateMeetingComponent>,
         public formBuilder: FormBuilder,
-        public rest: RestService) {
+        public rest: RestService,
+        private snackBar: MdSnackBar, ) {
         this.meetingGroup = this.formBuilder.group({
             day: [this.today, Validators.required],
             start: ['10:00', Validators.required],
@@ -33,6 +36,9 @@ export class CreateMeetingComponent {
         let end = tagtrans + ' ' + this.meetingGroup.controls['end'].value;
 
         this.rest.createMeeting(start, end).subscribe((date) => {
+            this.snackBar.open('Meeting successfully created', '', {
+                            duration: 3000
+                        });
             this.dialogRef.close();
         });
     }

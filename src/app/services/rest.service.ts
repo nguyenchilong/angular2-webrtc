@@ -148,6 +148,7 @@ export class RestService {
         let userId = localStorage.getItem('user_id');
         let requestBody = 'app_meeting_create[startDate]=' + start + '&app_meeting_create[endDate]=' + end;
         let response = this.http.post(REST + '/users/' + userId + '/meetings', requestBody, { withCredentials: true, headers: this.html_form_content_type })
+            .map((res) => res.json())
             .catch((err: any) => {
                 return Observable.throw(err.json());
             }
