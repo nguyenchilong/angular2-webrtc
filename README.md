@@ -27,6 +27,13 @@ This project is part of a project work at the university of applied sciences Stu
   node prodserver.js
   ```
   
+## Usage
+
+- Go to: https://chor-am-killesberg.de:8000
+- You can use one of the following users:
+  - role: PROFESSOR, username: hoess, password: Test1234
+  - role: STUDENT, username: ottooffline, password: Test1234
+  
 ## Code responsibilities + functionality
 
 ```
@@ -113,13 +120,6 @@ angular2-webrtc/
  ├──tslint.json                                  * typescript lint config
  └──webpack.config.js                            * webpack main configuration file
 ```
-
-## Usage
-
-- Go to: https://chor-am-killesberg.de:8000
-- You can use one of the following users:
-  - role: PROFESSOR, username: hoess, password: Test1234
-  - role: STUDENT, username: ottooffline, password: Test1234
   
 ## Contributing
 
