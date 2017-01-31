@@ -96,9 +96,7 @@ npm install
 npm start
 ```
 
-## Basic scripts
+## License
 
-Use npm run server:hmr` for dev server. Default dev port is `3000`.
-
-Use `npm run build` for production build.
+MIT License.
 
