@@ -46,17 +46,17 @@ angular2-webrtc/ │
  │                   └──register-dialog/         * Florian/Alina/Valentin
  │             │ 
  │             └──views/                         * views of our webapp e.g. /login
- │                   ├──createMeeting-dialog/    * Florian/Marvin
+ │                   ├──calendar-view/           * Florian
  │                   │ 
- │                   ├──forgot-dialog/           * Alina/Valentin/Marvin
+ │                   ├──caller-view/             * Florian
  │                   │ 
- │                   ├──info-dialog/             * Marvin
+ │                   ├──login-view/              * Florian/Marvin
  │                   │ 
- │                   ├──meeting-dialog/          * Florian/Daniel
+ │                   ├──profprofil-view/         * Florian/Marvin
  │                   │ 
- │                   ├──meetings-dialog/         * Florian
+ │                   ├──receiver-view/           * Florian
  │                   │ 
- │                   └──register-dialog/         * Florian/Alina/Valentin
+ │                   └──studprofil-view/         * Florian/Marvin
  │       │ 
  │       ├──model/                               * Daniel || contains all Typescript models
  │       │ 
