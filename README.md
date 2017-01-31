@@ -24,7 +24,7 @@ angular2-webrtc/ │
  │                   │ 
  │                   ├──nav/                     * Florian
  │                   │ 
- │                   ├──passwordchange/          * Valentin/Alina/Marvin
+ │                   ├──passwordchange/          * Marvin/Florian
  │                   │ 
  │                   ├──video/                   * Florian
  │                   │ 
@@ -35,7 +35,7 @@ angular2-webrtc/ │
  │             ├──dialogs/                       * our dialogs using @angular/material`s MDDialog
  │                   ├──createMeeting-dialog/    * Florian/Marvin
  │                   │ 
- │                   ├──forgot-dialog/           * Alina/Valentin/Marvin
+ │                   ├──forgot-dialog/           * Alina/Valentin
  │                   │ 
  │                   ├──info-dialog/             * Marvin
  │                   │ 
