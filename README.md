@@ -1,7 +1,7 @@
 # WinfProjekt2-WebRTC
 This project is part of a project work at the university of applied sciences Stuttgart and is not meant to be used for commercial purposes.
 
-# Code responsibilities + functionality
+## Code responsibilities + functionality
 
 ```
 angular2-webrtc/
