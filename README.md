@@ -9,7 +9,7 @@ This project uses Webrtc, RTCPeerconnection and Angular2
 
 Install:
 ```
-angular2-webrtc/ │
+angular2-webrtc/
  ├──src/                                         * our source files that will be compiled to javascript
  │   ├──app/                                     * our app source code
  │       ├──features/                            * all angular components
