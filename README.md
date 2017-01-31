@@ -1,13 +1,8 @@
-# Info
-This website is part of a project work and not meant to be used for commercial purposes.
+# WinfProjekt2-WebRTC
+This project is part of a project work at the university of applied sciences Stuttgart and is not meant to be used for commercial purposes.
 
-It uses the WebRTC API, Angular2, Node.js, Symfony and Apache to create a virtual consultation hour.
+# Code responsibilities + functionality
 
-# WinfProjekt2-Webrtc
-
-This project uses Webrtc, RTCPeerconnection and Angular2
-
-Install:
 ```
 angular2-webrtc/
  ├──src/                                         * our source files that will be compiled to javascript
