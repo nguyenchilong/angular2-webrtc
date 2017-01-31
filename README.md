@@ -128,7 +128,6 @@ Florian, Marvin, Daniel, Alina und Valentin
 ## Credits
 
 - Starter project for angular2 and webpack https://github.com/qdouble/angular-webpack2-starter
-
 - Node.js https://github.com/nodejs/node
 - Angular 2 https://github.com/angular/angular
 - Angular 2 Material Components https://github.com/angular/material2
