@@ -9,9 +9,88 @@ This project uses Webrtc, RTCPeerconnection and Angular2
 
 Install:
 ```
-git
-node
-visual studio code
+angular2-webrtc/ │
+ ├──src/                                         * our source files that will be compiled to javascript
+ │   ├──app/                                     * our app source code
+ │       ├──features/                            * all angular components
+ │             ├──components/                    * these components are used in views and have no route
+ │                   ├──calendar/                * Florian/Marvin
+ │                   │ 
+ │                   ├──chat/                    * Florian
+ │                   │ 
+ │                   ├──login/                   * Valentin/Alina/Florian
+ │                   │ 
+ │                   ├──meetings/                * Florian/Daniel
+ │                   │ 
+ │                   ├──nav/                     * Florian
+ │                   │ 
+ │                   ├──passwordchange/          * Valentin/Alina/Marvin
+ │                   │ 
+ │                   ├──video/                   * Florian
+ │                   │ 
+ │                   ├──webrtccaller/            * Florian
+ │                   │ 
+ │                   └──webrtcreceiver/          * Florian
+ │             │ 
+ │             ├──dialogs/                       * our dialogs using @angular/material`s MDDialog
+ │                   ├──createMeeting-dialog/    * Florian/Marvin
+ │                   │ 
+ │                   ├──forgot-dialog/           * Alina/Valentin/Marvin
+ │                   │ 
+ │                   ├──info-dialog/             * Marvin
+ │                   │ 
+ │                   ├──meeting-dialog/          * Florian/Daniel
+ │                   │ 
+ │                   ├──meetings-dialog/         * Florian
+ │                   │ 
+ │                   └──register-dialog/         * Florian/Alina/Valentin
+ │             │ 
+ │             └──views/                         * views of our webapp e.g. /login
+ │                   ├──createMeeting-dialog/    * Florian/Marvin
+ │                   │ 
+ │                   ├──forgot-dialog/           * Alina/Valentin/Marvin
+ │                   │ 
+ │                   ├──info-dialog/             * Marvin
+ │                   │ 
+ │                   ├──meeting-dialog/          * Florian/Daniel
+ │                   │ 
+ │                   ├──meetings-dialog/         * Florian
+ │                   │ 
+ │                   └──register-dialog/         * Florian/Alina/Valentin
+ │       │ 
+ │       ├──model/                               * Daniel || contains all Typescript models
+ │       │ 
+ │       ├──reducers/                            * contains all reducers for ngrx/store
+ │             ├──index.ts                       * Florian || bundles all reducers
+ │             ├──chat.reducer.ts                * Florian
+ │             ├──peerconn.reducer.ts            * Florian
+ │             ├──professors.reducer.ts          * Daniel/Florian
+ │             ├──slots.reducer.ts               * Daniel/Florian
+ │             └──user.reducer.ts                * Florian
+ │       │ 
+ │       └──services/                            * our services we use with angular
+ │             ├──auth.service.ts                * Florian
+ │             ├──call.service.ts                * Florian
+ │             ├──peerconnection.service.ts      * Florian
+ │             ├──profguard.service.ts           * Florian
+ │             ├──rest.service.ts                * Daniel/Florian
+ │             ├──studguard.service.ts           * Florian
+ │             └──wamp.service.ts                * Florian
+ │   │ 
+ │   ├──assets/                                  * static assets are served here
+ │       ├──icon/                                * our list of icons from www.favicon-generator.org
+ │   │ 
+ |   ├──index.html                               * Index.html: where we generate our index page
+ │   │ 
+ |   ├──main.browser.aot.ts                      * our entry file for our browser environment
+ │   │
+ |   └──polyfills.browser.aot.ts                 * our polyfills file
+ │
+ ├──constants.js                                 * constants e.g. ports and more webpack-configuration
+ ├──package.json                                 * what npm uses to manage it's dependencies
+ ├──prodserver.js                                * node.js server config
+ ├──tslint.json                                  * typescript lint config
+ └──webpack.config.js                            * webpack main configuration file
 ```
 
 then
