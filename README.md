@@ -34,6 +34,11 @@ This project is part of a project work at the university of applied sciences Stu
   - role: PROFESSOR, username: hoess, password: Test1234
   - role: STUDENT, username: ottooffline, password: Test1234
   
+## Contributing
+
+Florian, Marvin, Daniel, Alina und Valentin
+
+
 ## Code responsibilities + functionality
 
 ```
@@ -120,10 +125,6 @@ angular2-webrtc/
  ├──tslint.json                                  * typescript lint config
  └──webpack.config.js                            * webpack main configuration file
 ```
-  
-## Contributing
-
-Florian, Marvin, Daniel, Alina und Valentin
 
 ## Credits
 
