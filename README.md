@@ -88,13 +88,16 @@ angular2-webrtc/
  └──webpack.config.js                            * webpack main configuration file
 ```
 
-then
-```
-git clone https://github.com/fmoessle/angular2-webrtc.git
-cd angular2-webrtc
-npm install
-npm start
-```
+## Credits
+
+- Node.js https://github.com/nodejs/node
+- Angular 2 https://github.com/angular/angular
+- Angular 2 Material Components https://github.com/angular/material2
+- Lodash https://github.com/lodash/lodash
+- Autobahn.js https://github.com/crossbario/autobahn-js
+- Calendar Component https://github.com/mattlewis92/angular-calendar
+- Store for application state management https://github.com/ngrx/store
+- TLS Certificate https://letsencrypt.org/
 
 ## License
 
