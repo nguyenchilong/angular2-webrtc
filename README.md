@@ -1,6 +1,32 @@
 # WinfProjekt2-WebRTC
 This project is part of a project work at the university of applied sciences Stuttgart and is not meant to be used for commercial purposes.
 
+## Installation
+
+- Install Node.js https://nodejs.org
+- Clone project
+
+  ```
+  git clone https://github.com/fmoessle/angular2-webrtc.git
+  cd angular2-webrtc
+  npm install
+  ```
+- Run development server
+
+  ```
+  npm start
+  ```
+- Run build
+
+  ```
+  npm run compile
+  ```
+- Start server
+
+  ```
+  node prodserver.js
+  ```
+  
 ## Code responsibilities + functionality
 
 ```
@@ -87,6 +113,17 @@ angular2-webrtc/
  ├──tslint.json                                  * typescript lint config
  └──webpack.config.js                            * webpack main configuration file
 ```
+
+## Usage
+
+- Go to: https://chor-am-killesberg.de:8000
+- You can use one of the following users:
+  - role: PROFESSOR, username: hoess, password: Test1234
+  - role: STUDENT, username: ottooffline, password: Test1234
+  
+## Contributing
+
+Florian, Marvin, Daniel, Alina und Valentin
 
 ## Credits
 
