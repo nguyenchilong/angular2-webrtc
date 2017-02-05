@@ -34,6 +34,9 @@ This project is part of a project work at the university of applied sciences Stu
   - role: PROFESSOR, username: hoess, password: Test1234
   - role: STUDENT, username: ottooffline, password: Test1234
   
+Note:
+Sometimes there is a problem with the call. Reload the website and try again :)
+
 ## Contributing
 
 Florian, Marvin, Daniel, Alina und Valentin
