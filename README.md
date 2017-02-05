@@ -50,17 +50,17 @@ angular2-webrtc/
  │   ├──app/                                     * our app source code
  │       ├──features/                            * all angular components
  │             ├──components/                    * these components are used in views and have no route
- │                   ├──calendar/                * Florian/Marvin
+ │                   ├──calendar/                * Florian, Marvin
  │                   │ 
  │                   ├──chat/                    * Florian
  │                   │ 
- │                   ├──login/                   * Valentin/Alina/Florian
+ │                   ├──login/                   * Valentin, Alina, Florian
  │                   │ 
- │                   ├──meetings/                * Florian/Daniel
+ │                   ├──meetings/                * Florian, Daniel
  │                   │ 
  │                   ├──nav/                     * Florian
  │                   │ 
- │                   ├──passwordchange/          * Marvin/Florian
+ │                   ├──passwordchange/          * Marvin, Daniel, Florian
  │                   │ 
  │                   ├──video/                   * Florian
  │                   │ 
@@ -69,30 +69,30 @@ angular2-webrtc/
  │                   └──webrtcreceiver/          * Florian
  │             │ 
  │             ├──dialogs/                       * our dialogs using @angular/material`s MDDialog
- │                   ├──createMeeting-dialog/    * Florian/Marvin
+ │                   ├──createMeeting-dialog/    * Florian, Marvin
  │                   │ 
- │                   ├──forgot-dialog/           * Alina/Valentin
+ │                   ├──forgot-dialog/           * Alina, Valentin, Daniel
  │                   │ 
  │                   ├──info-dialog/             * Marvin
  │                   │ 
- │                   ├──meeting-dialog/          * Florian/Daniel
+ │                   ├──meeting-dialog/          * Florian, Daniel
  │                   │ 
- │                   ├──meetings-dialog/         * Florian
+ │                   ├──meetings-dialog/         * Florian, Daniel
  │                   │ 
- │                   └──register-dialog/         * Florian/Alina/Valentin
+ │                   └──register-dialog/         * Florian, Alina, Valentin, Daniel
  │             │ 
  │             └──views/                         * views of our webapp e.g. /login
  │                   ├──calendar-view/           * Florian
  │                   │ 
  │                   ├──caller-view/             * Florian
  │                   │ 
- │                   ├──login-view/              * Florian/Marvin
+ │                   ├──login-view/              * Florian, Marvin
  │                   │ 
- │                   ├──profprofil-view/         * Florian/Marvin
+ │                   ├──profprofil-view/         * Florian, Marvin, Daniel
  │                   │ 
  │                   ├──receiver-view/           * Florian
  │                   │ 
- │                   └──studprofil-view/         * Florian/Marvin
+ │                   └──studprofil-view/         * Florian, Marvin, Daniel
  │       │ 
  │       ├──model/                               * Daniel || contains all Typescript models
  │       │ 
@@ -100,16 +100,16 @@ angular2-webrtc/
  │             ├──index.ts                       * Florian || bundles all reducers
  │             ├──chat.reducer.ts                * Florian
  │             ├──peerconn.reducer.ts            * Florian
- │             ├──professors.reducer.ts          * Daniel/Florian
- │             ├──slots.reducer.ts               * Daniel/Florian
- │             └──user.reducer.ts                * Florian
+ │             ├──professors.reducer.ts          * Daniel, Florian
+ │             ├──slots.reducer.ts               * Daniel, Florian
+ │             └──user.reducer.ts                * Florian, Daniel
  │       │ 
  │       └──services/                            * our services we use with angular
- │             ├──auth.service.ts                * Florian
+ │             ├──auth.service.ts                * Florian, Daniel
  │             ├──call.service.ts                * Florian
  │             ├──peerconnection.service.ts      * Florian
  │             ├──profguard.service.ts           * Florian
- │             ├──rest.service.ts                * Daniel/Florian
+ │             ├──rest.service.ts                * Daniel
  │             ├──studguard.service.ts           * Florian
  │             └──wamp.service.ts                * Florian
  │   │ 
